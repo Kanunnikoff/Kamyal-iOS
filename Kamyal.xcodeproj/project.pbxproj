@@ -1,0 +1,802 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A1241D028796A3A00D71CE3 /* KamyalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1241CF28796A3A00D71CE3 /* KamyalApp.swift */; };
+		0A1241D228796A3A00D71CE3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1241D128796A3A00D71CE3 /* ContentView.swift */; };
+		0A1241D428796A3C00D71CE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A1241D328796A3C00D71CE3 /* Assets.xcassets */; };
+		0A1241D728796A3C00D71CE3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A1241D628796A3C00D71CE3 /* Preview Assets.xcassets */; };
+		0A1241E428796B5F00D71CE3 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1241E328796B5F00D71CE3 /* KeyboardViewController.swift */; };
+		0A1241E828796B5F00D71CE3 /* Keyboard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0A1241E128796B5F00D71CE3 /* Keyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0A1241EF28796BDD00D71CE3 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0A1241EE28796BDD00D71CE3 /* KeyboardKit */; };
+		0A1241F228796BFF00D71CE3 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0A1241F128796BFF00D71CE3 /* KeyboardKit */; };
+		0A1241F428796F3200D71CE3 /* MyKeyboardActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1241F328796F3200D71CE3 /* MyKeyboardActionHandler.swift */; };
+		0A26C45D28D10BE3004EEFCF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C45C28D10BE3004EEFCF /* SettingsView.swift */; };
+		0A26C46028D10C22004EEFCF /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C45F28D10C22004EEFCF /* AboutView.swift */; };
+		0A26C46428D10D0F004EEFCF /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C46328D10D0F004EEFCF /* Sidebar.swift */; };
+		0A26C46628D10D42004EEFCF /* DetailColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C46528D10D42004EEFCF /* DetailColumn.swift */; };
+		0A26C46828D10D65004EEFCF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C46728D10D65004EEFCF /* MainView.swift */; };
+		0A26C46B28D10DF5004EEFCF /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C46A28D10DF5004EEFCF /* Util.swift */; };
+		0A26C46D28D10E24004EEFCF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C46C28D10E24004EEFCF /* Config.swift */; };
+		0A3C773628E0770E0031EB74 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C46C28D10E24004EEFCF /* Config.swift */; };
+		0A3C773C28E09CEE0031EB74 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A3C773B28E09CEE0031EB74 /* Stickers.xcassets */; };
+		0A3C774028E09CEE0031EB74 /* Stickers.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0A3C773928E09CED0031EB74 /* Stickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0A713B4B28E98478006C71D8 /* LatinVaynakhInputSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A713B4A28E98478006C71D8 /* LatinVaynakhInputSetProvider.swift */; };
+		0A713B4D28E984A4006C71D8 /* LatinVaynakhCalloutActionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A713B4C28E984A4006C71D8 /* LatinVaynakhCalloutActionProvider.swift */; };
+		0A7A0E2728797DFE0032472B /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2628797DFE0032472B /* KeyboardView.swift */; };
+		0A7A0E2A28797E6A0032472B /* MyAutocompleteToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2928797E6A0032472B /* MyAutocompleteToolbar.swift */; };
+		0A7A0E2C28797F9A0032472B /* MyKeyboardAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2B28797F9A0032472B /* MyKeyboardAppearance.swift */; };
+		0A7A0E302879C4160032472B /* MyKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2F2879C4160032472B /* MyKeyboard.swift */; };
+		0A7A0E34287A11150032472B /* VaynakhInputSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E33287A11150032472B /* VaynakhInputSetProvider.swift */; };
+		0A7A0E36287A20100032472B /* VaynakhCalloutActionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E35287A20100032472B /* VaynakhCalloutActionProvider.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0A1241E628796B5F00D71CE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A1241C428796A3A00D71CE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0A1241E028796B5F00D71CE3;
+			remoteInfo = keyboard;
+		};
+		0A3C773E28E09CEE0031EB74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A1241C428796A3A00D71CE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0A3C773828E09CED0031EB74;
+			remoteInfo = Stickers;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0A1241EC28796B5F00D71CE3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0A3C774028E09CEE0031EB74 /* Stickers.appex in Embed Foundation Extensions */,
+				0A1241E828796B5F00D71CE3 /* Keyboard.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0A1241CC28796A3A00D71CE3 /* Kamyal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kamyal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A1241CF28796A3A00D71CE3 /* KamyalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KamyalApp.swift; sourceTree = "<group>"; };
+		0A1241D128796A3A00D71CE3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0A1241D328796A3C00D71CE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0A1241D628796A3C00D71CE3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0A1241E128796B5F00D71CE3 /* Keyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Keyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A1241E328796B5F00D71CE3 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
+		0A1241E528796B5F00D71CE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A1241F328796F3200D71CE3 /* MyKeyboardActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyKeyboardActionHandler.swift; sourceTree = "<group>"; };
+		0A26C45C28D10BE3004EEFCF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		0A26C45F28D10C22004EEFCF /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		0A26C46328D10D0F004EEFCF /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
+		0A26C46528D10D42004EEFCF /* DetailColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailColumn.swift; sourceTree = "<group>"; };
+		0A26C46728D10D65004EEFCF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		0A26C46A28D10DF5004EEFCF /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		0A26C46C28D10E24004EEFCF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		0A26C47228D1106F004EEFCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0A3C773428E076A90031EB74 /* Kamyal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kamyal.entitlements; sourceTree = "<group>"; };
+		0A3C773528E076D40031EB74 /* Keyboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Keyboard.entitlements; sourceTree = "<group>"; };
+		0A3C773928E09CED0031EB74 /* Stickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Stickers.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A3C773B28E09CEE0031EB74 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
+		0A3C773D28E09CEE0031EB74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A713B4A28E98478006C71D8 /* LatinVaynakhInputSetProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatinVaynakhInputSetProvider.swift; sourceTree = "<group>"; };
+		0A713B4C28E984A4006C71D8 /* LatinVaynakhCalloutActionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatinVaynakhCalloutActionProvider.swift; sourceTree = "<group>"; };
+		0A7A0E2628797DFE0032472B /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
+		0A7A0E2928797E6A0032472B /* MyAutocompleteToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAutocompleteToolbar.swift; sourceTree = "<group>"; };
+		0A7A0E2B28797F9A0032472B /* MyKeyboardAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyKeyboardAppearance.swift; sourceTree = "<group>"; };
+		0A7A0E2F2879C4160032472B /* MyKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyKeyboard.swift; sourceTree = "<group>"; };
+		0A7A0E33287A11150032472B /* VaynakhInputSetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaynakhInputSetProvider.swift; sourceTree = "<group>"; };
+		0A7A0E35287A20100032472B /* VaynakhCalloutActionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaynakhCalloutActionProvider.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0A1241C928796A3A00D71CE3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A1241EF28796BDD00D71CE3 /* KeyboardKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A1241DE28796B5F00D71CE3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A1241F228796BFF00D71CE3 /* KeyboardKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0A1241C328796A3A00D71CE3 = {
+			isa = PBXGroup;
+			children = (
+				0A1241CE28796A3A00D71CE3 /* Kamyal */,
+				0A1241E228796B5F00D71CE3 /* Keyboard */,
+				0A3C773A28E09CED0031EB74 /* Stickers */,
+				0A1241CD28796A3A00D71CE3 /* Products */,
+				0A1241F028796BFF00D71CE3 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		0A1241CD28796A3A00D71CE3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A1241CC28796A3A00D71CE3 /* Kamyal.app */,
+				0A1241E128796B5F00D71CE3 /* Keyboard.appex */,
+				0A3C773928E09CED0031EB74 /* Stickers.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0A1241CE28796A3A00D71CE3 /* Kamyal */ = {
+			isa = PBXGroup;
+			children = (
+				0A3C773428E076A90031EB74 /* Kamyal.entitlements */,
+				0A26C47228D1106F004EEFCF /* Info.plist */,
+				0A26C46928D10DE7004EEFCF /* Domain */,
+				0A26C45A28D10BB8004EEFCF /* Presentation */,
+				0A1241CF28796A3A00D71CE3 /* KamyalApp.swift */,
+				0A1241D328796A3C00D71CE3 /* Assets.xcassets */,
+				0A1241D528796A3C00D71CE3 /* Preview Content */,
+			);
+			path = Kamyal;
+			sourceTree = "<group>";
+		};
+		0A1241D528796A3C00D71CE3 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				0A1241D628796A3C00D71CE3 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0A1241E228796B5F00D71CE3 /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				0A713B4E28E98D35006C71D8 /* Latin */,
+				0A3C773528E076D40031EB74 /* Keyboard.entitlements */,
+				0A7A0E2828797E570032472B /* My */,
+				0A1241E328796B5F00D71CE3 /* KeyboardViewController.swift */,
+				0A7A0E2628797DFE0032472B /* KeyboardView.swift */,
+				0A7A0E33287A11150032472B /* VaynakhInputSetProvider.swift */,
+				0A7A0E35287A20100032472B /* VaynakhCalloutActionProvider.swift */,
+				0A1241E528796B5F00D71CE3 /* Info.plist */,
+			);
+			path = Keyboard;
+			sourceTree = "<group>";
+		};
+		0A1241F028796BFF00D71CE3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0A26C45A28D10BB8004EEFCF /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				0A26C46228D10D00004EEFCF /* Navigation */,
+				0A26C46128D10CAA004EEFCF /* Main */,
+				0A26C45E28D10BF2004EEFCF /* About */,
+				0A26C45B28D10BD1004EEFCF /* Settings */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		0A26C45B28D10BD1004EEFCF /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0A26C45C28D10BE3004EEFCF /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		0A26C45E28D10BF2004EEFCF /* About */ = {
+			isa = PBXGroup;
+			children = (
+				0A26C45F28D10C22004EEFCF /* AboutView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		0A26C46128D10CAA004EEFCF /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				0A26C46728D10D65004EEFCF /* MainView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		0A26C46228D10D00004EEFCF /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				0A1241D128796A3A00D71CE3 /* ContentView.swift */,
+				0A26C46328D10D0F004EEFCF /* Sidebar.swift */,
+				0A26C46528D10D42004EEFCF /* DetailColumn.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		0A26C46928D10DE7004EEFCF /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				0A26C46A28D10DF5004EEFCF /* Util.swift */,
+				0A26C46C28D10E24004EEFCF /* Config.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		0A3C773A28E09CED0031EB74 /* Stickers */ = {
+			isa = PBXGroup;
+			children = (
+				0A3C773B28E09CEE0031EB74 /* Stickers.xcassets */,
+				0A3C773D28E09CEE0031EB74 /* Info.plist */,
+			);
+			path = Stickers;
+			sourceTree = "<group>";
+		};
+		0A713B4E28E98D35006C71D8 /* Latin */ = {
+			isa = PBXGroup;
+			children = (
+				0A713B4A28E98478006C71D8 /* LatinVaynakhInputSetProvider.swift */,
+				0A713B4C28E984A4006C71D8 /* LatinVaynakhCalloutActionProvider.swift */,
+			);
+			path = Latin;
+			sourceTree = "<group>";
+		};
+		0A7A0E2828797E570032472B /* My */ = {
+			isa = PBXGroup;
+			children = (
+				0A1241F328796F3200D71CE3 /* MyKeyboardActionHandler.swift */,
+				0A7A0E2928797E6A0032472B /* MyAutocompleteToolbar.swift */,
+				0A7A0E2B28797F9A0032472B /* MyKeyboardAppearance.swift */,
+				0A7A0E2F2879C4160032472B /* MyKeyboard.swift */,
+			);
+			path = My;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0A1241CB28796A3A00D71CE3 /* Kamyal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A1241DA28796A3C00D71CE3 /* Build configuration list for PBXNativeTarget "Kamyal" */;
+			buildPhases = (
+				0A1241C828796A3A00D71CE3 /* Sources */,
+				0A1241C928796A3A00D71CE3 /* Frameworks */,
+				0A1241CA28796A3A00D71CE3 /* Resources */,
+				0A1241EC28796B5F00D71CE3 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0A1241E728796B5F00D71CE3 /* PBXTargetDependency */,
+				0A3C773F28E09CEE0031EB74 /* PBXTargetDependency */,
+			);
+			name = Kamyal;
+			packageProductDependencies = (
+				0A1241EE28796BDD00D71CE3 /* KeyboardKit */,
+			);
+			productName = izhitsa;
+			productReference = 0A1241CC28796A3A00D71CE3 /* Kamyal.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0A1241E028796B5F00D71CE3 /* Keyboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A1241E928796B5F00D71CE3 /* Build configuration list for PBXNativeTarget "Keyboard" */;
+			buildPhases = (
+				0A1241DD28796B5F00D71CE3 /* Sources */,
+				0A1241DE28796B5F00D71CE3 /* Frameworks */,
+				0A1241DF28796B5F00D71CE3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Keyboard;
+			packageProductDependencies = (
+				0A1241F128796BFF00D71CE3 /* KeyboardKit */,
+			);
+			productName = keyboard;
+			productReference = 0A1241E128796B5F00D71CE3 /* Keyboard.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		0A3C773828E09CED0031EB74 /* Stickers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A3C774128E09CEE0031EB74 /* Build configuration list for PBXNativeTarget "Stickers" */;
+			buildPhases = (
+				0A3C773728E09CED0031EB74 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Stickers;
+			productName = Stickers;
+			productReference = 0A3C773928E09CED0031EB74 /* Stickers.appex */;
+			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0A1241C428796A3A00D71CE3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					0A1241CB28796A3A00D71CE3 = {
+						CreatedOnToolsVersion = 14.0;
+					};
+					0A1241E028796B5F00D71CE3 = {
+						CreatedOnToolsVersion = 14.0;
+					};
+					0A3C773828E09CED0031EB74 = {
+						CreatedOnToolsVersion = 14.0;
+					};
+				};
+			};
+			buildConfigurationList = 0A1241C728796A3A00D71CE3 /* Build configuration list for PBXProject "Kamyal" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0A1241C328796A3A00D71CE3;
+			packageReferences = (
+				0A1241ED28796BDD00D71CE3 /* XCRemoteSwiftPackageReference "KeyboardKit" */,
+			);
+			productRefGroup = 0A1241CD28796A3A00D71CE3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0A1241CB28796A3A00D71CE3 /* Kamyal */,
+				0A1241E028796B5F00D71CE3 /* Keyboard */,
+				0A3C773828E09CED0031EB74 /* Stickers */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0A1241CA28796A3A00D71CE3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A1241D728796A3C00D71CE3 /* Preview Assets.xcassets in Resources */,
+				0A1241D428796A3C00D71CE3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A1241DF28796B5F00D71CE3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A3C773728E09CED0031EB74 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A3C773C28E09CEE0031EB74 /* Stickers.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0A1241C828796A3A00D71CE3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A26C46628D10D42004EEFCF /* DetailColumn.swift in Sources */,
+				0A26C46828D10D65004EEFCF /* MainView.swift in Sources */,
+				0A26C46D28D10E24004EEFCF /* Config.swift in Sources */,
+				0A26C46428D10D0F004EEFCF /* Sidebar.swift in Sources */,
+				0A26C46B28D10DF5004EEFCF /* Util.swift in Sources */,
+				0A26C46028D10C22004EEFCF /* AboutView.swift in Sources */,
+				0A26C45D28D10BE3004EEFCF /* SettingsView.swift in Sources */,
+				0A1241D228796A3A00D71CE3 /* ContentView.swift in Sources */,
+				0A1241D028796A3A00D71CE3 /* KamyalApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A1241DD28796B5F00D71CE3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A713B4B28E98478006C71D8 /* LatinVaynakhInputSetProvider.swift in Sources */,
+				0A7A0E2728797DFE0032472B /* KeyboardView.swift in Sources */,
+				0A7A0E2A28797E6A0032472B /* MyAutocompleteToolbar.swift in Sources */,
+				0A3C773628E0770E0031EB74 /* Config.swift in Sources */,
+				0A7A0E302879C4160032472B /* MyKeyboard.swift in Sources */,
+				0A7A0E36287A20100032472B /* VaynakhCalloutActionProvider.swift in Sources */,
+				0A7A0E34287A11150032472B /* VaynakhInputSetProvider.swift in Sources */,
+				0A1241F428796F3200D71CE3 /* MyKeyboardActionHandler.swift in Sources */,
+				0A7A0E2C28797F9A0032472B /* MyKeyboardAppearance.swift in Sources */,
+				0A1241E428796B5F00D71CE3 /* KeyboardViewController.swift in Sources */,
+				0A713B4D28E984A4006C71D8 /* LatinVaynakhCalloutActionProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0A1241E728796B5F00D71CE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0A1241E028796B5F00D71CE3 /* Keyboard */;
+			targetProxy = 0A1241E628796B5F00D71CE3 /* PBXContainerItemProxy */;
+		};
+		0A3C773F28E09CEE0031EB74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0A3C773828E09CED0031EB74 /* Stickers */;
+			targetProxy = 0A3C773E28E09CEE0031EB74 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0A1241D828796A3C00D71CE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		0A1241D928796A3C00D71CE3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0A1241DB28796A3C00D71CE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Kamyal/Kamyal.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_ASSET_PATHS = "Kamyal/Preview\\ Content";
+				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Kamyal/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Къамаьл";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0A1241DC28796A3C00D71CE3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Kamyal/Kamyal.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_ASSET_PATHS = "Kamyal/Preview\\ Content";
+				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Kamyal/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Къамаьл";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0A1241EA28796B5F00D71CE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = keyboard/keyboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = keyboard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Къамаьл";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal.Keyboard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0A1241EB28796B5F00D71CE3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = keyboard/keyboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = keyboard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Къамаьл";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal.Keyboard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0A3C774228E09CEE0031EB74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Stickers/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Къамаьл";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal.Stickers;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0A3C774328E09CEE0031EB74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Stickers/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Къамаьл";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal.Stickers;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0A1241C728796A3A00D71CE3 /* Build configuration list for PBXProject "Kamyal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A1241D828796A3C00D71CE3 /* Debug */,
+				0A1241D928796A3C00D71CE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0A1241DA28796A3C00D71CE3 /* Build configuration list for PBXNativeTarget "Kamyal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A1241DB28796A3C00D71CE3 /* Debug */,
+				0A1241DC28796A3C00D71CE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0A1241E928796B5F00D71CE3 /* Build configuration list for PBXNativeTarget "Keyboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A1241EA28796B5F00D71CE3 /* Debug */,
+				0A1241EB28796B5F00D71CE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0A3C774128E09CEE0031EB74 /* Build configuration list for PBXNativeTarget "Stickers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A3C774228E09CEE0031EB74 /* Debug */,
+				0A3C774328E09CEE0031EB74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0A1241ED28796BDD00D71CE3 /* XCRemoteSwiftPackageReference "KeyboardKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/KeyboardKit/KeyboardKit.git";
+			requirement = {
+				kind = versionRange;
+				maximumVersion = 10.0.0;
+				minimumVersion = 6.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0A1241EE28796BDD00D71CE3 /* KeyboardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A1241ED28796BDD00D71CE3 /* XCRemoteSwiftPackageReference "KeyboardKit" */;
+			productName = KeyboardKit;
+		};
+		0A1241F128796BFF00D71CE3 /* KeyboardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A1241ED28796BDD00D71CE3 /* XCRemoteSwiftPackageReference "KeyboardKit" */;
+			productName = KeyboardKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 0A1241C428796A3A00D71CE3 /* Project object */;
+}

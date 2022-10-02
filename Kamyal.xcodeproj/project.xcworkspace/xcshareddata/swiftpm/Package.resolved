@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "keyboardkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/KeyboardKit/KeyboardKit.git",
+      "state" : {
+        "revision" : "202ba3ea2b7310813c224ef516b5e8605abec8fa",
+        "version" : "6.4.0"
+      }
+    }
+  ],
+  "version" : 2
+}
