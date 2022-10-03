@@ -26,14 +26,14 @@
 		0A3C773628E0770E0031EB74 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C46C28D10E24004EEFCF /* Config.swift */; };
 		0A3C773C28E09CEE0031EB74 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A3C773B28E09CEE0031EB74 /* Stickers.xcassets */; };
 		0A3C774028E09CEE0031EB74 /* Stickers.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0A3C773928E09CED0031EB74 /* Stickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		0A713B4B28E98478006C71D8 /* LatinVaynakhInputSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A713B4A28E98478006C71D8 /* LatinVaynakhInputSetProvider.swift */; };
-		0A713B4D28E984A4006C71D8 /* LatinVaynakhCalloutActionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A713B4C28E984A4006C71D8 /* LatinVaynakhCalloutActionProvider.swift */; };
+		0A713B4B28E98478006C71D8 /* LatinIngushInputSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A713B4A28E98478006C71D8 /* LatinIngushInputSetProvider.swift */; };
+		0A713B4D28E984A4006C71D8 /* LatinIngushCalloutActionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A713B4C28E984A4006C71D8 /* LatinIngushCalloutActionProvider.swift */; };
 		0A7A0E2728797DFE0032472B /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2628797DFE0032472B /* KeyboardView.swift */; };
 		0A7A0E2A28797E6A0032472B /* MyAutocompleteToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2928797E6A0032472B /* MyAutocompleteToolbar.swift */; };
 		0A7A0E2C28797F9A0032472B /* MyKeyboardAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2B28797F9A0032472B /* MyKeyboardAppearance.swift */; };
 		0A7A0E302879C4160032472B /* MyKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2F2879C4160032472B /* MyKeyboard.swift */; };
-		0A7A0E34287A11150032472B /* VaynakhInputSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E33287A11150032472B /* VaynakhInputSetProvider.swift */; };
-		0A7A0E36287A20100032472B /* VaynakhCalloutActionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E35287A20100032472B /* VaynakhCalloutActionProvider.swift */; };
+		0A7A0E34287A11150032472B /* IngushInputSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E33287A11150032472B /* IngushInputSetProvider.swift */; };
+		0A7A0E36287A20100032472B /* IngushCalloutActionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E35287A20100032472B /* IngushCalloutActionProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,14 +91,14 @@
 		0A3C773928E09CED0031EB74 /* Stickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Stickers.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A3C773B28E09CEE0031EB74 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
 		0A3C773D28E09CEE0031EB74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0A713B4A28E98478006C71D8 /* LatinVaynakhInputSetProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatinVaynakhInputSetProvider.swift; sourceTree = "<group>"; };
-		0A713B4C28E984A4006C71D8 /* LatinVaynakhCalloutActionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatinVaynakhCalloutActionProvider.swift; sourceTree = "<group>"; };
+		0A713B4A28E98478006C71D8 /* LatinIngushInputSetProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatinIngushInputSetProvider.swift; sourceTree = "<group>"; };
+		0A713B4C28E984A4006C71D8 /* LatinIngushCalloutActionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatinIngushCalloutActionProvider.swift; sourceTree = "<group>"; };
 		0A7A0E2628797DFE0032472B /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		0A7A0E2928797E6A0032472B /* MyAutocompleteToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAutocompleteToolbar.swift; sourceTree = "<group>"; };
 		0A7A0E2B28797F9A0032472B /* MyKeyboardAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyKeyboardAppearance.swift; sourceTree = "<group>"; };
 		0A7A0E2F2879C4160032472B /* MyKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyKeyboard.swift; sourceTree = "<group>"; };
-		0A7A0E33287A11150032472B /* VaynakhInputSetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaynakhInputSetProvider.swift; sourceTree = "<group>"; };
-		0A7A0E35287A20100032472B /* VaynakhCalloutActionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaynakhCalloutActionProvider.swift; sourceTree = "<group>"; };
+		0A7A0E33287A11150032472B /* IngushInputSetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngushInputSetProvider.swift; sourceTree = "<group>"; };
+		0A7A0E35287A20100032472B /* IngushCalloutActionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngushCalloutActionProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,8 +172,8 @@
 				0A7A0E2828797E570032472B /* My */,
 				0A1241E328796B5F00D71CE3 /* KeyboardViewController.swift */,
 				0A7A0E2628797DFE0032472B /* KeyboardView.swift */,
-				0A7A0E33287A11150032472B /* VaynakhInputSetProvider.swift */,
-				0A7A0E35287A20100032472B /* VaynakhCalloutActionProvider.swift */,
+				0A7A0E33287A11150032472B /* IngushInputSetProvider.swift */,
+				0A7A0E35287A20100032472B /* IngushCalloutActionProvider.swift */,
 				0A1241E528796B5F00D71CE3 /* Info.plist */,
 			);
 			path = Keyboard;
@@ -252,8 +252,8 @@
 		0A713B4E28E98D35006C71D8 /* Latin */ = {
 			isa = PBXGroup;
 			children = (
-				0A713B4A28E98478006C71D8 /* LatinVaynakhInputSetProvider.swift */,
-				0A713B4C28E984A4006C71D8 /* LatinVaynakhCalloutActionProvider.swift */,
+				0A713B4A28E98478006C71D8 /* LatinIngushInputSetProvider.swift */,
+				0A713B4C28E984A4006C71D8 /* LatinIngushCalloutActionProvider.swift */,
 			);
 			path = Latin;
 			sourceTree = "<group>";
@@ -422,17 +422,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A713B4B28E98478006C71D8 /* LatinVaynakhInputSetProvider.swift in Sources */,
+				0A713B4B28E98478006C71D8 /* LatinIngushInputSetProvider.swift in Sources */,
 				0A7A0E2728797DFE0032472B /* KeyboardView.swift in Sources */,
 				0A7A0E2A28797E6A0032472B /* MyAutocompleteToolbar.swift in Sources */,
 				0A3C773628E0770E0031EB74 /* Config.swift in Sources */,
 				0A7A0E302879C4160032472B /* MyKeyboard.swift in Sources */,
-				0A7A0E36287A20100032472B /* VaynakhCalloutActionProvider.swift in Sources */,
-				0A7A0E34287A11150032472B /* VaynakhInputSetProvider.swift in Sources */,
+				0A7A0E36287A20100032472B /* IngushCalloutActionProvider.swift in Sources */,
+				0A7A0E34287A11150032472B /* IngushInputSetProvider.swift in Sources */,
 				0A1241F428796F3200D71CE3 /* MyKeyboardActionHandler.swift in Sources */,
 				0A7A0E2C28797F9A0032472B /* MyKeyboardAppearance.swift in Sources */,
 				0A1241E428796B5F00D71CE3 /* KeyboardViewController.swift in Sources */,
-				0A713B4D28E984A4006C71D8 /* LatinVaynakhCalloutActionProvider.swift in Sources */,
+				0A713B4D28E984A4006C71D8 /* LatinIngushCalloutActionProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

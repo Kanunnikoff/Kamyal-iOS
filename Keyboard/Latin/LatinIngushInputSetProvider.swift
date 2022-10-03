@@ -1,5 +1,5 @@
 //
-//  Pre1917RussianInputSetProvider.swift
+//  LatinIngushInputSetProvider.swift
 //  keyboard
 //
 //  Created by Дмитрiй Канунниковъ on 09.07.2022.
@@ -9,9 +9,9 @@ import Foundation
 import KeyboardKit
 
 /**
- This input set provider provides Pre-Revolutionary Russian input sets.
+ This input set provider provides Latin Ingush input sets.
  */
-public class LatinVaynakhInputSetProvider: InputSetProvider, LocalizedService {
+public class LatinIngushInputSetProvider: InputSetProvider, LocalizedService {
     
     /**
      Create an English input set provider.

@@ -20,13 +20,13 @@ class KeyboardViewController: KeyboardInputViewController {
         
         var vaynakhCalloutActionProvider: LocalizedCalloutActionProvider {
             if isKeyboardLatin {
-                guard let provider = try? LatinVaynakhCalloutActionProvider() else {
+                guard let provider = try? LatinIngushCalloutActionProvider() else {
                     fatalError("LatinVaynakhCalloutActionProvider could not be created.")
                 }
                 
                 return provider
             } else {
-                guard let provider = try? VaynakhCalloutActionProvider() else {
+                guard let provider = try? IngushCalloutActionProvider() else {
                     fatalError("VaynakhCalloutActionProvider could not be created.")
                 }
                 
@@ -42,12 +42,12 @@ class KeyboardViewController: KeyboardInputViewController {
         if isKeyboardLatin {
             inputSetProvider = StandardInputSetProvider(
                 context: keyboardContext,
-                providers: [LatinVaynakhInputSetProvider()]
+                providers: [LatinIngushInputSetProvider()]
             )
         } else {
             inputSetProvider = StandardInputSetProvider(
                 context: keyboardContext,
-                providers: [VaynakhInputSetProvider()]
+                providers: [IngushInputSetProvider()]
             )
         }
         

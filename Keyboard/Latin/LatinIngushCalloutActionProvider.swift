@@ -1,5 +1,5 @@
 //
-//  Pre1917RussianCalloutActionProvider.swift
+//  LatinIngushCalloutActionProvider.swift
 //  keyboard
 //
 //  Created by Дмитрiй Канунниковъ on 09.07.2022.
@@ -9,7 +9,7 @@ import Foundation
 import KeyboardKit
 
 /**
- This class provides Pre-Revolutionary Russian callout actions.
+ This class provides Latin Ingush callout actions.
  
  You can use the class as a template when you want to create
  your own callout action provider.
@@ -17,7 +17,7 @@ import KeyboardKit
  KeyboardKit Pro adds a provider for each ``KeyboardLocale``
  Check out the demo app to see them in action.
  */
-class LatinVaynakhCalloutActionProvider: BaseCalloutActionProvider, LocalizedService {
+class LatinIngushCalloutActionProvider: BaseCalloutActionProvider, LocalizedService {
     
     public let localeKey: String = KeyboardLocale.russian.id
     
