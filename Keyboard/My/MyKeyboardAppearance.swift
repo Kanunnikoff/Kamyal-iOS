@@ -41,7 +41,7 @@ class MyKeyboardAppearance: StandardKeyboardAppearance {
         switch action {
             case .space:
                 if isKeyboardLatin {
-                    return "Jukh"
+                    return "Juqh"
                 } else {
                     if isKeyboardIngush {
                         return "Юкъ"

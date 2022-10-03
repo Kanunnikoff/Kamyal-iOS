@@ -47,9 +47,9 @@ public class IngushInputSetProvider: InputSetProvider, LocalizedService {
      */
     public var alphabeticInputSet: AlphabeticInputSet {
         AlphabeticInputSet(rows: [
-            InputSetRow("йцукенгшщзх"),
-            InputSetRow("фывапролджэ"),
-            InputSetRow(phone: "ячсмитьбю", pad: "ячсмитьбюъ")
+            InputSetRow(phone: "йцукенгшщзхъ", pad: "йцукенгшщзх"),
+            InputSetRow(phone: "фывапролджэӀ", pad: "фывапролджэ"),
+            InputSetRow(phone: "ячсмитьбю", pad: "ячсмитьбюъӀ")
         ])
     }
     

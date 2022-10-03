@@ -32,7 +32,7 @@ class LatinIngushCalloutActionProvider: BaseCalloutActionProvider, LocalizedServ
         switch char {
             case "0": return ["0", "°"]
                 
-            case "a": return ["a", "æ", "ä"]
+            case "a": return ["a", "æ", "ä", "ā"]
             case "c": return ["c", "č", "ch", "čh"]
             case "g": return ["g", "gh"]
             case "h": return ["h", "ꜧ"]
@@ -44,7 +44,7 @@ class LatinIngushCalloutActionProvider: BaseCalloutActionProvider, LocalizedServ
             case "s": return ["s", "š"]
             case "t": return ["t", "th"]
             case "u": return ["u", "ü"]
-            case "x": return ["x", "x́"]
+            case "x": return ["x", "x́", "xh"]
             case "z": return ["z", "ž"]
                 
             case "-": return ["-", "–", "—", "•"]
