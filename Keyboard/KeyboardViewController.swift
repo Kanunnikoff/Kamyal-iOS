@@ -18,16 +18,16 @@ class KeyboardViewController: KeyboardInputViewController {
         keyboardContext.locale = KeyboardLocale.russian.locale
         keyboardAppearance = MyKeyboardAppearance(context: keyboardContext)
         
-        var vaynakhCalloutActionProvider: LocalizedCalloutActionProvider {
+        var ingushCalloutActionProvider: LocalizedCalloutActionProvider {
             if isKeyboardLatin {
                 guard let provider = try? LatinIngushCalloutActionProvider() else {
-                    fatalError("LatinVaynakhCalloutActionProvider could not be created.")
+                    fatalError("LatinIngushCalloutActionProvider could not be created.")
                 }
                 
                 return provider
             } else {
                 guard let provider = try? IngushCalloutActionProvider() else {
-                    fatalError("VaynakhCalloutActionProvider could not be created.")
+                    fatalError("IngushCalloutActionProvider could not be created.")
                 }
                 
                 return provider
@@ -36,7 +36,7 @@ class KeyboardViewController: KeyboardInputViewController {
         
         calloutActionProvider = StandardCalloutActionProvider(
             context: keyboardContext,
-            providers: [vaynakhCalloutActionProvider]
+            providers: [ingushCalloutActionProvider]
         )
         
         if isKeyboardLatin {
@@ -54,6 +54,8 @@ class KeyboardViewController: KeyboardInputViewController {
         keyboardLayoutProvider = StandardKeyboardLayoutProvider(inputSetProvider: inputSetProvider)
         
         keyboardActionHandler = MyKeyboardActionHandler(inputViewController: self)
+        
+        autocompleteProvider = MyAutocompleteProvider()
         
         super.viewDidLoad()
     }

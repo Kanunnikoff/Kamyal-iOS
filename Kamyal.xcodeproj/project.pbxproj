@@ -23,9 +23,16 @@
 		0A26C46828D10D65004EEFCF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C46728D10D65004EEFCF /* MainView.swift */; };
 		0A26C46B28D10DF5004EEFCF /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C46A28D10DF5004EEFCF /* Util.swift */; };
 		0A26C46D28D10E24004EEFCF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C46C28D10E24004EEFCF /* Config.swift */; };
+		0A29ECA528EE093800DBF90F /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A29ECA428EE093800DBF90F /* StringExt.swift */; };
+		0A29ECA628EE093A00DBF90F /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A29ECA428EE093800DBF90F /* StringExt.swift */; };
+		0A29ECA828EE0DC400DBF90F /* GlobalFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A29ECA728EE0DC400DBF90F /* GlobalFunc.swift */; };
+		0A29ECA928EE0DC400DBF90F /* GlobalFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A29ECA728EE0DC400DBF90F /* GlobalFunc.swift */; };
+		0A29ECAD28EE18F400DBF90F /* ing_freq_dict_sorted.csv in Resources */ = {isa = PBXBuildFile; fileRef = 0A29ECAC28EE18F400DBF90F /* ing_freq_dict_sorted.csv */; };
 		0A3C773628E0770E0031EB74 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C46C28D10E24004EEFCF /* Config.swift */; };
 		0A3C773C28E09CEE0031EB74 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A3C773B28E09CEE0031EB74 /* Stickers.xcassets */; };
 		0A3C774028E09CEE0031EB74 /* Stickers.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0A3C773928E09CED0031EB74 /* Stickers.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0A547D1428ECCD3F0008C977 /* MyAutocompleteProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A547D1328ECCD3F0008C977 /* MyAutocompleteProvider.swift */; };
+		0A547D1628ECD0110008C977 /* IngushDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A547D1528ECD0110008C977 /* IngushDictionary.swift */; };
 		0A713B4B28E98478006C71D8 /* LatinIngushInputSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A713B4A28E98478006C71D8 /* LatinIngushInputSetProvider.swift */; };
 		0A713B4D28E984A4006C71D8 /* LatinIngushCalloutActionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A713B4C28E984A4006C71D8 /* LatinIngushCalloutActionProvider.swift */; };
 		0A7A0E2728797DFE0032472B /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2628797DFE0032472B /* KeyboardView.swift */; };
@@ -86,11 +93,16 @@
 		0A26C46A28D10DF5004EEFCF /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		0A26C46C28D10E24004EEFCF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		0A26C47228D1106F004EEFCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0A29ECA428EE093800DBF90F /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
+		0A29ECA728EE0DC400DBF90F /* GlobalFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunc.swift; sourceTree = "<group>"; };
+		0A29ECAC28EE18F400DBF90F /* ing_freq_dict_sorted.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ing_freq_dict_sorted.csv; sourceTree = "<group>"; };
 		0A3C773428E076A90031EB74 /* Kamyal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kamyal.entitlements; sourceTree = "<group>"; };
 		0A3C773528E076D40031EB74 /* Keyboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Keyboard.entitlements; sourceTree = "<group>"; };
 		0A3C773928E09CED0031EB74 /* Stickers.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Stickers.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A3C773B28E09CEE0031EB74 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
 		0A3C773D28E09CEE0031EB74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A547D1328ECCD3F0008C977 /* MyAutocompleteProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAutocompleteProvider.swift; sourceTree = "<group>"; };
+		0A547D1528ECD0110008C977 /* IngushDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngushDictionary.swift; sourceTree = "<group>"; };
 		0A713B4A28E98478006C71D8 /* LatinIngushInputSetProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatinIngushInputSetProvider.swift; sourceTree = "<group>"; };
 		0A713B4C28E984A4006C71D8 /* LatinIngushCalloutActionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatinIngushCalloutActionProvider.swift; sourceTree = "<group>"; };
 		0A7A0E2628797DFE0032472B /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
@@ -167,6 +179,7 @@
 		0A1241E228796B5F00D71CE3 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				0A547D1728ECD0560008C977 /* Dictionary */,
 				0A814EE328EB70E000445ECA /* Cyrillic */,
 				0A713B4E28E98D35006C71D8 /* Latin */,
 				0A3C773528E076D40031EB74 /* Keyboard.entitlements */,
@@ -233,10 +246,20 @@
 		0A26C46928D10DE7004EEFCF /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				0A29ECA328EE092B00DBF90F /* Ext */,
 				0A26C46A28D10DF5004EEFCF /* Util.swift */,
 				0A26C46C28D10E24004EEFCF /* Config.swift */,
+				0A29ECA728EE0DC400DBF90F /* GlobalFunc.swift */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		0A29ECA328EE092B00DBF90F /* Ext */ = {
+			isa = PBXGroup;
+			children = (
+				0A29ECA428EE093800DBF90F /* StringExt.swift */,
+			);
+			path = Ext;
 			sourceTree = "<group>";
 		};
 		0A3C773A28E09CED0031EB74 /* Stickers */ = {
@@ -246,6 +269,15 @@
 				0A3C773D28E09CEE0031EB74 /* Info.plist */,
 			);
 			path = Stickers;
+			sourceTree = "<group>";
+		};
+		0A547D1728ECD0560008C977 /* Dictionary */ = {
+			isa = PBXGroup;
+			children = (
+				0A29ECAC28EE18F400DBF90F /* ing_freq_dict_sorted.csv */,
+				0A547D1528ECD0110008C977 /* IngushDictionary.swift */,
+			);
+			path = Dictionary;
 			sourceTree = "<group>";
 		};
 		0A713B4E28E98D35006C71D8 /* Latin */ = {
@@ -264,6 +296,7 @@
 				0A7A0E2928797E6A0032472B /* MyAutocompleteToolbar.swift */,
 				0A7A0E2B28797F9A0032472B /* MyKeyboardAppearance.swift */,
 				0A7A0E2F2879C4160032472B /* MyKeyboard.swift */,
+				0A547D1328ECCD3F0008C977 /* MyAutocompleteProvider.swift */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -396,6 +429,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A29ECAD28EE18F400DBF90F /* ing_freq_dict_sorted.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,8 +450,10 @@
 			files = (
 				0A26C46628D10D42004EEFCF /* DetailColumn.swift in Sources */,
 				0A26C46828D10D65004EEFCF /* MainView.swift in Sources */,
+				0A29ECA828EE0DC400DBF90F /* GlobalFunc.swift in Sources */,
 				0A26C46D28D10E24004EEFCF /* Config.swift in Sources */,
 				0A26C46428D10D0F004EEFCF /* Sidebar.swift in Sources */,
+				0A29ECA528EE093800DBF90F /* StringExt.swift in Sources */,
 				0A26C46B28D10DF5004EEFCF /* Util.swift in Sources */,
 				0A26C46028D10C22004EEFCF /* AboutView.swift in Sources */,
 				0A26C45D28D10BE3004EEFCF /* SettingsView.swift in Sources */,
@@ -436,10 +472,14 @@
 				0A3C773628E0770E0031EB74 /* Config.swift in Sources */,
 				0A7A0E302879C4160032472B /* MyKeyboard.swift in Sources */,
 				0A7A0E36287A20100032472B /* IngushCalloutActionProvider.swift in Sources */,
+				0A547D1428ECCD3F0008C977 /* MyAutocompleteProvider.swift in Sources */,
 				0A7A0E34287A11150032472B /* IngushInputSetProvider.swift in Sources */,
 				0A1241F428796F3200D71CE3 /* MyKeyboardActionHandler.swift in Sources */,
 				0A7A0E2C28797F9A0032472B /* MyKeyboardAppearance.swift in Sources */,
+				0A29ECA928EE0DC400DBF90F /* GlobalFunc.swift in Sources */,
+				0A29ECA628EE093A00DBF90F /* StringExt.swift in Sources */,
 				0A1241E428796B5F00D71CE3 /* KeyboardViewController.swift in Sources */,
+				0A547D1628ECD0110008C977 /* IngushDictionary.swift in Sources */,
 				0A713B4D28E984A4006C71D8 /* LatinIngushCalloutActionProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -582,7 +622,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kamyal/Kamyal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "Kamyal/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				ENABLE_PREVIEWS = YES;
@@ -599,7 +639,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -619,7 +659,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kamyal/Kamyal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "Kamyal/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				ENABLE_PREVIEWS = YES;
@@ -636,7 +676,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -654,7 +694,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = keyboard/keyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = keyboard/Info.plist;
@@ -665,7 +705,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal.Keyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -681,7 +721,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = keyboard/keyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = keyboard/Info.plist;
@@ -692,7 +732,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal.Keyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -707,12 +747,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stickers/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Къамаьл";
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal.Stickers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -726,12 +766,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stickers/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Къамаьл";
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal.Stickers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
