@@ -8,6 +8,7 @@
 import Foundation
 import KeyboardKit
 import Combine
+import SwiftUI
 
 struct AutocompleteData {
     let text: String
@@ -15,6 +16,9 @@ struct AutocompleteData {
 }
 
 final class MyAutocompleteProvider: AutocompleteProvider {
+    
+    @AppStorage("SettingsView.Keyboard.isKeyboardLatin", store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
+    private var isKeyboardLatin: Bool = false
     
     private let dictionary = IngushDictionary()
     
@@ -32,7 +36,9 @@ final class MyAutocompleteProvider: AutocompleteProvider {
     }
     
     public func autocompleteSuggestions(for text: String, completion: @escaping (AutocompleteResult) -> Void) {
-        subject.send(AutocompleteData(text: text, completion: completion))
+        if !isKeyboardLatin {
+            subject.send(AutocompleteData(text: text, completion: completion))
+        }
     }
     
     private func createSuggestions(for text: String, completion: @escaping (AutocompleteResult) -> Void) {
