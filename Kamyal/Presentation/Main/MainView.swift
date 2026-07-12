@@ -8,44 +8,30 @@
 import SwiftUI
 
 struct MainView: View {
-    
-    @AppStorage("SettingsView.isIngush")
+
+    private enum Metrics {
+
+        static let cornerRadius: CGFloat = 15
+        static let sectionSpacing: CGFloat = 20
+    }
+
+    @AppStorage(AppSettingsKey.isIngush)
     private var isIngush: Bool = false
-    
+
+    @AppStorage(
+        KeyboardSettingsKey.hasBeenUsed,
+        store: UserDefaults(suiteName: Config.APP_GROUP_NAME)
+    )
+    private var hasUsedKeyboard: Bool = false
+
     @State private var text = ""
-    
+
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: 20) {
-                VStack(spacing: 20) {
-                    Text(isIngush ? "ГӀалгӀай лакашка хьалсогаргйолаш ер де:\n• Чоалха оттамашка «Керттердараш» яхача ралса чу вáла (я́ла), цигара —> Клавиатура -> Клавиатуры -> Новые клавиатуры\n• Къамаьл яхаш йола лакашка хьалсага." : "Для включения ингушской клавиатуры выполните ​следующие​ шаги:\n• в Настройках устройства зайдите в раздел Основные -> Клавиатура -> Клавиатуры -> ​Новые​ клавиатуры\n• включите клавиатуру с названием Къамаьл")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.subheadline)
-                    
-                    Text(isIngush ? "Лакашка чу деррига гӀалгӀай алапаш долаш да: кириллица тӀа оттадаьраш а, 1938-ча шерага кхаччалца леладаь латиница тӀа оттадаь хиннараш а." : "Клавиатура содержит ​все буквы ингушского алфавита: как на основе кириллицы, так и на основе латиницы, применявшейся до 1938-го года.")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.subheadline)
-                    
-                    Text(isIngush ? "​Цхьадола алапаш тара долча алапашта тӀа пӀелг ӀотӀатоӀабаь лоаттабича, хьаувтт." : "Некоторые буквы доступны по долгому удержанию соответствующих букв со схожим начертанием.")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.subheadline)
-                }
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .overlay(
-                    RoundedRectangle(
-                        cornerRadius: 15,
-                        style: .continuous
-                    )
-                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                )
-                .clipShape(
-                    RoundedRectangle(
-                        cornerRadius: 15,
-                        style: .continuous
-                    )
-                )
-                
+            VStack(spacing: Metrics.sectionSpacing) {
+                activationGuide
+                keyboardDescription
+
                 TextField(isIngush ? "Чуяздаьр нийса дий хьажа" : "Проверьте ввод", text: $text, axis: .vertical)
                     .lineLimit(...5)
                     .autocorrectionDisabled()
@@ -61,7 +47,7 @@ struct MainView: View {
                         .stroke(Color.gray.opacity(0.5), lineWidth: 1)
                     )
 #endif
-                
+
                 Spacer()
             }
             .padding()
@@ -70,6 +56,105 @@ struct MainView: View {
                 Util.requestReviewIfNeeded()
             }
         }
+    }
+}
+
+private extension MainView {
+
+    var activationGuide: some View {
+        GroupBox {
+            VStack(alignment: .leading, spacing: 14) {
+                ActivationStepView(
+                    number: 1,
+                    text: isIngush
+                        ? "Чоалха оттамашка «Керттердараш» яхача ралса чу вáла (я́ла)."
+                        : "Откройте «Настройки» → «Основные»."
+                )
+
+                ActivationStepView(
+                    number: 2,
+                    text: "Клавиатура → Клавиатуры → Новые клавиатуры"
+                )
+
+                ActivationStepView(
+                    number: 3,
+                    text: isIngush
+                        ? "Къамаьл яхаш йола лакашка хьалсага."
+                        : "Добавьте клавиатуру «Къамаьл».",
+                    isCompleted: hasUsedKeyboard
+                )
+
+                if !isIngush {
+                    Divider()
+
+                    Label(
+                        hasUsedKeyboard
+                            ? "Клавиатура уже была успешно открыта на этом устройстве."
+                            : "В любом обычном поле ввода удерживайте кнопку переключения клавиатур и выберите «Къамаьл».",
+                        systemImage: hasUsedKeyboard ? "checkmark.circle.fill" : "globe"
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(hasUsedKeyboard ? Color.green : Color.secondary)
+
+                    Text("В полях пароля и номера телефона iOS показывает системную клавиатуру. Некоторые приложения также могут запрещать сторонние клавиатуры.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        } label: {
+            Label(
+                isIngush ? "ГӀалгӀай лакашка хьалсогаргйолаш ер де" : "Как включить клавиатуру",
+                systemImage: "keyboard"
+            )
+        }
+    }
+
+    var keyboardDescription: some View {
+        VStack(alignment: .leading, spacing: Metrics.sectionSpacing) {
+            Text(isIngush ? "Лакашка чу деррига гӀалгӀай алапаш долаш да: кириллица тӀа оттадаьраш а, 1938-ча шерага кхаччалца леладаь латиница тӀа оттадаь хиннараш а." : "Клавиатура содержит ​все буквы ингушского алфавита: как на основе кириллицы, так и на основе латиницы, применявшейся до 1938-го года.")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.subheadline)
+
+            Text(isIngush ? "​Цхьадола алапаш тара долча алапашта тӀа пӀелг ӀотӀатоӀабаь лоаттабича, хьаувтт." : "Некоторые буквы доступны по долгому удержанию соответствующих букв со схожим начертанием.")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.subheadline)
+        }
+        .padding()
+        .background(Color.gray.opacity(0.1))
+        .overlay(
+            RoundedRectangle(
+                cornerRadius: Metrics.cornerRadius,
+                style: .continuous
+            )
+            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+        )
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: Metrics.cornerRadius,
+                style: .continuous
+            )
+        )
+    }
+}
+
+private struct ActivationStepView: View {
+
+    let number: Int
+    let text: String
+    var isCompleted = false
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 12) {
+            Image(systemName: isCompleted ? "checkmark.circle.fill" : "\(number).circle.fill")
+                .foregroundStyle(isCompleted ? Color.green : Color.accentColor)
+                .accessibilityHidden(true)
+
+            Text(text)
+                .font(.subheadline)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .accessibilityElement(children: .combine)
     }
 }
 

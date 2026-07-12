@@ -44,3 +44,16 @@ struct Config {
     
     static let APP_GROUP_NAME = "group.software.kanunnikoff.Kamyal"
 }
+
+enum AppSettingsKey {
+
+    static let isIngush = "SettingsView.isIngush"
+}
+
+enum KeyboardSettingsKey {
+
+    static let hasBeenUsed = "Keyboard.hasBeenUsed"
+    static let isAudioFeedback = "SettingsView.Keyboard.isAudioFeedback"
+    static let isKeyboardIngush = "SettingsView.Keyboard.isKeyboardIngush"
+    static let isKeyboardLatin = "SettingsView.Keyboard.isKeyboardLatin"
+}

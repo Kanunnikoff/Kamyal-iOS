@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AboutView: View {
     
-    @AppStorage("SettingsView.isIngush")
+    @AppStorage(AppSettingsKey.isIngush)
     private var isIngush: Bool = false
     
     var body: some View {

@@ -10,7 +10,6 @@ import KeyboardKit
 
 final class MyAutocompleteProvider: AutocompleteService {
 
-    private static let debounceNanoseconds: UInt64 = 100_000_000
     private static let maxSuggestionCount = 3
 
     private let dictionary = IngushDictionary()
@@ -18,9 +17,15 @@ final class MyAutocompleteProvider: AutocompleteService {
 
     var locale: Locale = .russian
 
-    func autocomplete(_ text: String) async throws -> AutocompleteResult {
-        try await Task.sleep(nanoseconds: Self.debounceNanoseconds)
+    init() {
+        Task(priority: .userInitiated) { [dictionary] in
+            // Построение указателя начинается при открытии клавиатуры, поэтому первый
+            // введённый слог не ждёт чтения всего частотного словаря с диска.
+            await dictionary.prepare()
+        }
+    }
 
+    func autocomplete(_ text: String) async throws -> AutocompleteResult {
         guard !isKeyboardLatin else {
             return AutocompleteResult(
                 inputText: text,
@@ -28,18 +33,30 @@ final class MyAutocompleteProvider: AutocompleteService {
             )
         }
 
-        let words = await dictionary.words()
-        let suggestions = words.lazy
-            .filter { word in
-                word.hasPrefixIgnoringCase(text)
-            }
-            .prefix(Self.maxSuggestionCount)
-            .map { word in
-                let suggestion = text.isCapitalized
-                    ? word.capitalized(with: .russian)
-                    : word
-                return AutocompleteSuggestion(text: suggestion)
-            }
+        // KeyboardKit 10 передаёт сюда весь доступный фрагмент текста перед
+        // курсором, а не только набираемое слово. Для поиска используем последнее
+        // незавершённое слово, но в результате сохраняем исходный `text`: библиотека
+        // сопоставляет его с запросом и отбрасывает успевшие устареть ответы.
+        let query = text.wordFragmentAtEnd
+        guard !query.isEmpty else {
+            return AutocompleteResult(
+                inputText: text,
+                suggestions: []
+            )
+        }
+
+        let words = try await dictionary.suggestions(
+            for: query,
+            limit: Self.maxSuggestionCount
+        )
+        let suggestions = words.map { word in
+            AutocompleteSuggestion(
+                text: IngushSuggestionFormatter.format(
+                    word,
+                    for: query
+                )
+            )
+        }
 
         return AutocompleteResult(
             inputText: text,

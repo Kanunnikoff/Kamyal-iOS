@@ -142,13 +142,6 @@ private struct MyKeyboardButtonContent<StandardContent: View>: View {
     }
 }
 
-enum KeyboardSettingsKey {
-
-    static let isAudioFeedback = "SettingsView.Keyboard.isAudioFeedback"
-    static let isKeyboardIngush = "SettingsView.Keyboard.isKeyboardIngush"
-    static let isKeyboardLatin = "SettingsView.Keyboard.isKeyboardLatin"
-}
-
 private struct MyEmojiKeyboard: View {
 
     private enum Metrics {

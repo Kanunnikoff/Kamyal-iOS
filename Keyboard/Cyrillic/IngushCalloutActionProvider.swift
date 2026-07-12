@@ -43,6 +43,7 @@ struct IngushCalloutActionProvider {
             case "х": return ["х", "хь", "хӀ"]
             case "ц": return ["ц", "цӀ"]
             case "ч": return ["ч", "чӀ"]
+            case "ь": return ["ь", "ъ"]
             case "ы": return ["ы", "ы́"]
             case "э": return ["э", "э́"]
             case "ю": return ["ю", "ю́"]

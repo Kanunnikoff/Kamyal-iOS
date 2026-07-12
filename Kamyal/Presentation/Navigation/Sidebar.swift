@@ -17,7 +17,7 @@ struct Sidebar: View {
     
     @Binding var selection: SidebarItem?
     
-    @AppStorage("SettingsView.isIngush")
+    @AppStorage(AppSettingsKey.isIngush)
     private var isIngush: Bool = false
     
     var body: some View {

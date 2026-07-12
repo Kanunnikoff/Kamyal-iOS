@@ -9,16 +9,16 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @AppStorage("SettingsView.isIngush")
+    @AppStorage(AppSettingsKey.isIngush)
     private var isIngush: Bool = false
     
-    @AppStorage("SettingsView.Keyboard.isKeyboardLatin", store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
+    @AppStorage(KeyboardSettingsKey.isKeyboardLatin, store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
     private var isKeyboardLatin: Bool = false
     
-    @AppStorage("SettingsView.Keyboard.isKeyboardIngush", store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
+    @AppStorage(KeyboardSettingsKey.isKeyboardIngush, store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
     private var isKeyboardIngush: Bool = false
     
-    @AppStorage("SettingsView.Keyboard.isAudioFeedback", store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
+    @AppStorage(KeyboardSettingsKey.isAudioFeedback, store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
     private var isKeyboardAudioFeedback: Bool = false
     
     var body: some View {

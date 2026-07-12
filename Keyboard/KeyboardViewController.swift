@@ -9,6 +9,18 @@ import KeyboardKit
 
 class KeyboardViewController: KeyboardInputViewController {
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // Основное приложение не может напрямую проверить системный переключатель
+        // сторонней клавиатуры. Метка в общей группе подтверждает более полезный факт:
+        // расширение хотя бы раз действительно появилось у пользователя на экране.
+        UserDefaults(suiteName: Config.APP_GROUP_NAME)?.set(
+            true,
+            forKey: KeyboardSettingsKey.hasBeenUsed
+        )
+    }
+
     override func viewWillSetupKeyboardKit() {
         setupKeyboardKit(for: .kamyal) { [weak self] result in
             guard let self else { return }
@@ -16,8 +28,16 @@ class KeyboardViewController: KeyboardInputViewController {
             // Пользовательские службы устанавливаются после настройки KeyboardKit,
             // поскольку сама библиотека во время настройки заменяет стандартные службы.
             self.state.keyboardContext.locale = .russian
-            self.services.actionHandler = MyKeyboardActionHandler(controller: self)
-            self.services.autocompleteService = MyAutocompleteProvider()
+
+            let autocompleteService = MyAutocompleteProvider()
+            self.services.autocompleteService = autocompleteService
+
+            // Стандартный обработчик KeyboardKit сохраняет используемую службу
+            // подсказок при создании. Поэтому сначала устанавливаем нашу службу,
+            // а затем передаём тот же экземпляр обработчику явно.
+            let actionHandler = MyKeyboardActionHandler(controller: self)
+            actionHandler.autocompleteService = autocompleteService
+            self.services.actionHandler = actionHandler
 
             if case .failure(let error) = result {
                 // Даже при ошибке необязательной настройки расширение продолжает работать
