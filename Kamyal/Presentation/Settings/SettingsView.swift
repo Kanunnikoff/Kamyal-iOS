@@ -20,6 +20,9 @@ struct SettingsView: View {
     
     @AppStorage(KeyboardSettingsKey.isAudioFeedback, store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
     private var isKeyboardAudioFeedback: Bool = false
+
+    @AppStorage(KeyboardSettingsKey.isAutocapitalizationEnabled, store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
+    private var isKeyboardAutocapitalizationEnabled: Bool = true
     
     var body: some View {
         List {
@@ -49,10 +52,15 @@ struct SettingsView: View {
                     isIngush ? "Лакий оаз" : "Звуковой сигнал клавиш",
                     isOn: $isKeyboardAudioFeedback
                 )
+
+                Toggle(
+                    "Заглавная буква в начале предложения",
+                    isOn: $isKeyboardAutocapitalizationEnabled
+                )
             } header: {
                 Text(isIngush ? "Лакашка" : "Клавиатура")
             } footer: {
-                Text(isIngush ? "Латиний йоазонцара дола алапат хьагойта йиш хилари, лакаш теӀаеча хана оаз ялийтари." : "Возможность включения латинского алфавита и отображения текста на ингушском языке. Ну, и звук при нажатии клавиш.")
+                Text(isIngush ? "Латиний йоазонцара дола алапат хьагойта йиш хилари, лакаш теӀаеча хана оаз ялийтари." : "Настройки алфавита, подписей клавиш, автоматической заглавной буквы и звука при нажатии.")
             }
         }
 #if os(iOS)

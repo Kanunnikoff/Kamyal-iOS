@@ -54,6 +54,7 @@ struct MainView: View {
             }
             .padding()
         }
+        .scrollDismissesKeyboard(.immediately)
         .navigationTitle("Къамаьл")
         .navigationBarTitleDisplayMode(.inline)
         .modifier(TipNavigationSubtitleModifier())

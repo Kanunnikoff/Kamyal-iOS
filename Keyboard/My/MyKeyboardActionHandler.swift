@@ -13,6 +13,8 @@ class MyKeyboardActionHandler: StandardKeyboardActionHandler {
     
     @AppStorage(KeyboardSettingsKey.isAudioFeedback, store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
     private var isKeyboardAudioFeedback: Bool = false
+
+    var isAutocapitalizationEnabled: Bool = true
     
     // MARK: - Overrides
     
@@ -31,6 +33,19 @@ class MyKeyboardActionHandler: StandardKeyboardActionHandler {
             case .release: return releaseAction(for: action) ?? standard
             default: return standard
         }
+    }
+
+    override func preferredKeyboardCase(
+        after gesture: Keyboard.Gesture,
+        on action: KeyboardAction
+    ) -> Keyboard.KeyboardCase {
+        // KeyboardKit пересчитывает регистр после пробела, удаления и ввода знаков.
+        // При отключённой настройке не даём этим переходам снова включить Shift.
+        guard isAutocapitalizationEnabled else {
+            return .lowercased
+        }
+
+        return super.preferredKeyboardCase(after: gesture, on: action)
     }
     
     // MARK: - Custom actions

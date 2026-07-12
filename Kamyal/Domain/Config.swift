@@ -45,6 +45,7 @@ enum AppSettingsKey {
 enum KeyboardSettingsKey {
 
     static let hasBeenUsed = "Keyboard.hasBeenUsed"
+    static let isAutocapitalizationEnabled = "SettingsView.Keyboard.isAutocapitalizationEnabled"
     static let isAudioFeedback = "SettingsView.Keyboard.isAudioFeedback"
     static let isKeyboardIngush = "SettingsView.Keyboard.isKeyboardIngush"
     static let isKeyboardLatin = "SettingsView.Keyboard.isKeyboardLatin"

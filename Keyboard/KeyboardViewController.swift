@@ -9,6 +9,12 @@ import KeyboardKit
 
 class KeyboardViewController: KeyboardInputViewController {
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        applyAutocapitalizationSetting()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -28,6 +34,7 @@ class KeyboardViewController: KeyboardInputViewController {
             // Пользовательские службы устанавливаются после настройки KeyboardKit,
             // поскольку сама библиотека во время настройки заменяет стандартные службы.
             self.state.keyboardContext.locale = .russian
+            self.applyAutocapitalizationSetting()
 
             let autocompleteService = MyAutocompleteProvider()
             self.services.autocompleteService = autocompleteService
@@ -37,6 +44,7 @@ class KeyboardViewController: KeyboardInputViewController {
             // а затем передаём тот же экземпляр обработчику явно.
             let actionHandler = MyKeyboardActionHandler(controller: self)
             actionHandler.autocompleteService = autocompleteService
+            actionHandler.isAutocapitalizationEnabled = self.isAutocapitalizationEnabled
             self.services.actionHandler = actionHandler
 
             if case .failure(let error) = result {
@@ -47,6 +55,15 @@ class KeyboardViewController: KeyboardInputViewController {
         }
     }
 
+    override func viewWillSetupInitialKeyboardCase() {
+        guard isAutocapitalizationEnabled else {
+            setKeyboardCase(.lowercased)
+            return
+        }
+
+        super.viewWillSetupInitialKeyboardCase()
+    }
+
     override func viewWillSetupKeyboardView() {
         setupKeyboardView { controller in
             KeyboardView(
@@ -54,6 +71,40 @@ class KeyboardViewController: KeyboardInputViewController {
                 state: controller.state
             )
         }
+    }
+}
+
+private extension KeyboardViewController {
+
+    var isAutocapitalizationEnabled: Bool {
+        let userDefaults = UserDefaults(suiteName: Config.APP_GROUP_NAME)
+
+        // Настройку меняет основное приложение в другом процессе. Перед чтением
+        // обновляем общий домен, чтобы расширение не использовало старое значение.
+        userDefaults?.synchronize()
+
+        return userDefaults?.object(
+            forKey: KeyboardSettingsKey.isAutocapitalizationEnabled
+        ) as? Bool ?? true
+    }
+
+    func applyAutocapitalizationSetting() {
+        let isEnabled = isAutocapitalizationEnabled
+
+        // Основное приложение и расширение работают в разных процессах, поэтому
+        // при каждом показе клавиатуры заново переносим значение из общей группы
+        // в настройки KeyboardKit. Затем сразу пересчитываем регистр, иначе уже
+        // показанная раскладка может сохранить прежнее состояние первой буквы.
+        state.keyboardContext.settings.isAutocapitalizationEnabled = isEnabled
+
+        (services.actionHandler as? MyKeyboardActionHandler)?
+            .isAutocapitalizationEnabled = isEnabled
+
+        setKeyboardCase(
+            isEnabled
+                ? preferredKeyboardCase(for: state.keyboardContext.locale)
+                : .lowercased
+        )
     }
 }
 
