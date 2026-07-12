@@ -40,6 +40,15 @@
 		0A7A0E302879C4160032472B /* MyKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2F2879C4160032472B /* MyKeyboard.swift */; };
 		0A7A0E34287A11150032472B /* IngushInputSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E33287A11150032472B /* IngushInputSetProvider.swift */; };
 		0A7A0E36287A20100032472B /* IngushCalloutActionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E35287A20100032472B /* IngushCalloutActionProvider.swift */; };
+		0B1000012E25700100C0D3E1 /* TabNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2000012E25700100C0D3E1 /* TabNavigationView.swift */; };
+		0B1000022E25700100C0D3E1 /* StoreProductIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2000022E25700100C0D3E1 /* StoreProductIdentifiers.swift */; };
+		0B1000032E25700100C0D3E1 /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2000032E25700100C0D3E1 /* PurchaseManager.swift */; };
+		0B1000042E25700100C0D3E1 /* TipPurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2000042E25700100C0D3E1 /* TipPurchaseController.swift */; };
+		0B1000052E25700100C0D3E1 /* ShopViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2000052E25700100C0D3E1 /* ShopViewModifier.swift */; };
+		0B1000062E25700100C0D3E1 /* TipsViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2000062E25700100C0D3E1 /* TipsViewModifier.swift */; };
+		0B1000072E25700100C0D3E1 /* DoneIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2000072E25700100C0D3E1 /* DoneIndicatorView.swift */; };
+		0B1000082E25700100C0D3E1 /* Store.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 0B2000082E25700100C0D3E1 /* Store.storekit */; };
+		0B1000092E25700100C0D3E1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B2000092E25700100C0D3E1 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +119,15 @@
 		0A7A0E2F2879C4160032472B /* MyKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyKeyboard.swift; sourceTree = "<group>"; };
 		0A7A0E33287A11150032472B /* IngushInputSetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngushInputSetProvider.swift; sourceTree = "<group>"; };
 		0A7A0E35287A20100032472B /* IngushCalloutActionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngushCalloutActionProvider.swift; sourceTree = "<group>"; };
+		0B2000012E25700100C0D3E1 /* TabNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigationView.swift; sourceTree = "<group>"; };
+		0B2000022E25700100C0D3E1 /* StoreProductIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreProductIdentifiers.swift; sourceTree = "<group>"; };
+		0B2000032E25700100C0D3E1 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		0B2000042E25700100C0D3E1 /* TipPurchaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipPurchaseController.swift; sourceTree = "<group>"; };
+		0B2000052E25700100C0D3E1 /* ShopViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewModifier.swift; sourceTree = "<group>"; };
+		0B2000062E25700100C0D3E1 /* TipsViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsViewModifier.swift; sourceTree = "<group>"; };
+		0B2000072E25700100C0D3E1 /* DoneIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneIndicatorView.swift; sourceTree = "<group>"; };
+		0B2000082E25700100C0D3E1 /* Store.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Store.storekit; sourceTree = "<group>"; };
+		0B2000092E25700100C0D3E1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B1000092E25700100C0D3E1 /* StoreKit.framework in Frameworks */,
 				0A1241EF28796BDD00D71CE3 /* KeyboardKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,6 +153,7 @@
 		0A1241C328796A3A00D71CE3 = {
 			isa = PBXGroup;
 			children = (
+				0B2000082E25700100C0D3E1 /* Store.storekit */,
 				0A1241CE28796A3A00D71CE3 /* Kamyal */,
 				0A1241E228796B5F00D71CE3 /* Keyboard */,
 				0A3C773A28E09CED0031EB74 /* Stickers */,
@@ -192,6 +212,7 @@
 		0A1241F028796BFF00D71CE3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0B2000092E25700100C0D3E1 /* StoreKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -203,6 +224,8 @@
 				0A26C46128D10CAA004EEFCF /* Main */,
 				0A26C45E28D10BF2004EEFCF /* About */,
 				0A26C45B28D10BD1004EEFCF /* Settings */,
+				0B3000012E25700100C0D3E1 /* Store */,
+				0B3000032E25700100C0D3E1 /* Views */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -237,6 +260,7 @@
 				0A1241D128796A3A00D71CE3 /* ContentView.swift */,
 				0A26C46328D10D0F004EEFCF /* Sidebar.swift */,
 				0A26C46528D10D42004EEFCF /* DetailColumn.swift */,
+				0B2000012E25700100C0D3E1 /* TabNavigationView.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -306,6 +330,34 @@
 				0A7A0E35287A20100032472B /* IngushCalloutActionProvider.swift */,
 			);
 			path = Cyrillic;
+			sourceTree = "<group>";
+		};
+		0B3000012E25700100C0D3E1 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				0B3000022E25700100C0D3E1 /* Modifiers */,
+				0B2000022E25700100C0D3E1 /* StoreProductIdentifiers.swift */,
+				0B2000032E25700100C0D3E1 /* PurchaseManager.swift */,
+				0B2000042E25700100C0D3E1 /* TipPurchaseController.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		0B3000022E25700100C0D3E1 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				0B2000052E25700100C0D3E1 /* ShopViewModifier.swift */,
+				0B2000062E25700100C0D3E1 /* TipsViewModifier.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		0B3000032E25700100C0D3E1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0B2000072E25700100C0D3E1 /* DoneIndicatorView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -417,6 +469,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B1000082E25700100C0D3E1 /* Store.storekit in Resources */,
 				0A1241D728796A3C00D71CE3 /* Preview Assets.xcassets in Resources */,
 				0A1241D428796A3C00D71CE3 /* Assets.xcassets in Resources */,
 			);
@@ -445,6 +498,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B1000012E25700100C0D3E1 /* TabNavigationView.swift in Sources */,
+				0B1000022E25700100C0D3E1 /* StoreProductIdentifiers.swift in Sources */,
+				0B1000032E25700100C0D3E1 /* PurchaseManager.swift in Sources */,
+				0B1000042E25700100C0D3E1 /* TipPurchaseController.swift in Sources */,
+				0B1000052E25700100C0D3E1 /* ShopViewModifier.swift in Sources */,
+				0B1000062E25700100C0D3E1 /* TipsViewModifier.swift in Sources */,
+				0B1000072E25700100C0D3E1 /* DoneIndicatorView.swift in Sources */,
 				0A26C46628D10D42004EEFCF /* DetailColumn.swift in Sources */,
 				0A26C46828D10D65004EEFCF /* MainView.swift in Sources */,
 				0A29ECA828EE0DC400DBF90F /* GlobalFunc.swift in Sources */,

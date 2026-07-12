@@ -6,26 +6,43 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct AboutView: View {
-    
+
     @AppStorage(AppSettingsKey.isIngush)
     private var isIngush: Bool = false
-    
+
+    @StateObject private var tipPurchaseController = TipPurchaseController()
+
     var body: some View {
         List {
-            VStack(alignment: .leading) {
-                Text(Util.getAppDisplayName())
-                    .font(.headline)
-                
-                Text("\(isIngush ? "Эрш" : "Версия") \(Util.getAppVersion()), сборка \(Util.getAppBuild())")
-                    .font(.caption)
-                
-                Text("© 2022 Дмитрiй Канунниковъ")
-                    .font(.subheadline)
-                    .padding(.top, 1)
+            HStack {
+                if let appIconName = Util.getAppIconName(),
+                   let image = UIImage(named: appIconName) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .frame(width: 65)
+                        .accessibilityHidden(true)
+                }
+
+                VStack(alignment: .leading) {
+                    Text(Util.getAppDisplayName())
+                        .font(.headline)
+
+                    Text("\(isIngush ? "Эрш" : "Версия") \(Util.getAppVersion()), сборка \(Util.getAppBuild())")
+                        .font(.caption)
+
+                    Text("© 2026 Дмитрiй Канунниковъ")
+                        .font(.caption)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 5)
             }
-            
+            .frame(maxWidth: .infinity)
+
             Section {
                 Link(destination: Config.APPSTORE_APP_REVIEW_URL) {
                     Text(isIngush ? "Хетар а‌ла" : "Оценить")
@@ -54,20 +71,6 @@ struct AboutView: View {
                 Link(destination: Config.EMAIL_URL) {
                     Text(isIngush ? "Каьхат язде" : "Написать письмо")
                 }
-                
-#if !os(watchOS)
-                Link(destination: Config.YOUTUBE_URL) {
-                    Text(isIngush ? "Са YouTube-канал" : "Мой YouTube-канал")
-                }
-                
-                Link(destination: Config.TWITTER_URL) {
-                    Text(isIngush ? "Са Twitter" : "Я в Twitter")
-                }
-                
-                Link(destination: Config.INSTAGRAM_URL) {
-                    Text(isIngush ? "Са Instagram" : "Я в Instagram")
-                }
-#endif
             } header: {
                 Text(isIngush ? "Сога хьаязъяр" : "Обратная связь")
             } footer: {
@@ -84,15 +87,22 @@ struct AboutView: View {
             } footer: {
                 Text(isIngush ? "Хьа дарех приложене пайда мишта эца дувца хоам." : "Подробная информация о том, как приложение использует Ваши данные.")
             }
-            
+
             Section {
-                Link(destination: Config.PATREON) {
-                    Text("Patreon")
+                Button {
+                    tipPurchaseController.purchase()
+                } label: {
+                    HStack {
+                        Text("Чаевые")
+
+                        Spacer()
+
+                        if tipPurchaseController.isPurchasing {
+                            ProgressView()
+                        }
+                    }
                 }
-                
-                Link(destination: Config.BOOSTY) {
-                    Text("Boosty")
-                }
+                .disabled(tipPurchaseController.isPurchasing)
             } header: {
                 Text(isIngush ? "ОагӀув лаца" : "Поддержка")
             } footer: {
@@ -101,6 +111,8 @@ struct AboutView: View {
 #endif
         }
         .navigationTitle(isIngush ? "Программах лаьца" : "О программе")
+        .navigationBarTitleDisplayMode(.inline)
+        .tips(purchaseController: tipPurchaseController)
     }
 }
 

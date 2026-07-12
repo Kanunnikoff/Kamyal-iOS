@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+#if os(iOS)
+import UIKit
+#endif
 
 struct ContentView: View {
     
@@ -13,15 +16,21 @@ struct ContentView: View {
     @State private var path = NavigationPath()
     
     var body: some View {
-        NavigationSplitView {
-            Sidebar(selection: $selection)
-        } detail: {
-            NavigationStack(path: $path) {
-                DetailColumn(selection: $selection)
+        Group {
+            if prefersTabNavigation {
+                TabNavigationView()
+            } else {
+                NavigationSplitView {
+                    Sidebar(selection: $selection)
+                } detail: {
+                    NavigationStack(path: $path) {
+                        DetailColumn(selection: $selection)
+                    }
+                }
+                .onChange(of: selection) { _ in
+                    path.removeLast(path.count)
+                }
             }
-        }
-        .onChange(of: selection) { _ in
-            path.removeLast(path.count)
         }
 #if os(macOS)
         .frame(minWidth: 600, minHeight: 450)
@@ -29,6 +38,16 @@ struct ContentView: View {
 //        .onAppear {
 //            Util.requestReviewIfNeeded()
 //        }
+    }
+
+    private var prefersTabNavigation: Bool {
+#if os(iOS)
+        // Как и в «Яти», на телефоне используем нижнюю панель, а на iPad
+        // оставляем системную боковую панель независимо от текущей ширины окна.
+        UIDevice.current.userInterfaceIdiom == .phone
+#else
+        false
+#endif
     }
 }
 

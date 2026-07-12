@@ -61,6 +61,7 @@ struct SettingsView: View {
         .listStyle(.inset)
 #endif
         .navigationTitle(isIngush ? "Оттамаш" : "Настройки")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

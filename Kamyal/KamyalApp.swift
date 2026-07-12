@@ -12,6 +12,7 @@ struct KamyalApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .shop()
         }
     }
 }

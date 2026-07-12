@@ -26,6 +26,8 @@ struct MainView: View {
 
     @State private var text = ""
 
+    @StateObject private var tipPurchaseController = TipPurchaseController()
+
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: Metrics.sectionSpacing) {
@@ -51,10 +53,36 @@ struct MainView: View {
                 Spacer()
             }
             .padding()
-            .navigationTitle("Къамаьл")
-            .onAppear {
-                Util.requestReviewIfNeeded()
+        }
+        .navigationTitle("Къамаьл")
+        .navigationBarTitleDisplayMode(.inline)
+        .modifier(TipNavigationSubtitleModifier())
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    tipPurchaseController.purchase()
+                } label: {
+                    Image(systemName: "cup.and.heat.waves.fill")
+                }
+                .disabled(tipPurchaseController.isPurchasing)
+                .accessibilityLabel("Оставить чаевые")
             }
+        }
+        .tips(purchaseController: tipPurchaseController)
+        .onAppear {
+            Util.requestReviewIfNeeded()
+        }
+    }
+}
+
+private struct TipNavigationSubtitleModifier: ViewModifier {
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content.navigationSubtitle("Спасибо за чаевые!")
+        } else {
+            content
         }
     }
 }

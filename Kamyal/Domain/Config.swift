@@ -27,18 +27,10 @@ struct Config {
     //--- Feedback
     
     static let EMAIL_URL = URL(string: "mailto:dmitry.kanunnikoff@gmail.com?subject=%D0%9A%D1%8A%D0%B0%D0%BC%D0%B0%D1%8C%D0%BB%20%28iOS%29")!
-    static let YOUTUBE_URL = URL(string: "https://www.youtube.com/c/DmitryKanunnikoff")!
-    static let TWITTER_URL = URL(string: "https://twitter.com/DKanunnikoff")!
-    static let INSTAGRAM_URL = URL(string: "https://www.instagram.com/dmitry.kanunnikoff")!
     
     //--- Privacy
     
     static let PRIVACY_POLICY_URL = URL(string: "https://docs.google.com/document/d/1nelj5CzLKdfPF8B50UoeXcKxIADgLeDGJ-04O_wDzow/edit?usp=sharing")!
-    
-    // --- Support
-    
-    static let PATREON = URL(string: "https://patreon.com/DmitryKanunnikoff")!
-    static let BOOSTY = URL(string: "https://boosty.to/dmitrykanunnikoff")!
     
     // ---
     

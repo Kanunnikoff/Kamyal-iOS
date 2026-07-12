@@ -34,6 +34,7 @@ struct Sidebar: View {
                 Label(isIngush ? "Программах лаьца" : "О программе", systemImage: "info.circle")
             }
         }
+        .listStyle(.sidebar)
         .navigationTitle("Меню")
 #if os(macOS)
         .navigationSplitViewColumnWidth(min: 200, ideal: 200)
