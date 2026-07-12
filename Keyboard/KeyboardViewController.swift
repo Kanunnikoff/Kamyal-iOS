@@ -5,65 +5,43 @@
 //  Created by Дмитрiй Канунниковъ on 09.07.2022.
 //
 
-import UIKit
 import KeyboardKit
-import SwiftUI
 
 class KeyboardViewController: KeyboardInputViewController {
-    
-    @AppStorage("SettingsView.Keyboard.isKeyboardLatin", store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
-    private var isKeyboardLatin: Bool = false
-    
-    override func viewDidLoad() {
-        keyboardContext.locale = KeyboardLocale.russian.locale
-        keyboardAppearance = MyKeyboardAppearance(context: keyboardContext)
-        
-        var ingushCalloutActionProvider: LocalizedCalloutActionProvider {
-            if isKeyboardLatin {
-                guard let provider = try? LatinIngushCalloutActionProvider() else {
-                    fatalError("LatinIngushCalloutActionProvider could not be created.")
-                }
-                
-                return provider
-            } else {
-                guard let provider = try? IngushCalloutActionProvider() else {
-                    fatalError("IngushCalloutActionProvider could not be created.")
-                }
-                
-                return provider
+
+    override func viewWillSetupKeyboardKit() {
+        setupKeyboardKit(for: .kamyal) { [weak self] result in
+            guard let self else { return }
+
+            // Пользовательские службы устанавливаются после настройки KeyboardKit,
+            // поскольку сама библиотека во время настройки заменяет стандартные службы.
+            self.state.keyboardContext.locale = .russian
+            self.services.actionHandler = MyKeyboardActionHandler(controller: self)
+            self.services.autocompleteService = MyAutocompleteProvider()
+
+            if case .failure(let error) = result {
+                // Даже при ошибке необязательной настройки расширение продолжает работать
+                // на явно установленных выше службах и не оставляет пользователя без клавиатуры.
+                NSLog("Не удалось полностью настроить KeyboardKit: \(error)")
             }
         }
-        
-        calloutActionProvider = StandardCalloutActionProvider(
-            context: keyboardContext,
-            providers: [ingushCalloutActionProvider]
-        )
-        
-        if isKeyboardLatin {
-            inputSetProvider = StandardInputSetProvider(
-                context: keyboardContext,
-                providers: [LatinIngushInputSetProvider()]
-            )
-        } else {
-            inputSetProvider = StandardInputSetProvider(
-                context: keyboardContext,
-                providers: [IngushInputSetProvider()]
-            )
-        }
-        
-        keyboardLayoutProvider = StandardKeyboardLayoutProvider(inputSetProvider: inputSetProvider)
-        
-        keyboardActionHandler = MyKeyboardActionHandler(inputViewController: self)
-        
-        autocompleteProvider = MyAutocompleteProvider()
-        
-        super.viewDidLoad()
-    }
-    
-    override func viewWillSetupKeyboard() {
-        super.viewWillSetupKeyboard()
-        
-        setup(with: KeyboardView(controller: self))
     }
 
+    override func viewWillSetupKeyboardView() {
+        setupKeyboardView { controller in
+            KeyboardView(
+                services: controller.services,
+                state: controller.state
+            )
+        }
+    }
+}
+
+private extension KeyboardApp {
+
+    static let kamyal = KeyboardApp(
+        name: "Къамаьл",
+        appGroupId: Config.APP_GROUP_NAME,
+        locales: [.russian]
+    )
 }

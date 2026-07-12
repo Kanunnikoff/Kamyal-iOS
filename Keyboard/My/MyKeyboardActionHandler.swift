@@ -11,16 +11,12 @@ import SwiftUI
 
 class MyKeyboardActionHandler: StandardKeyboardActionHandler {
     
-    @AppStorage("SettingsView.Keyboard.isAudioFeedback", store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
+    @AppStorage(KeyboardSettingsKey.isAudioFeedback, store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
     private var isKeyboardAudioFeedback: Bool = false
-    
-    public init(inputViewController: KeyboardInputViewController) {
-        super.init(inputViewController: inputViewController)
-    }
     
     // MARK: - Overrides
     
-    override func shouldTriggerFeedback(for gesture: KeyboardGesture, on action: KeyboardAction) -> Bool {
+    override func shouldTriggerFeedback(for gesture: Keyboard.Gesture, on action: KeyboardAction) -> Bool {
         if isKeyboardAudioFeedback {
             return super.shouldTriggerFeedback(for: gesture, on: action)
         } else {
@@ -28,20 +24,14 @@ class MyKeyboardActionHandler: StandardKeyboardActionHandler {
         }
     }
     
-    override func action(for gesture: KeyboardGesture, on action: KeyboardAction) -> KeyboardAction.GestureAction? {
+    override func action(for gesture: Keyboard.Gesture, on action: KeyboardAction) -> KeyboardAction.GestureAction? {
         let standard = super.action(for: gesture, on: action)
         switch gesture {
             case .longPress: return longPressAction(for: action) ?? standard
-            case .tap: return tapAction(for: action) ?? standard
+            case .release: return releaseAction(for: action) ?? standard
             default: return standard
         }
     }
-    
-    override func handle(_ gesture: KeyboardGesture, on action: KeyboardAction) {
-        // Customize the action handling if needed
-        super.handle(gesture, on: action)
-    }
-    
     
     // MARK: - Custom actions
     
@@ -52,7 +42,7 @@ class MyKeyboardActionHandler: StandardKeyboardActionHandler {
         }
     }
     
-    func tapAction(for action: KeyboardAction) -> KeyboardAction.GestureAction? {
+    func releaseAction(for action: KeyboardAction) -> KeyboardAction.GestureAction? {
         switch action {
             case .image(_, _, let imageName): return { [weak self] _ in self?.copyImage(named: imageName) }
             default: return nil

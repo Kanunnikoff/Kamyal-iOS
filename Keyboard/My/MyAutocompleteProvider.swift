@@ -7,65 +7,62 @@
 
 import Foundation
 import KeyboardKit
-import Combine
-import SwiftUI
 
-struct AutocompleteData {
-    let text: String
-    let completion: (AutocompleteResult) -> Void
+final class MyAutocompleteProvider: AutocompleteService {
+
+    private static let debounceNanoseconds: UInt64 = 100_000_000
+    private static let maxSuggestionCount = 3
+
+    private let dictionary = IngushDictionary()
+    private let userDefaults = UserDefaults(suiteName: Config.APP_GROUP_NAME) ?? .standard
+
+    var locale: Locale = .russian
+
+    func autocomplete(_ text: String) async throws -> AutocompleteResult {
+        try await Task.sleep(nanoseconds: Self.debounceNanoseconds)
+
+        guard !isKeyboardLatin else {
+            return AutocompleteResult(
+                inputText: text,
+                suggestions: []
+            )
+        }
+
+        let words = await dictionary.words()
+        let suggestions = words.lazy
+            .filter { word in
+                word.hasPrefixIgnoringCase(text)
+            }
+            .prefix(Self.maxSuggestionCount)
+            .map { word in
+                let suggestion = text.isCapitalized
+                    ? word.capitalized(with: .russian)
+                    : word
+                return AutocompleteSuggestion(text: suggestion)
+            }
+
+        return AutocompleteResult(
+            inputText: text,
+            suggestions: Array(suggestions)
+        )
+    }
+
+    var canIgnoreWords: Bool { false }
+    var canLearnWords: Bool { false }
+    var ignoredWords: [String] { [] }
+    var learnedWords: [String] { [] }
+
+    func hasIgnoredWord(_ word: String) -> Bool { false }
+    func hasLearnedWord(_ word: String) -> Bool { false }
+    func ignoreWord(_ word: String) {}
+    func learnWord(_ word: String) {}
+    func removeIgnoredWord(_ word: String) {}
+    func unlearnWord(_ word: String) {}
 }
 
-final class MyAutocompleteProvider: AutocompleteProvider {
-    
-    @AppStorage("SettingsView.Keyboard.isKeyboardLatin", store: UserDefaults(suiteName: Config.APP_GROUP_NAME))
-    private var isKeyboardLatin: Bool = false
-    
-    private let dictionary = IngushDictionary()
-    
-    private let subject: PassthroughSubject = PassthroughSubject<AutocompleteData, Never>()
-    private var cancellable: Cancellable? = nil
-    
-    public var locale: Locale = .current
-    
-    init() {
-        cancellable = subject
-            .debounce(for: .seconds(0.1), scheduler: RunLoop.main)
-            .sink { data in
-                self.createSuggestions(for: data.text, completion: data.completion)
-            }
+private extension MyAutocompleteProvider {
+
+    var isKeyboardLatin: Bool {
+        userDefaults.bool(forKey: KeyboardSettingsKey.isKeyboardLatin)
     }
-    
-    public func autocompleteSuggestions(for text: String, completion: @escaping (AutocompleteResult) -> Void) {
-        if !isKeyboardLatin {
-            subject.send(AutocompleteData(text: text, completion: completion))
-        }
-    }
-    
-    private func createSuggestions(for text: String, completion: @escaping (AutocompleteResult) -> Void) {
-        BG {
-            let suggestions = self.dictionary.words
-                .filter { word in
-                    word.hasPrefix(text) || word.hasPrefix(text.lowercased())
-                }
-                .prefix(3)
-                .map { text.isCapitalized ? $0.capitalized() : $0 }
-                .map { StandardAutocompleteSuggestion($0) }
-            
-            UI {
-                completion(.success(suggestions))
-            }
-        }
-    }
-    
-    public var canIgnoreWords: Bool { false }
-    public var canLearnWords: Bool { false }
-    public var ignoredWords: [String] = []
-    public var learnedWords: [String] = []
-    
-    public func hasIgnoredWord(_ word: String) -> Bool { false }
-    public func hasLearnedWord(_ word: String) -> Bool { false }
-    public func ignoreWord(_ word: String) {}
-    public func learnWord(_ word: String) {}
-    public func removeIgnoredWord(_ word: String) {}
-    public func unlearnWord(_ word: String) {}
 }

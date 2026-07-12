@@ -14,7 +14,6 @@
 		0A1241E428796B5F00D71CE3 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1241E328796B5F00D71CE3 /* KeyboardViewController.swift */; };
 		0A1241E828796B5F00D71CE3 /* Keyboard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0A1241E128796B5F00D71CE3 /* Keyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0A1241EF28796BDD00D71CE3 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0A1241EE28796BDD00D71CE3 /* KeyboardKit */; };
-		0A1241F228796BFF00D71CE3 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0A1241F128796BFF00D71CE3 /* KeyboardKit */; };
 		0A1241F428796F3200D71CE3 /* MyKeyboardActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1241F328796F3200D71CE3 /* MyKeyboardActionHandler.swift */; };
 		0A26C45D28D10BE3004EEFCF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C45C28D10BE3004EEFCF /* SettingsView.swift */; };
 		0A26C46028D10C22004EEFCF /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A26C45F28D10C22004EEFCF /* AboutView.swift */; };
@@ -126,7 +125,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A1241F228796BFF00D71CE3 /* KeyboardKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,7 +348,6 @@
 			);
 			name = Keyboard;
 			packageProductDependencies = (
-				0A1241F128796BFF00D71CE3 /* KeyboardKit */,
 			);
 			productName = keyboard;
 			productReference = 0A1241E128796B5F00D71CE3 /* Keyboard.appex */;
@@ -827,19 +824,14 @@
 			repositoryURL = "https://github.com/KeyboardKit/KeyboardKit.git";
 			requirement = {
 				kind = versionRange;
-				maximumVersion = 10.0.0;
-				minimumVersion = 6.3.0;
+				maximumVersion = 11.0.0;
+				minimumVersion = 10.7.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		0A1241EE28796BDD00D71CE3 /* KeyboardKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0A1241ED28796BDD00D71CE3 /* XCRemoteSwiftPackageReference "KeyboardKit" */;
-			productName = KeyboardKit;
-		};
-		0A1241F128796BFF00D71CE3 /* KeyboardKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0A1241ED28796BDD00D71CE3 /* XCRemoteSwiftPackageReference "KeyboardKit" */;
 			productName = KeyboardKit;

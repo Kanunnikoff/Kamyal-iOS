@@ -8,23 +8,22 @@
 import Foundation
 import KeyboardKit
 
-/**
- This class provides Ingush callout actions.
- 
- You can use the class as a template when you want to create
- your own callout action provider.
- 
- KeyboardKit Pro adds a provider for each ``KeyboardLocale``
- Check out the demo app to see them in action.
- */
-class IngushCalloutActionProvider: BaseCalloutActionProvider, LocalizedService {
-    
-    public let localeKey: String = KeyboardLocale.russian.id
-    
-    override func calloutActions(for char: String) -> [KeyboardAction] {
-        let charValue = char.lowercased()
-        let result = calloutActionStrings(for: charValue)
-        let strings = char.isUppercased ? result.map{ $0.capitalized() } : result
+/// Варианты ингушских кириллических букв и знаков по долгому нажатию.
+struct IngushCalloutActionProvider {
+
+    func calloutActions(for action: KeyboardAction) -> [KeyboardAction]? {
+        guard case .character(let character) = action else { return nil }
+
+        let lowercaseCharacter = character.lowercased()
+        let calloutStrings = calloutActionStrings(for: lowercaseCharacter)
+        guard !calloutStrings.isEmpty else { return nil }
+
+        // KeyboardKit передаёт в построитель уже преобразованную по регистру букву.
+        // Составные варианты должны получить только первую заглавную букву, как и раньше.
+        let strings = character.isUppercased
+            ? calloutStrings.map { $0.capitalized(with: .russian) }
+            : calloutStrings
+
         return strings.map { .character($0) }
     }
     

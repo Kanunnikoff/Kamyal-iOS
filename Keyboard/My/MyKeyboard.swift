@@ -5,329 +5,280 @@
 //  Created by Дмитрiй Канунниковъ on 09.07.2022.
 //
 
-#if os(iOS) || os(tvOS)
-import SwiftUI
 import KeyboardKit
+import SwiftUI
 
-public struct MyKeyboard<ButtonView: View>: View {
-    
-    /**
-     Create a system keyboard that uses a custom `buttonView`
-     to customize the entire view for each layout item.
-     */
-    public init(
-        layout: KeyboardLayout,
-        appearance: KeyboardAppearance,
-        actionHandler: KeyboardActionHandler,
-        keyboardContext: KeyboardContext,
-        actionCalloutContext: ActionCalloutContext?,
-        inputCalloutContext: InputCalloutContext?,
-        width: CGFloat? = nil,
-        @ViewBuilder buttonView: @escaping ButtonViewBuilder
-    ) {
-        let width = width ?? Self.standardKeyboardWidth
-        
-        self.layout = layout
-        self.layoutConfig = .standard(for: keyboardContext)
-        self.actionHandler = actionHandler
-        self.appearance = appearance
-        self.keyboardWidth = width
-        self.buttonView = buttonView
-        self.inputWidth = layout.inputWidth(for: width)
-        
-        _keyboardContext = ObservedObject(wrappedValue: keyboardContext)
-        _actionCalloutContext = ObservedObject(wrappedValue: actionCalloutContext ?? .disabled)
-        _inputCalloutContext = ObservedObject(wrappedValue: inputCalloutContext ?? .disabled)
-    }
-    
-    /**
-     Create a system keyboard that uses a custom `buttonView`
-     to customize the entire view for each layout item.
-     */
-    init(
-        controller: KeyboardInputViewController? = nil,
-        width: CGFloat? = nil,
-        @ViewBuilder buttonView: @escaping ButtonViewBuilder
-    ) {
-        let controller = controller ?? .shared
-        
-        self.init(
-            layout: controller.keyboardLayoutProvider.keyboardLayout(for: controller.keyboardContext),
-            appearance: controller.keyboardAppearance,
-            actionHandler: controller.keyboardActionHandler,
-            keyboardContext: controller.keyboardContext,
-            actionCalloutContext: controller.actionCalloutContext,
-            inputCalloutContext: controller.inputCalloutContext,
-            width: width,
-            buttonView: buttonView
-        )
-    }
-    
-    private let actionHandler: KeyboardActionHandler
-    private let appearance: KeyboardAppearance
-    private let buttonView: ButtonViewBuilder
-    private let keyboardWidth: CGFloat
-    private let inputWidth: CGFloat
-    private let layout: KeyboardLayout
-    private let layoutConfig: KeyboardLayoutConfiguration
-    
-    public typealias ButtonViewBuilder = (KeyboardLayoutItem, KeyboardWidth, KeyboardItemWidth) -> ButtonView
-    public typealias KeyboardWidth = CGFloat
-    public typealias KeyboardItemWidth = CGFloat
-    
-    private var actionCalloutStyle: ActionCalloutStyle {
-        var style = appearance.actionCalloutStyle()
-        let insets = layoutConfig.buttonInsets
-        style.callout.buttonInset = CGSize(width: insets.leading, height: insets.top)
-        return style
-    }
-    
-    private var inputCalloutStyle: InputCalloutStyle {
-        var style = appearance.inputCalloutStyle()
-        let insets = layoutConfig.buttonInsets
-        style.callout.buttonInset = CGSize(width: insets.leading, height: insets.top)
-        return style
-    }
-    
-    @ObservedObject private var actionCalloutContext: ActionCalloutContext
-    @ObservedObject private var inputCalloutContext: InputCalloutContext
+struct MyKeyboard: View {
+
+    @AppStorage(
+        KeyboardSettingsKey.isKeyboardLatin,
+        store: UserDefaults(suiteName: Config.APP_GROUP_NAME)
+    )
+    private var isKeyboardLatin = false
+
+    private let services: KeyboardServices
+
     @ObservedObject private var keyboardContext: KeyboardContext
-    
-    public var body: some View {
-        if #available(iOS 14.0, tvOS 14.0, *) {
-            switch keyboardContext.keyboardType {
-                case .emojis: emojiKeyboard
-                default: myKeyboard
-            }
-        } else {
-            myKeyboard
-        }
-    }
-}
 
-public extension MyKeyboard where ButtonView == SystemKeyboardButtonRowItem<SystemKeyboardActionButtonContent> {
-    
-    /**
-     Create a system keyboard view that uses standard button
-     views for all layout items.
-     
-     See ``SystemKeyboard/standardButtonView(item:appearance:actionHandler:keyboardContext:keyboardWidth:inputWidth:)`` for more info.
-     */
     init(
-        layout: KeyboardLayout,
-        appearance: KeyboardAppearance,
-        actionHandler: KeyboardActionHandler,
-        keyboardContext: KeyboardContext,
-        actionCalloutContext: ActionCalloutContext?,
-        inputCalloutContext: InputCalloutContext?,
-        width: CGFloat? = nil
+        services: KeyboardServices,
+        state: KeyboardState
     ) {
-        self.init(
-            layout: layout,
-            appearance: appearance,
-            actionHandler: actionHandler,
-            keyboardContext: keyboardContext,
-            actionCalloutContext: actionCalloutContext,
-            inputCalloutContext: inputCalloutContext,
-            width: width,
-            buttonView: { item, keyboardWidth, inputWidth in
-                Self.standardButtonView(
-                    item: item,
-                    appearance: appearance,
-                    actionHandler: actionHandler,
-                    keyboardContext: keyboardContext,
-                    keyboardWidth: keyboardWidth,
-                    inputWidth: inputWidth
+        self.services = services
+        _keyboardContext = ObservedObject(wrappedValue: state.keyboardContext)
+    }
+
+    var body: some View {
+        KeyboardKit.KeyboardView(
+            layout: keyboardLayout,
+            services: services,
+            buttonContent: { parameters in
+                MyKeyboardButtonContent(
+                    action: parameters.item.action,
+                    standardContent: parameters.view
                 )
+            },
+            buttonView: { parameters in
+                parameters.view
+            },
+            collapsedView: { parameters in
+                parameters.view
+            },
+            emojiKeyboard: { _ in
+                MyEmojiKeyboard(services: services)
+            },
+            toolbar: { parameters in
+                parameters.view
             }
         )
-    }
-    
-    /**
-     Create a system keyboard view that uses standard button
-     views for all layout items.
-     
-     See ``SystemKeyboard/standardButtonView(item:appearance:actionHandler:keyboardContext:keyboardWidth:inputWidth:)`` for more info.
-     */
-    init(
-        controller: KeyboardInputViewController? = nil,
-        width: CGFloat? = nil
-    ) {
-        let controller = controller ?? .shared
-        self.init(
-            layout: controller.keyboardLayoutProvider.keyboardLayout(for: controller.keyboardContext),
-            appearance: controller.keyboardAppearance,
-            actionHandler: controller.keyboardActionHandler,
-            keyboardContext: controller.keyboardContext,
-            actionCalloutContext: controller.actionCalloutContext,
-            inputCalloutContext: controller.inputCalloutContext,
-            width: width
-        )
-    }
-}
-
-public extension MyKeyboard where ButtonView == SystemKeyboardButtonRowItem<AnyView> {
-    
-    /**
-     Create a system keyboard view that uses `buttonContent`
-     to customize the content of each layout item.
-     */
-    init<ButtonContentView: View>(
-        layout: KeyboardLayout,
-        appearance: KeyboardAppearance,
-        actionHandler: KeyboardActionHandler,
-        keyboardContext: KeyboardContext,
-        actionCalloutContext: ActionCalloutContext?,
-        inputCalloutContext: InputCalloutContext?,
-        width: CGFloat? = nil,
-        @ViewBuilder buttonContent: @escaping (KeyboardLayoutItem) -> ButtonContentView
-    ) {
-        
-        self.init(
-            layout: layout,
-            appearance: appearance,
-            actionHandler: actionHandler,
-            keyboardContext: keyboardContext,
-            actionCalloutContext: actionCalloutContext,
-            inputCalloutContext: inputCalloutContext,
-            width: width,
-            buttonView: { item, keyboardWidth, inputWidth in
-                SystemKeyboardButtonRowItem(
-                    content: AnyView(buttonContent(item)),
-                    item: item,
-                    context: keyboardContext,
-                    keyboardWidth: keyboardWidth,
-                    inputWidth: inputWidth,
-                    appearance: appearance,
-                    actionHandler: actionHandler
-                )
-            }
-        )
-    }
-    
-    /**
-     Create a system keyboard view that uses `buttonContent`
-     to customize the content of each layout item.
-     */
-    init<ButtonContentView: View>(
-        controller: KeyboardInputViewController? = nil,
-        width: CGFloat? = nil,
-        @ViewBuilder buttonContent: @escaping (KeyboardLayoutItem) -> ButtonContentView
-    ) {
-        let controller = controller ?? .shared
-        self.init(
-            layout: controller.keyboardLayoutProvider.keyboardLayout(for: controller.keyboardContext),
-            appearance: controller.keyboardAppearance,
-            actionHandler: controller.keyboardActionHandler,
-            keyboardContext: controller.keyboardContext,
-            actionCalloutContext: controller.actionCalloutContext,
-            inputCalloutContext: controller.inputCalloutContext,
-            width: width,
-            buttonContent: buttonContent
-        )
-    }
-}
-
-public extension MyKeyboard {
-    
-    /**
-     The standard view to use as button content.
-     */
-    static func standardButtonContent(
-        item: KeyboardLayoutItem,
-        appearance: KeyboardAppearance,
-        keyboardContext: KeyboardContext
-    ) -> SystemKeyboardActionButtonContent {
-        
-        SystemKeyboardActionButtonContent(
-            action: item.action,
-            appearance: appearance,
-            context: keyboardContext
-        )
-    }
-    
-    /**
-     The standard view to use as button view.
-     */
-    static func standardButtonView(
-        item: KeyboardLayoutItem,
-        appearance: KeyboardAppearance,
-        actionHandler: KeyboardActionHandler,
-        keyboardContext: KeyboardContext,
-        keyboardWidth: KeyboardWidth,
-        inputWidth: KeyboardItemWidth
-    ) -> SystemKeyboardButtonRowItem<SystemKeyboardActionButtonContent> {
-        
-        SystemKeyboardButtonRowItem(
-            content: standardButtonContent(
-                item: item,
-                appearance: appearance,
-                keyboardContext: keyboardContext
-            ),
-            item: item,
-            context: keyboardContext,
-            keyboardWidth: keyboardWidth,
-            inputWidth: inputWidth,
-            appearance: appearance,
-            actionHandler: actionHandler
-        )
-    }
-}
-
-public extension MyKeyboard {
-    
-    /**
-     This is the standard keyboard width, which is retrieved
-     from ``KeyboardInputViewController/shared``.
-     */
-    static var standardKeyboardWidth: CGFloat {
-        KeyboardInputViewController.shared.view.frame.width
-    }
-}
-
-private extension MyKeyboard {
-    
-    @available(iOS 14.0, tvOS 14.0, *)
-    var emojiKeyboard: some View {
-        EmojiCategoryKeyboard(
-            appearance: appearance,
-            context: keyboardContext,
-            style: .standard(for: keyboardContext)
-        )
-        .padding(.top)
-    }
-    
-    var myKeyboard: some View {
-        VStack(spacing: 0) {
-            itemRows(for: layout)
+        .keyboardCalloutActions { parameters in
+            customCalloutActions(for: parameters.action) ?? parameters.standardActions()
         }
-        .actionCallout(
-            context: actionCalloutContext,
-            style: actionCalloutStyle
-        )
-        .inputCallout(
-            context: inputCalloutContext,
-            keyboardContext: keyboardContext,
-            style: inputCalloutStyle
-        )
+        .autocompleteToolbarStyle(MyAutocompleteToolbar.style)
         .environment(\.layoutDirection, .leftToRight)
     }
 }
 
 private extension MyKeyboard {
-    
-    func itemRows(for layout: KeyboardLayout) -> some View {
-        ForEach(Array(layout.itemRows.enumerated()), id: \.offset) {
-            items(for: layout, itemRow: $0.element)
+
+    var keyboardLayout: KeyboardLayout {
+        // Базовый построитель KeyboardKit сохраняет служебные клавиши и переходы
+        // между буквенным, цифровым и символьным режимами, а мы заменяем только ряды ввода.
+        if isKeyboardLatin {
+            let inputSets = LatinIngushInputSetProvider()
+
+            let baseLayout = KeyboardLayout(
+                baseLayoutFor: keyboardContext,
+                alphabeticInputSet: inputSets.alphabeticInputSet,
+                numericInputSet: inputSets.numericInputSet,
+                symbolicInputSet: inputSets.symbolicInputSet
+            )
+
+            return deviceLayout(from: baseLayout)
         }
+
+        let inputSets = IngushInputSetProvider()
+
+        let baseLayout = KeyboardLayout(
+            baseLayoutFor: keyboardContext,
+            alphabeticInputSet: inputSets.alphabeticInputSet,
+            numericInputSet: inputSets.numericInputSet,
+            symbolicInputSet: inputSets.symbolicInputSet
+        )
+
+        return deviceLayout(from: baseLayout)
     }
-    
-    func items(for layout: KeyboardLayout, itemRow: KeyboardLayoutItemRow) -> some View {
-        HStack(spacing: 0) {
-            ForEach(Array(itemRow.enumerated()), id: \.offset) {
-                buttonView($0.element, keyboardWidth, inputWidth)
-            }
+
+    func deviceLayout(from baseLayout: KeyboardLayout) -> KeyboardLayout {
+        // На iPad библиотека добавляет отдельные служебные ряды и размеры клавиш,
+        // а плавающая клавиатура сообщает тип iPhone через deviceTypeForKeyboard.
+        if keyboardContext.deviceTypeForKeyboard.isPad {
+            return baseLayout.iPadLayout(for: keyboardContext)
+        }
+
+        return baseLayout.iPhoneLayout(for: keyboardContext)
+    }
+
+    func customCalloutActions(for action: KeyboardAction) -> [KeyboardAction]? {
+        if isKeyboardLatin {
+            return LatinIngushCalloutActionProvider().calloutActions(for: action)
+        }
+
+        return IngushCalloutActionProvider().calloutActions(for: action)
+    }
+}
+
+private struct MyKeyboardButtonContent<StandardContent: View>: View {
+
+    @AppStorage(
+        KeyboardSettingsKey.isKeyboardLatin,
+        store: UserDefaults(suiteName: Config.APP_GROUP_NAME)
+    )
+    private var isKeyboardLatin = false
+
+    @AppStorage(
+        KeyboardSettingsKey.isKeyboardIngush,
+        store: UserDefaults(suiteName: Config.APP_GROUP_NAME)
+    )
+    private var isKeyboardIngush = false
+
+    let action: KeyboardAction
+    let standardContent: StandardContent
+
+    @ViewBuilder
+    var body: some View {
+        if let title = MyKeyboardAppearance.buttonTitle(
+            for: action,
+            isKeyboardLatin: isKeyboardLatin,
+            isKeyboardIngush: isKeyboardIngush
+        ) {
+            Keyboard.ButtonTitle(
+                text: title,
+                action: action
+            )
+        } else {
+            standardContent
         }
     }
 }
-#endif
+
+enum KeyboardSettingsKey {
+
+    static let isAudioFeedback = "SettingsView.Keyboard.isAudioFeedback"
+    static let isKeyboardIngush = "SettingsView.Keyboard.isKeyboardIngush"
+    static let isKeyboardLatin = "SettingsView.Keyboard.isKeyboardLatin"
+}
+
+private struct MyEmojiKeyboard: View {
+
+    private enum Metrics {
+
+        static let bottomBarHeight: CGFloat = 44
+        static let categoryButtonSize: CGFloat = 36
+        static let emojiFontSize: CGFloat = 32
+        static let emojiItemHeight: CGFloat = 42
+        static let emojiItemWidth: CGFloat = 44
+        static let horizontalPadding: CGFloat = 6
+        static let rowCount = 4
+        static let rowSpacing: CGFloat = 2
+    }
+
+    private let services: KeyboardServices
+
+    @State private var selectedCategory: EmojiCategory = .smileysAndPeople
+
+    init(services: KeyboardServices) {
+        self.services = services
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            emojiGrid
+            bottomBar
+        }
+    }
+}
+
+private extension MyEmojiKeyboard {
+
+    var categories: [EmojiCategory] {
+        let recentCategory = EmojiCategory.recent
+        if recentCategory.hasEmojis {
+            return [recentCategory] + EmojiCategory.standardCategories
+        }
+
+        return EmojiCategory.standardCategories
+    }
+
+    var emojiRows: [GridItem] {
+        Array(
+            repeating: GridItem(
+                .fixed(Metrics.emojiItemHeight),
+                spacing: Metrics.rowSpacing
+            ),
+            count: Metrics.rowCount
+        )
+    }
+
+    var emojiGrid: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHGrid(
+                rows: emojiRows,
+                spacing: Metrics.rowSpacing
+            ) {
+                ForEach(selectedCategory.emojis) { emoji in
+                    Button {
+                        insert(emoji)
+                    } label: {
+                        Text(emoji.char)
+                            .font(.system(size: Metrics.emojiFontSize))
+                            .frame(
+                                width: Metrics.emojiItemWidth,
+                                height: Metrics.emojiItemHeight
+                            )
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(emoji.localizedName)
+                }
+            }
+            .padding(.horizontal, Metrics.horizontalPadding)
+        }
+    }
+
+    var bottomBar: some View {
+        HStack(spacing: 0) {
+            Button("АБВ") {
+                services.actionHandler.handle(.keyboardType(.alphabetic))
+            }
+            .frame(width: Metrics.categoryButtonSize)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 0) {
+                    ForEach(categories) { category in
+                        Button {
+                            selectedCategory = category
+                        } label: {
+                            category.symbolIcon
+                                .frame(
+                                    width: Metrics.categoryButtonSize,
+                                    height: Metrics.categoryButtonSize
+                                )
+                                .background(
+                                    selectedCategory == category
+                                        ? Color.primary.opacity(0.12)
+                                        : Color.clear
+                                )
+                                .clipShape(Circle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(category.labelText(for: .russian))
+                    }
+                }
+            }
+
+            Button {
+                services.actionHandler.handle(.nextKeyboard)
+            } label: {
+                Image(systemName: "globe")
+            }
+            .frame(width: Metrics.categoryButtonSize)
+            .accessibilityLabel("Следующая клавиатура")
+
+            Button {
+                services.actionHandler.handle(.backspace)
+            } label: {
+                Image(systemName: "delete.left")
+            }
+            .frame(width: Metrics.categoryButtonSize)
+            .accessibilityLabel("Удалить")
+        }
+        .buttonStyle(.plain)
+        .frame(height: Metrics.bottomBarHeight)
+        .padding(.horizontal, Metrics.horizontalPadding)
+    }
+
+    func insert(_ emoji: Emoji) {
+        EmojiCategory.Persisted.recent.addEmoji(emoji)
+        services.actionHandler.handle(.emoji(emoji))
+    }
+}
