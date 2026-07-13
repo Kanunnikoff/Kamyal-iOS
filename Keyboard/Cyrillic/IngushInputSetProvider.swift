@@ -28,8 +28,8 @@ public struct IngushInputSetProvider {
     /// Буквенные ряды для iPhone и iPad.
     public var alphabeticInputSet: KeyboardLayout.InputSet {
         KeyboardLayout.InputSet(rows: [
-            .init(chars: "йцукенгшщзхъ", deviceVariations: [.pad: "йцукенгшщзх"]),
-            .init(chars: "фывапролджэӀ", deviceVariations: [.pad: "фывапролджэ"]),
+            .init(chars: "йцукенгшӀзх", deviceVariations: [.pad: "йцукенгшщзх"]),
+            .init(chars: "фывапролджэ", deviceVariations: [.pad: "фывапролджэ"]),
             .init(chars: "ячсмитьбю", deviceVariations: [.pad: "ячсмитьбюъӀ"])
         ])
     }

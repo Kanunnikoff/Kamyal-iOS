@@ -56,6 +56,11 @@ struct MyKeyboard: View {
         }
         .autocompleteToolbarStyle(MyAutocompleteToolbar.style)
         .environment(\.layoutDirection, .leftToRight)
+        .overlay(alignment: .top) {
+            if keyboardContext.keyboardType.isAlphabetic {
+                MyAutocompleteToolbar.separators
+            }
+        }
     }
 }
 
@@ -96,7 +101,85 @@ private extension MyKeyboard {
             return baseLayout.iPadLayout(for: keyboardContext)
         }
 
-        return baseLayout.iPhoneLayout(for: keyboardContext)
+        return systemIngushLayout(
+            from: baseLayout.iPhoneLayout(for: keyboardContext)
+        )
+    }
+
+    func systemIngushLayout(from layout: KeyboardLayout) -> KeyboardLayout {
+        var result = layout
+
+        // Все режимы используют одну внешнюю ширину. Без этой поправки цифровая
+        // и символьная раскладки занимают ещё по 10 физических пикселей с каждой
+        // стороны, поэтому клавиши заметно разъезжаются при переключении.
+        result.configuration.edgeInsets.leading += AlphabeticLayoutMetrics.horizontalKeyboardInset
+        result.configuration.edgeInsets.trailing += AlphabeticLayoutMetrics.horizontalKeyboardInset
+
+        if result.itemRows.indices.contains(AlphabeticLayoutMetrics.serviceRowIndex) {
+            // KeyboardKit располагает служебный ряд немного выше системного и делает
+            // его на 15 физических пикселей ниже по высоте. Несимметричная поправка
+            // внутренних отступов одновременно сдвигает ряд вниз на нужные 10 пикселей
+            // сверху и увеличивает клавиши до системной нижней границы ещё на 15 пикселей.
+            result.itemRows[AlphabeticLayoutMetrics.serviceRowIndex] = result.itemRows[
+                AlphabeticLayoutMetrics.serviceRowIndex
+            ].map { item in
+                var item = item
+                item.edgeInsets.top += AlphabeticLayoutMetrics.serviceRowTopInsetIncrease
+                item.edgeInsets.bottom -= AlphabeticLayoutMetrics.serviceRowBottomInsetDecrease
+
+                return item
+            }
+        }
+
+        guard keyboardContext.keyboardType.isAlphabetic, !isKeyboardLatin else {
+            for rowIndex in result.itemRows.indices.prefix(AlphabeticLayoutMetrics.rowCount) {
+                result.itemRows[rowIndex] = result.itemRows[rowIndex].map {
+                    verticallyAlignedInputItem(from: $0)
+                }
+            }
+
+            return result
+        }
+
+        for rowIndex in result.itemRows.indices.prefix(AlphabeticLayoutMetrics.rowCount) {
+            let row = result.itemRows[rowIndex]
+            let visibleItems = row.filter { !$0.action.isCharacterMargin }
+
+            guard visibleItems.count == AlphabeticLayoutMetrics.columnCount else {
+                continue
+            }
+
+            // Стандартная русская основа KeyboardKit рассчитана на 12 букв в верхнем
+            // ряду и может добавлять невидимые поля по краям. В системной ингушской
+            // раскладке каждый из трёх рядов занимает ровно 11 равных ячеек. Поэтому
+            // удаляем служебные поля, задаём общий внешний отступ в конфигурации и
+            // поровну распределяем доступную ширину между всеми видимыми клавишами.
+            let resizedItems = visibleItems.map { item in
+                var item = verticallyAlignedInputItem(from: item)
+                item.size.width = AlphabeticLayoutMetrics.itemWidth
+
+                return item
+            }
+
+            result.itemRows[rowIndex] = resizedItems
+        }
+
+        return result
+    }
+
+    func verticallyAlignedInputItem(
+        from layoutItem: KeyboardLayoutItem
+    ) -> KeyboardLayoutItem {
+        var item = layoutItem
+
+        // Одинаковая поправка для буквенного, цифрового и символьного режимов
+        // исключает вертикальный скачок при переключении. На экране @3x верхняя
+        // граница опускается на 10 пикселей, а нижняя — на 4 пикселя, поэтому
+        // положение и высота клавиш совпадают с системной ингушской раскладкой.
+        item.edgeInsets.top += AlphabeticLayoutMetrics.inputRowTopInsetIncrease
+        item.edgeInsets.bottom -= AlphabeticLayoutMetrics.inputRowBottomInsetDecrease
+
+        return item
     }
 
     func customCalloutActions(for action: KeyboardAction) -> [KeyboardAction]? {
@@ -105,6 +188,39 @@ private extension MyKeyboard {
         }
 
         return IngushCalloutActionProvider().calloutActions(for: action)
+    }
+}
+
+private enum AlphabeticLayoutMetrics {
+
+    static let columnCount = 11
+    static let rowCount = 3
+
+    // Эти отступы компенсируют геометрию основы KeyboardKit: на экране @3x
+    // верхняя граница опускается на 10 пикселей, а нижняя — на 4 пикселя.
+    static let inputRowBottomInsetDecrease: CGFloat = 4 / 3
+    static let inputRowTopInsetIncrease: CGFloat = 10 / 3
+
+    // 3,5 пункта по краям всей раскладки дают те же ширину ячеек
+    // и внешние поля, что у системной ингушской клавиатуры.
+    static let horizontalKeyboardInset: CGFloat = 3.5
+    static let serviceRowBottomInsetDecrease: CGFloat = 5
+    static let serviceRowIndex = 3
+    static let serviceRowTopInsetIncrease: CGFloat = 10 / 3
+
+    static var itemWidth: KeyboardLayoutItem.Width {
+        .percentage(1 / CGFloat(columnCount))
+    }
+}
+
+private extension KeyboardAction {
+
+    var isCharacterMargin: Bool {
+        if case .characterMargin = self {
+            return true
+        }
+
+        return false
     }
 }
 
