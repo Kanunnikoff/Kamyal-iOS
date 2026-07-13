@@ -27,10 +27,13 @@ public struct IngushInputSetProvider {
     
     /// Буквенные ряды для iPhone и iPad.
     public var alphabeticInputSet: KeyboardLayout.InputSet {
+        // Используем одинаковые ряды на телефоне и планшете: Щ доступна долгим
+        // нажатием на Ш, а Ъ — долгим нажатием на Ь. Отдельные варианты для iPad
+        // возвращали эти буквы в основной ряд и нарушали принятую раскладку.
         KeyboardLayout.InputSet(rows: [
-            .init(chars: "йцукенгшӀзх", deviceVariations: [.pad: "йцукенгшщзх"]),
-            .init(chars: "фывапролджэ", deviceVariations: [.pad: "фывапролджэ"]),
-            .init(chars: "ячсмитьбю", deviceVariations: [.pad: "ячсмитьбюъӀ"])
+            .init(chars: "йцукенгшӀзх"),
+            .init(chars: "фывапролджэ"),
+            .init(chars: "ячсмитьбю")
         ])
     }
     

@@ -39,6 +39,13 @@ class MyKeyboardActionHandler: StandardKeyboardActionHandler {
         after gesture: Keyboard.Gesture,
         on action: KeyboardAction
     ) -> Keyboard.KeyboardCase {
+        if action.isShiftAction {
+            // Отключение автоматических заглавных букв не должно запрещать ручной
+            // выбор регистра. К моменту этого вызова KeyboardKit уже переключил
+            // состояние Shift, поэтому сохраняем результат стандартной обработки.
+            return super.preferredKeyboardCase(after: gesture, on: action)
+        }
+
         // KeyboardKit пересчитывает регистр после пробела, удаления и ввода знаков.
         // При отключённой настройке не даём этим переходам снова включить Shift.
         guard isAutocapitalizationEnabled else {
@@ -46,6 +53,23 @@ class MyKeyboardActionHandler: StandardKeyboardActionHandler {
         }
 
         return super.preferredKeyboardCase(after: gesture, on: action)
+    }
+
+    override func preferredKeyboardType(
+        after gesture: Keyboard.Gesture,
+        on action: KeyboardAction
+    ) -> Keyboard.KeyboardType {
+        if gesture == .release,
+           case .character(let character) = action,
+           KeyboardCharacters.apostrophes.contains(character) {
+            // KeyboardKit считает апостроф знаком, после которого цифровая или
+            // символьная раскладка должна автоматически смениться на буквенную.
+            // Для ингушского ввода апостроф может быть частью набираемой
+            // последовательности, поэтому оставляем выбранную раскладку без изменений.
+            return keyboardContext.keyboardType
+        }
+
+        return super.preferredKeyboardType(after: gesture, on: action)
     }
     
     // MARK: - Custom actions
@@ -103,6 +127,11 @@ private extension MyKeyboardActionHandler {
         if error == nil { alert("Saved!") }
         else { alert("Failed!") }
     }
+}
+
+private enum KeyboardCharacters {
+
+    static let apostrophes: Set<String> = ["'", "’", "‘"]
 }
 
 
