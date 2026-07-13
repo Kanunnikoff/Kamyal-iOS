@@ -37,24 +37,24 @@ public struct LatinIngushInputSetProvider {
     /// Ряды цифрового режима.
     public var numericInputSet: KeyboardLayout.InputSet {
         KeyboardLayout.InputSet(rows: [
-            .init(chars: "1234567890"),
+            .init(chars: "1234567890", deviceVariations: [.pad: "1234567890–"]),
             .init(
                 chars: "-/:;()\(numericCurrency)&@”",
-                deviceVariations: [.pad: "@#\(numericCurrency)&*()’”"]
+                deviceVariations: [.pad: "@#№\(numericCurrency)•&*()’”"]
             ),
-            .init(chars: ".,?!’", deviceVariations: [.pad: "%-+=/;:!?"])
+            .init(chars: ".,?!’", deviceVariations: [.pad: "%-−+=/;:!?"])
         ])
     }
     
     /// Ряды символьного режима.
     public var symbolicInputSet: KeyboardLayout.InputSet {
         KeyboardLayout.InputSet(rows: [
-            .init(chars: "[]{}#%^*+=", deviceVariations: [.pad: "1234567890"]),
+            .init(chars: "[]{}#%^*+=", deviceVariations: [.pad: "1234567890–"]),
             .init(
                 chars: "_\\|~<>$\(symbolicCurrency)£•",
-                deviceVariations: [.pad: "€\(symbolicCurrency)¥_^[]{}"]
+                deviceVariations: [.pad: "$\(symbolicCurrency)£±•`^[]{}"]
             ),
-            .init(chars: ".,?!’", deviceVariations: [.pad: "§|~…\\<>!?"])
+            .init(chars: ".,?!’", deviceVariations: [.pad: "§|~…≠\\<>!?"])
         ])
     }
 }

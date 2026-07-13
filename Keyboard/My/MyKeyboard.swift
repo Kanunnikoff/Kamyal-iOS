@@ -48,7 +48,11 @@ struct MyKeyboard: View {
                 MyEmojiKeyboard(services: services)
             },
             toolbar: { parameters in
-                parameters.view
+                if isPadKeyboard {
+                    Color.clear.frame(height: PadLayoutMetrics.toolbarHeight)
+                } else {
+                    parameters.view
+                }
             }
         )
         .keyboardCalloutActions { parameters in
@@ -57,7 +61,7 @@ struct MyKeyboard: View {
         .autocompleteToolbarStyle(MyAutocompleteToolbar.style)
         .environment(\.layoutDirection, .leftToRight)
         .overlay(alignment: .top) {
-            if keyboardContext.keyboardType.isAlphabetic {
+            if keyboardContext.keyboardType.isAlphabetic, !isPadKeyboard {
                 MyAutocompleteToolbar.separators
             }
         }
@@ -65,6 +69,10 @@ struct MyKeyboard: View {
 }
 
 private extension MyKeyboard {
+
+    var isPadKeyboard: Bool {
+        keyboardContext.deviceTypeForKeyboard.isPad
+    }
 
     var keyboardLayout: KeyboardLayout {
         // Базовый построитель KeyboardKit сохраняет служебные клавиши и переходы
@@ -97,8 +105,10 @@ private extension MyKeyboard {
     func deviceLayout(from baseLayout: KeyboardLayout) -> KeyboardLayout {
         // На iPad библиотека добавляет отдельные служебные ряды и размеры клавиш,
         // а плавающая клавиатура сообщает тип iPhone через deviceTypeForKeyboard.
-        if keyboardContext.deviceTypeForKeyboard.isPad {
-            return baseLayout.iPadLayout(for: keyboardContext)
+        if isPadKeyboard {
+            return systemPadLayout(
+                from: baseLayout.iPadLayout(for: keyboardContext)
+            )
         }
 
         return systemIngushLayout(
@@ -167,6 +177,103 @@ private extension MyKeyboard {
         return result
     }
 
+    func systemPadLayout(from layout: KeyboardLayout) -> KeyboardLayout {
+        var result = layout
+
+        guard result.itemRows.indices.contains(PadLayoutMetrics.topRowIndex),
+              result.itemRows.indices.contains(PadLayoutMetrics.middleRowIndex),
+              result.itemRows.indices.contains(PadLayoutMetrics.lowerRowIndex) else {
+            return result
+        }
+
+        // Системная клавиатура iPad сохраняет одинаковую ширину клавиш ввода
+        // во всех рядах, а свободное место отдаёт служебным клавишам. Стандартная
+        // схема KeyboardKit делает удаление и «Ввод» обычными клавишами ввода,
+        // поэтому клавиша удаления сжимается, а ширина букв и знаков зависит
+        // от выбранного режима.
+        result.itemRows[PadLayoutMetrics.topRowIndex] = padTopRow(
+            from: result.itemRows[PadLayoutMetrics.topRowIndex]
+        )
+        result.itemRows[PadLayoutMetrics.middleRowIndex] = padMiddleRow(
+            from: result.itemRows[PadLayoutMetrics.middleRowIndex]
+        )
+        result.itemRows[PadLayoutMetrics.lowerRowIndex] = padLowerRow(
+            from: result.itemRows[PadLayoutMetrics.lowerRowIndex]
+        )
+
+        if result.itemRows.indices.contains(PadLayoutMetrics.serviceRowIndex) {
+            result.itemRows[PadLayoutMetrics.serviceRowIndex] = padServiceRow(
+                from: result.itemRows[PadLayoutMetrics.serviceRowIndex]
+            )
+        }
+
+        return result
+    }
+
+    func padTopRow(from row: KeyboardLayoutItemRow) -> KeyboardLayoutItemRow {
+        guard row.count >= PadLayoutMetrics.minimumInputRowItemCount else {
+            return row
+        }
+
+        return row.enumerated().map { index, sourceItem in
+            var item = sourceItem
+            let isTrailingItem = index == row.index(before: row.endIndex)
+            item.size.width = isTrailingItem
+                ? PadLayoutMetrics.topRowTrailingItemWidth
+                : .input
+
+            return item
+        }
+    }
+
+    func padMiddleRow(from row: KeyboardLayoutItemRow) -> KeyboardLayoutItemRow {
+        guard row.count >= PadLayoutMetrics.minimumInputRowItemCount else {
+            return row
+        }
+
+        return row.enumerated().map { index, sourceItem in
+            var item = sourceItem
+
+            if index == row.startIndex {
+                item.size.width = PadLayoutMetrics.middleRowLeadingItemWidth
+            } else if index == row.index(before: row.endIndex) {
+                item.size.width = .available
+            } else {
+                item.size.width = .input
+            }
+
+            return item
+        }
+    }
+
+    func padLowerRow(from row: KeyboardLayoutItemRow) -> KeyboardLayoutItemRow {
+        guard row.count >= PadLayoutMetrics.minimumInputRowItemCount else {
+            return row
+        }
+
+        return row.enumerated().map { index, sourceItem in
+            var item = sourceItem
+            let isServiceItem = index == row.startIndex
+                || index == row.index(before: row.endIndex)
+            item.size.width = isServiceItem ? .available : .input
+
+            return item
+        }
+    }
+
+    func padServiceRow(from row: KeyboardLayoutItemRow) -> KeyboardLayoutItemRow {
+        guard row.count == PadLayoutMetrics.serviceRowWidths.count else {
+            return row
+        }
+
+        return zip(row, PadLayoutMetrics.serviceRowWidths).map { sourceItem, width in
+            var item = sourceItem
+            item.size.width = width
+
+            return item
+        }
+    }
+
     func verticallyAlignedInputItem(
         from layoutItem: KeyboardLayoutItem
     ) -> KeyboardLayoutItem {
@@ -211,6 +318,36 @@ private enum AlphabeticLayoutMetrics {
     static var itemWidth: KeyboardLayoutItem.Width {
         .percentage(1 / CGFloat(columnCount))
     }
+}
+
+private enum PadLayoutMetrics {
+
+    static let lowerRowIndex = 2
+    static let middleRowIndex = 1
+    static let minimumInputRowItemCount = 3
+    static let serviceRowIndex = 3
+
+    // iPad сам добавляет полосу команд редактирования над расширением. Нулевая
+    // высота делает клавиатуру на 8 физических пикселей ниже системной, а
+    // обычная полоса подсказок создаёт целый лишний ряд. Прозрачные 4 пункта
+    // сохраняют системную общую высоту без дублирования этой полосы.
+    static let toolbarHeight: CGFloat = 4
+    static let topRowIndex = 0
+
+    // Доли получены по системной клавиатуре iPad Pro 11″ в альбомной
+    // ориентации. Они сохраняют взаимные пропорции и в книжной ориентации,
+    // поскольку KeyboardKit рассчитывает их от доступной ширины ряда.
+    static let middleRowLeadingItemWidth: KeyboardLayoutItem.Width = .percentage(0.09)
+    static let topRowTrailingItemWidth: KeyboardLayoutItem.Width = .percentage(0.13)
+
+    static let serviceRowWidths: [KeyboardLayoutItem.Width] = [
+        .percentage(0.08),
+        .percentage(0.08),
+        .percentage(0.08),
+        .percentage(0.532),
+        .percentage(0.114),
+        .percentage(0.114)
+    ]
 }
 
 private extension KeyboardAction {
