@@ -46,6 +46,13 @@ class MyKeyboardActionHandler: StandardKeyboardActionHandler {
             return super.preferredKeyboardCase(after: gesture, on: action)
         }
 
+        if keyboardContext.keyboardCase == .capsLocked {
+            // Двойное нажатие на Shift явно включает постоянный верхний регистр.
+            // Не позволяем автоматическому пересчёту отключить его после символа,
+            // пробела или удаления: выйти из этого состояния можно только через Shift.
+            return .capsLocked
+        }
+
         // KeyboardKit пересчитывает регистр после пробела, удаления и ввода знаков.
         // При отключённой настройке не даём этим переходам снова включить Shift.
         guard isAutocapitalizationEnabled else {
