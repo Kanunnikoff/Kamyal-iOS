@@ -32,12 +32,10 @@ struct ContentView: View {
                 }
             }
         }
+        .requestReview()
 #if os(macOS)
         .frame(minWidth: 600, minHeight: 450)
 #endif
-//        .onAppear {
-//            Util.requestReviewIfNeeded()
-//        }
     }
 
     private var prefersTabNavigation: Bool {

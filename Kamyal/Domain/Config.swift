@@ -21,6 +21,7 @@ struct Config {
     static let APPSTORE_APP_REVIEW_URL = URL(string: "https://itunes.apple.com/app/id\(APPSTORE_APP_ID)?action=write-review")!
     static let APPSTORE_DEVELOPER_URL = URL(string: "https://itunes.apple.com/developer/id1449411291")!
     static let APPSTORE_NAZRAN_MOSCOW_URL = URL(string: "https://itunes.apple.com/app/id1449411292")!
+    static let REQUEST_REVIEW_LAUNCHES_COUNT_THRESHOLD = 5
     
     static let PACKAGE_NAME = "software.kanunnikoff.Kamyal"
     

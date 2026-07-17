@@ -49,6 +49,9 @@
 		0B1000072E25700100C0D3E1 /* DoneIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2000072E25700100C0D3E1 /* DoneIndicatorView.swift */; };
 		0B1000082E25700100C0D3E1 /* Store.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 0B2000082E25700100C0D3E1 /* Store.storekit */; };
 		0B1000092E25700100C0D3E1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B2000092E25700100C0D3E1 /* StoreKit.framework */; };
+		0B10000A2F17000100C0D3E1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0B20000A2F17000100C0D3E1 /* PrivacyInfo.xcprivacy */; };
+		0B10000B2F17000100C0D3E1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0B20000B2F17000100C0D3E1 /* PrivacyInfo.xcprivacy */; };
+		0B10000C2F17000200C0D3E1 /* RequestReviewViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B20000C2F17000200C0D3E1 /* RequestReviewViewModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +131,9 @@
 		0B2000072E25700100C0D3E1 /* DoneIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneIndicatorView.swift; sourceTree = "<group>"; };
 		0B2000082E25700100C0D3E1 /* Store.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Store.storekit; sourceTree = "<group>"; };
 		0B2000092E25700100C0D3E1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		0B20000A2F17000100C0D3E1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		0B20000B2F17000100C0D3E1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		0B20000C2F17000200C0D3E1 /* RequestReviewViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestReviewViewModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +183,7 @@
 			children = (
 				0A3C773428E076A90031EB74 /* Kamyal.entitlements */,
 				0A26C47228D1106F004EEFCF /* Info.plist */,
+				0B20000A2F17000100C0D3E1 /* PrivacyInfo.xcprivacy */,
 				0A26C46928D10DE7004EEFCF /* Domain */,
 				0A26C45A28D10BB8004EEFCF /* Presentation */,
 				0A1241CF28796A3A00D71CE3 /* KamyalApp.swift */,
@@ -205,6 +212,7 @@
 				0A1241E328796B5F00D71CE3 /* KeyboardViewController.swift */,
 				0A7A0E2628797DFE0032472B /* KeyboardView.swift */,
 				0A1241E528796B5F00D71CE3 /* Info.plist */,
+				0B20000B2F17000100C0D3E1 /* PrivacyInfo.xcprivacy */,
 			);
 			path = Keyboard;
 			sourceTree = "<group>";
@@ -224,6 +232,7 @@
 				0A26C46128D10CAA004EEFCF /* Main */,
 				0A26C45E28D10BF2004EEFCF /* About */,
 				0A26C45B28D10BD1004EEFCF /* Settings */,
+				0B3000042F17000200C0D3E1 /* Modifiers */,
 				0B3000012E25700100C0D3E1 /* Store */,
 				0B3000032E25700100C0D3E1 /* Views */,
 			);
@@ -360,6 +369,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		0B3000042F17000200C0D3E1 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				0B20000C2F17000200C0D3E1 /* RequestReviewViewModifier.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -469,6 +486,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B10000A2F17000100C0D3E1 /* PrivacyInfo.xcprivacy in Resources */,
 				0B1000082E25700100C0D3E1 /* Store.storekit in Resources */,
 				0A1241D728796A3C00D71CE3 /* Preview Assets.xcassets in Resources */,
 				0A1241D428796A3C00D71CE3 /* Assets.xcassets in Resources */,
@@ -479,6 +497,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B10000B2F17000100C0D3E1 /* PrivacyInfo.xcprivacy in Resources */,
 				0A29ECAD28EE18F400DBF90F /* ing_freq_dict_sorted.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -498,6 +517,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B10000C2F17000200C0D3E1 /* RequestReviewViewModifier.swift in Sources */,
 				0B1000012E25700100C0D3E1 /* TabNavigationView.swift in Sources */,
 				0B1000022E25700100C0D3E1 /* StoreProductIdentifiers.swift in Sources */,
 				0B1000032E25700100C0D3E1 /* PurchaseManager.swift in Sources */,
@@ -679,7 +699,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kamyal/Kamyal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "Kamyal/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				ENABLE_PREVIEWS = YES;
@@ -717,7 +737,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kamyal/Kamyal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "Kamyal/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				ENABLE_PREVIEWS = YES;
@@ -753,7 +773,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = keyboard/keyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = keyboard/Info.plist;
@@ -784,7 +804,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = keyboard/keyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = keyboard/Info.plist;
@@ -814,7 +834,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stickers/Info.plist;
@@ -837,7 +857,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stickers/Info.plist;

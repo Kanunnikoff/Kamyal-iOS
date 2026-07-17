@@ -71,9 +71,6 @@ struct MainView: View {
             }
         }
         .tips(purchaseController: tipPurchaseController)
-        .onAppear {
-            Util.requestReviewIfNeeded()
-        }
     }
 }
 
