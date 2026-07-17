@@ -45,7 +45,10 @@ struct MyKeyboard: View {
                 parameters.view
             },
             emojiKeyboard: { _ in
-                MyEmojiKeyboard(services: services)
+                MyEmojiKeyboard(
+                    services: services,
+                    isPadKeyboard: isPadKeyboard
+                )
             },
             toolbar: { parameters in
                 if isPadKeyboard {
@@ -397,7 +400,7 @@ private struct MyKeyboardButtonContent<StandardContent: View>: View {
 
 private struct MyEmojiKeyboard: View {
 
-    private enum Metrics {
+    private enum CompactMetrics {
 
         static let bottomBarHeight: CGFloat = 44
         static let categoryButtonSize: CGFloat = 36
@@ -409,18 +412,53 @@ private struct MyEmojiKeyboard: View {
         static let rowSpacing: CGFloat = 2
     }
 
+    private enum PadMetrics {
+
+        static let bottomBarHeight: CGFloat = 44
+        static let categoryButtonSize: CGFloat = 36
+        static let columnSpacing: CGFloat = 10
+        static let emojiFontSize: CGFloat = 40
+        static let emojiItemHeight: CGFloat = 55
+        static let emojiItemWidth: CGFloat = 55
+        static let horizontalPadding: CGFloat = 20
+        static let maximumRowCount = 6
+        static let minimumRowCount = 4
+        static let rowSpacing: CGFloat = 8
+        static let sectionSpacing: CGFloat = 32
+        static let sectionTitleBottomSpacing: CGFloat = 10
+        static let sectionTitleFontSize: CGFloat = 13
+        static let sectionTitleHeight: CGFloat = 16
+        static let topPadding: CGFloat = 12
+    }
+
+    private let isPadKeyboard: Bool
     private let services: KeyboardServices
 
     @State private var selectedCategory: EmojiCategory = .smileysAndPeople
 
-    init(services: KeyboardServices) {
+    init(
+        services: KeyboardServices,
+        isPadKeyboard: Bool
+    ) {
         self.services = services
+        self.isPadKeyboard = isPadKeyboard
+
+        let recentCategory = EmojiCategory.recent
+        let initialCategory: EmojiCategory = isPadKeyboard && recentCategory.hasEmojis
+            ? recentCategory
+            : .smileysAndPeople
+        _selectedCategory = State(initialValue: initialCategory)
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            emojiGrid
-            bottomBar
+            if isPadKeyboard {
+                padEmojiGrid
+                padBottomBar
+            } else {
+                compactEmojiGrid
+                compactBottomBar
+            }
         }
     }
 }
@@ -436,47 +474,41 @@ private extension MyEmojiKeyboard {
         return EmojiCategory.standardCategories
     }
 
-    var emojiRows: [GridItem] {
+    var compactEmojiRows: [GridItem] {
         Array(
             repeating: GridItem(
-                .fixed(Metrics.emojiItemHeight),
-                spacing: Metrics.rowSpacing
+                .fixed(CompactMetrics.emojiItemHeight),
+                spacing: CompactMetrics.rowSpacing
             ),
-            count: Metrics.rowCount
+            count: CompactMetrics.rowCount
         )
     }
 
-    var emojiGrid: some View {
+    var compactEmojiGrid: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHGrid(
-                rows: emojiRows,
-                spacing: Metrics.rowSpacing
+                rows: compactEmojiRows,
+                spacing: CompactMetrics.rowSpacing
             ) {
                 ForEach(selectedCategory.emojis) { emoji in
-                    Button {
-                        insert(emoji)
-                    } label: {
-                        Text(emoji.char)
-                            .font(.system(size: Metrics.emojiFontSize))
-                            .frame(
-                                width: Metrics.emojiItemWidth,
-                                height: Metrics.emojiItemHeight
-                            )
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel(emoji.localizedName)
+                    emojiButton(
+                        emoji,
+                        fontSize: CompactMetrics.emojiFontSize,
+                        itemWidth: CompactMetrics.emojiItemWidth,
+                        itemHeight: CompactMetrics.emojiItemHeight
+                    )
                 }
             }
-            .padding(.horizontal, Metrics.horizontalPadding)
+            .padding(.horizontal, CompactMetrics.horizontalPadding)
         }
     }
 
-    var bottomBar: some View {
+    var compactBottomBar: some View {
         HStack(spacing: 0) {
             Button("АБВ") {
                 services.actionHandler.handle(.keyboardType(.alphabetic))
             }
-            .frame(width: Metrics.categoryButtonSize)
+            .frame(width: CompactMetrics.categoryButtonSize)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
@@ -486,8 +518,8 @@ private extension MyEmojiKeyboard {
                         } label: {
                             category.symbolIcon
                                 .frame(
-                                    width: Metrics.categoryButtonSize,
-                                    height: Metrics.categoryButtonSize
+                                    width: CompactMetrics.categoryButtonSize,
+                                    height: CompactMetrics.categoryButtonSize
                                 )
                                 .background(
                                     selectedCategory == category
@@ -507,7 +539,7 @@ private extension MyEmojiKeyboard {
             } label: {
                 Image(systemName: "globe")
             }
-            .frame(width: Metrics.categoryButtonSize)
+            .frame(width: CompactMetrics.categoryButtonSize)
             .accessibilityLabel("Следующая клавиатура")
 
             Button {
@@ -515,12 +547,194 @@ private extension MyEmojiKeyboard {
             } label: {
                 Image(systemName: "delete.left")
             }
-            .frame(width: Metrics.categoryButtonSize)
+            .frame(width: CompactMetrics.categoryButtonSize)
             .accessibilityLabel("Удалить")
         }
         .buttonStyle(.plain)
-        .frame(height: Metrics.bottomBarHeight)
-        .padding(.horizontal, Metrics.horizontalPadding)
+        .frame(height: CompactMetrics.bottomBarHeight)
+        .padding(.horizontal, CompactMetrics.horizontalPadding)
+    }
+
+    func padEmojiRows(for availableHeight: CGFloat) -> [GridItem] {
+        // Полноразмерные iPad дают расширению разную высоту в книжной и альбомной
+        // ориентациях. Число строк выводим из фактической высоты после вычета
+        // заголовка, но ограничиваем системным диапазоном: до шести строк на
+        // большом экране и не менее четырёх на более компактном.
+        let reservedHeight = PadMetrics.topPadding
+            + PadMetrics.sectionTitleHeight
+            + PadMetrics.sectionTitleBottomSpacing
+        let gridHeight = max(0, availableHeight - reservedHeight)
+        let rowStride = PadMetrics.emojiItemHeight + PadMetrics.rowSpacing
+        let fittingRowCount = Int(
+            (gridHeight + PadMetrics.rowSpacing) / rowStride
+        )
+        let rowCount = min(
+            PadMetrics.maximumRowCount,
+            max(PadMetrics.minimumRowCount, fittingRowCount)
+        )
+
+        return Array(
+            repeating: GridItem(
+                .fixed(PadMetrics.emojiItemHeight),
+                spacing: PadMetrics.rowSpacing
+            ),
+            count: rowCount
+        )
+    }
+
+    var padVisibleCategories: [EmojiCategory] {
+        // Системная раскладка не обрывает содержимое на границе выбранного
+        // раздела: справа сразу начинается следующий. Оставляем в горизонтальной
+        // ленте выбранный и все последующие разделы, а кнопка категории переносит
+        // начало ленты к соответствующему месту.
+        guard let selectedIndex = categories.firstIndex(of: selectedCategory) else {
+            return [selectedCategory]
+        }
+
+        return Array(categories[selectedIndex...])
+    }
+
+    var padEmojiGrid: some View {
+        GeometryReader { geometry in
+            let rows = padEmojiRows(for: geometry.size.height)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(
+                    alignment: .top,
+                    spacing: PadMetrics.sectionSpacing
+                ) {
+                    ForEach(padVisibleCategories) { category in
+                        padCategorySection(
+                            category,
+                            rows: rows
+                        )
+                    }
+                }
+                // Без минимальной высоты горизонтальная прокрутка прижимает
+                // содержимое к нижней границе, как на исходном снимке приложения.
+                // Рамка с верхним выравниванием использует свободную высоту iPad.
+                .frame(
+                    minHeight: geometry.size.height,
+                    alignment: .top
+                )
+                .padding(.horizontal, PadMetrics.horizontalPadding)
+                .padding(.top, PadMetrics.topPadding)
+                .id(selectedCategory)
+            }
+        }
+    }
+
+    func padCategorySection(
+        _ category: EmojiCategory,
+        rows: [GridItem]
+    ) -> some View {
+        VStack(
+            alignment: .leading,
+            spacing: PadMetrics.sectionTitleBottomSpacing
+        ) {
+            Text(
+                category.labelText(for: .russian)
+                    .uppercased(with: .russian)
+            )
+            .font(
+                .system(
+                    size: PadMetrics.sectionTitleFontSize,
+                    weight: .semibold
+                )
+            )
+            .foregroundStyle(.secondary)
+
+            LazyHGrid(
+                rows: rows,
+                spacing: PadMetrics.columnSpacing
+            ) {
+                ForEach(category.emojis) { emoji in
+                    emojiButton(
+                        emoji,
+                        fontSize: PadMetrics.emojiFontSize,
+                        itemWidth: PadMetrics.emojiItemWidth,
+                        itemHeight: PadMetrics.emojiItemHeight
+                    )
+                }
+            }
+        }
+        .fixedSize(horizontal: true, vertical: true)
+    }
+
+    var padBottomBar: some View {
+        HStack(spacing: 0) {
+            Button("АБВ") {
+                services.actionHandler.handle(.keyboardType(.alphabetic))
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            ForEach(categories) { category in
+                Button {
+                    selectedCategory = category
+                } label: {
+                    category.symbolIcon
+                        .frame(
+                            width: PadMetrics.categoryButtonSize,
+                            height: PadMetrics.categoryButtonSize
+                        )
+                        .background(
+                            selectedCategory == category
+                                ? Color.primary.opacity(0.12)
+                                : Color.clear
+                        )
+                        .clipShape(Circle())
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .accessibilityLabel(category.labelText(for: .russian))
+            }
+
+            Button {
+                services.actionHandler.handle(.nextKeyboard)
+            } label: {
+                Image(systemName: "globe")
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .accessibilityLabel("Следующая клавиатура")
+
+            Button {
+                services.actionHandler.handle(.backspace)
+            } label: {
+                Image(systemName: "delete.left")
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .accessibilityLabel("Удалить")
+
+            Button {
+                services.actionHandler.handle(.dismissKeyboard)
+            } label: {
+                Image(systemName: "keyboard.chevron.compact.down")
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .accessibilityLabel("Скрыть клавиатуру")
+        }
+        .buttonStyle(.plain)
+        .frame(height: PadMetrics.bottomBarHeight)
+        .padding(.horizontal, CompactMetrics.horizontalPadding)
+    }
+
+    func emojiButton(
+        _ emoji: Emoji,
+        fontSize: CGFloat,
+        itemWidth: CGFloat,
+        itemHeight: CGFloat
+    ) -> some View {
+        Button {
+            insert(emoji)
+        } label: {
+            Text(emoji.char)
+                .font(.system(size: fontSize))
+                .frame(
+                    width: itemWidth,
+                    height: itemHeight
+                )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(emoji.localizedName)
     }
 
     func insert(_ emoji: Emoji) {
