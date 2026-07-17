@@ -14,6 +14,13 @@ struct MainView: View {
         static let cornerRadius: CGFloat = 15
         static let sectionSpacing: CGFloat = 20
         static let activationGuideTitleBottomPadding: CGFloat = 6
+        static let decorativeDividerSpacing: CGFloat = 6
+        static let decorativeDividerWidth: CGFloat = 140
+    }
+
+    private enum Colors {
+
+        static let decorativeDivider = Color("MainDividerColor")
     }
 
     @AppStorage(AppSettingsKey.isIngush)
@@ -32,24 +39,28 @@ struct MainView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: Metrics.sectionSpacing) {
-                activationGuide
-                keyboardDescription
+                VStack(spacing: Metrics.decorativeDividerSpacing) {
+                    activationGuide
+                    decorativeDivider
+                    keyboardDescription
+                    decorativeDivider
 
-                TextField(isIngush ? "Чуяздаьр нийса дий хьажа" : "Проверьте ввод", text: $text, axis: .vertical)
-                    .lineLimit(...5)
-                    .autocorrectionDisabled()
-                    .textInputAutocapitalization(.sentences)
-                    .font(.body)
+                    TextField(isIngush ? "Чуяздаьр нийса дий хьажа" : "Проверьте ввод", text: $text, axis: .vertical)
+                        .lineLimit(...5)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.sentences)
+                        .font(.body)
 #if os(iOS)
-                    .padding(10)
-                    .overlay(
-                        RoundedRectangle(
-                            cornerRadius: 10,
-                            style: .continuous
+                        .padding(10)
+                        .overlay(
+                            RoundedRectangle(
+                                cornerRadius: 10,
+                                style: .continuous
+                            )
+                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
                         )
-                        .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                    )
 #endif
+                }
 
                 Spacer()
             }
@@ -87,6 +98,16 @@ private struct TipNavigationSubtitleModifier: ViewModifier {
 }
 
 private extension MainView {
+
+    var decorativeDivider: some View {
+        Image("MainDivider")
+            .resizable()
+            .renderingMode(.template)
+            .scaledToFit()
+            .frame(width: Metrics.decorativeDividerWidth)
+            .foregroundStyle(Colors.decorativeDivider)
+            .accessibilityHidden(true)
+    }
 
     var activationGuide: some View {
         GroupBox {
