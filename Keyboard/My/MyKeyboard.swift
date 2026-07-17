@@ -63,9 +63,7 @@ struct MyKeyboard: View {
         .keyboardCalloutActions { parameters in
             customCalloutActions(for: parameters.action) ?? parameters.standardActions()
         }
-        .autocompleteToolbarStyle(
-            MyAutocompleteToolbar.style(isPadKeyboard: isPadKeyboard)
-        )
+        .autocompleteToolbarStyle(MyAutocompleteToolbar.style)
         .environment(\.layoutDirection, .leftToRight)
         .overlay(alignment: .top) {
             if keyboardContext.keyboardType.isAlphabetic {
@@ -543,14 +541,6 @@ private extension MyEmojiKeyboard {
             }
 
             Button {
-                services.actionHandler.handle(.nextKeyboard)
-            } label: {
-                Image(systemName: "globe")
-            }
-            .frame(width: CompactMetrics.categoryButtonSize)
-            .accessibilityLabel("Следующая клавиатура")
-
-            Button {
                 services.actionHandler.handle(.backspace)
             } label: {
                 Image(systemName: "delete.left")
@@ -695,14 +685,6 @@ private extension MyEmojiKeyboard {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .accessibilityLabel(category.labelText(for: .russian))
             }
-
-            Button {
-                services.actionHandler.handle(.nextKeyboard)
-            } label: {
-                Image(systemName: "globe")
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .accessibilityLabel("Следующая клавиатура")
 
             Button {
                 services.actionHandler.handle(.backspace)
