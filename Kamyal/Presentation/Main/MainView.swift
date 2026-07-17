@@ -13,6 +13,7 @@ struct MainView: View {
 
         static let cornerRadius: CGFloat = 15
         static let sectionSpacing: CGFloat = 20
+        static let activationGuideTitleBottomPadding: CGFloat = 6
     }
 
     @AppStorage(AppSettingsKey.isIngush)
@@ -136,6 +137,7 @@ private extension MainView {
                 isIngush ? "ГӀалгӀай лакашка хьалсогаргйолаш ер де" : "Как включить клавиатуру",
                 systemImage: "keyboard"
             )
+            .padding(.bottom, Metrics.activationGuideTitleBottomPadding)
         }
     }
 
