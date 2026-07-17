@@ -24,7 +24,11 @@ struct IngushCalloutActionProvider {
             ? calloutStrings.map { $0.capitalized(with: .russian) }
             : calloutStrings
 
-        return strings.map { .character($0) }
+        // `capitalized` переводит стоящую после первой буквы палочку в формальную
+        // строчную U+04CF. Перед вставкой возвращаем единственную принятую форму U+04C0.
+        return strings.map {
+            .character($0.canonicalizingIngushPalochka())
+        }
     }
     
     private func calloutActionStrings(for char: String) -> [String] {
