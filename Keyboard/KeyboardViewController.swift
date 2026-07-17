@@ -36,7 +36,9 @@ class KeyboardViewController: KeyboardInputViewController {
             self.state.keyboardContext.locale = .russian
             self.applyAutocapitalizationSetting()
 
-            let autocompleteService = MyAutocompleteProvider()
+            let autocompleteService = MyAutocompleteProvider(
+                keyboardContext: self.state.keyboardContext
+            )
             self.services.autocompleteService = autocompleteService
 
             // Стандартный обработчик KeyboardKit сохраняет используемую службу

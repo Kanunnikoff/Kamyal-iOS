@@ -14,8 +14,16 @@ enum IngushSuggestionFormatter {
 
     static func format(
         _ word: String,
-        for input: String
+        for input: String,
+        isUppercaseLocked: Bool
     ) -> String {
+        // Зафиксированный Shift относится ко всему выбранному слову, а не только
+        // к уже введённому фрагменту. Проверяем его раньше нормативных исключений,
+        // чтобы в этом режиме любая подсказка была полностью в верхнем регистре.
+        if isUppercaseLocked {
+            return word.uppercased(with: locale)
+        }
+
         let normalizedWord = word.lowercased(with: locale)
 
         // Частотный словарь собран из корпуса и содержит отдельные формы имени

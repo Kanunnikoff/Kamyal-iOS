@@ -13,11 +13,14 @@ final class MyAutocompleteProvider: AutocompleteService {
     private static let maxSuggestionCount = 3
 
     private let dictionary = IngushDictionary()
+    private let keyboardContext: KeyboardContext
     private let userDefaults = UserDefaults(suiteName: Config.APP_GROUP_NAME) ?? .standard
 
     var locale: Locale = .russian
 
-    init() {
+    init(keyboardContext: KeyboardContext) {
+        self.keyboardContext = keyboardContext
+
         Task(priority: .userInitiated) { [dictionary] in
             // Построение указателя начинается при открытии клавиатуры, поэтому первый
             // введённый слог не ждёт чтения всего частотного словаря с диска.
@@ -49,11 +52,13 @@ final class MyAutocompleteProvider: AutocompleteService {
             for: query,
             limit: Self.maxSuggestionCount
         )
+        let isUppercaseLocked = keyboardContext.keyboardCase == .capsLocked
         let suggestions = words.map { word in
             AutocompleteSuggestion(
                 text: IngushSuggestionFormatter.format(
                     word,
-                    for: query
+                    for: query,
+                    isUppercaseLocked: isUppercaseLocked
                 )
             )
         }
