@@ -15,6 +15,8 @@ struct DetailColumn: View {
         switch selection ?? .main {
             case .main:
                 MainView()
+            case .alphabet:
+                AlphabetView()
             case .settings:
                 SettingsView()
             case .about:

@@ -9,6 +9,7 @@ import SwiftUI
 
 enum SidebarItem: Hashable {
     case main
+    case alphabet
     case settings
     case about
 }
@@ -24,6 +25,10 @@ struct Sidebar: View {
         List(selection: $selection) {
             NavigationLink(value: SidebarItem.main) {
                 Label(isIngush ? "Керттера оагӀув" : "Главная", systemImage: "house")
+            }
+
+            NavigationLink(value: SidebarItem.alphabet) {
+                Label("Алфавит", systemImage: "textformat.abc")
             }
             
             NavigationLink(value: SidebarItem.settings) {

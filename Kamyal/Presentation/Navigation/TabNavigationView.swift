@@ -10,6 +10,7 @@ import SwiftUI
 private enum TabSelection: Hashable {
 
     case main
+    case alphabet
     case settings
     case about
 }
@@ -30,6 +31,14 @@ struct TabNavigationView: View {
                 Label(isIngush ? "Керттера оагӀув" : "Главная", systemImage: "house")
             }
             .tag(TabSelection.main)
+
+            NavigationStack {
+                AlphabetView()
+            }
+            .tabItem {
+                Label("Алфавит", systemImage: "textformat.abc")
+            }
+            .tag(TabSelection.alphabet)
 
             NavigationStack {
                 SettingsView()
