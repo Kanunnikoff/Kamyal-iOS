@@ -10,7 +10,9 @@ import SwiftUI
 
 enum MyAutocompleteToolbar {
 
-    private static let height: CGFloat = 29
+    // Дополнительные семь пунктов опускают верхний ряд клавиш и оставляют
+    // всплывающей плашке долгого нажатия место внутри границ расширения.
+    private static let height: CGFloat = 36
 
     private enum Metrics {
 

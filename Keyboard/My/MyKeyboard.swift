@@ -664,34 +664,44 @@ private extension MyEmojiKeyboard {
             Button("АБВ") {
                 services.actionHandler.handle(.keyboardType(.alphabetic))
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(width: PadMetrics.categoryButtonSize)
+            .frame(maxHeight: .infinity)
 
-            ForEach(categories) { category in
-                Button {
-                    selectedCategory = category
-                } label: {
-                    category.symbolIcon
-                        .frame(
-                            width: PadMetrics.categoryButtonSize,
-                            height: PadMetrics.categoryButtonSize
-                        )
-                        .background(
-                            selectedCategory == category
-                                ? Color.primary.opacity(0.12)
-                                : Color.clear
-                        )
-                        .clipShape(Circle())
+            // Категорий может оказаться больше, чем помещается на узкой или
+            // разделённой клавиатуре iPad. Прокручивается только средняя часть,
+            // поэтому переход к буквам и служебные кнопки всегда остаются видимыми.
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 0) {
+                    ForEach(categories) { category in
+                        Button {
+                            selectedCategory = category
+                        } label: {
+                            category.symbolIcon
+                                .frame(
+                                    width: PadMetrics.categoryButtonSize,
+                                    height: PadMetrics.categoryButtonSize
+                                )
+                                .background(
+                                    selectedCategory == category
+                                        ? Color.primary.opacity(0.12)
+                                        : Color.clear
+                                )
+                                .clipShape(Circle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(category.labelText(for: .russian))
+                    }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .accessibilityLabel(category.labelText(for: .russian))
             }
+            .frame(maxWidth: .infinity)
 
             Button {
                 services.actionHandler.handle(.backspace)
             } label: {
                 Image(systemName: "delete.left")
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(width: PadMetrics.categoryButtonSize)
+            .frame(maxHeight: .infinity)
             .accessibilityLabel("Удалить")
 
             Button {
@@ -699,7 +709,8 @@ private extension MyEmojiKeyboard {
             } label: {
                 Image(systemName: "keyboard.chevron.compact.down")
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(width: PadMetrics.categoryButtonSize)
+            .frame(maxHeight: .infinity)
             .accessibilityLabel("Скрыть клавиатуру")
         }
         .buttonStyle(.plain)
