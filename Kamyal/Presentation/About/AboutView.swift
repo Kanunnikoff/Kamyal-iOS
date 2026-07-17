@@ -43,6 +43,10 @@ struct AboutView: View {
             }
             .frame(maxWidth: .infinity)
 
+            Text("Предложения слов формируются на основе ингушского частотного словаря [YandievRuslan/ing_freq_dict](https://github.com/YandievRuslan/ing_freq_dict).")
+                .font(.caption)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
             Section {
                 Link(destination: Config.APPSTORE_APP_REVIEW_URL) {
                     Text(isIngush ? "Хетар а‌ла" : "Оценить")
