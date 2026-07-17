@@ -10,10 +10,10 @@ import SwiftUI
 
 enum MyAutocompleteToolbar {
 
-    private static let height: CGFloat = 29
-
     private enum Metrics {
 
+        static let padHeight: CGFloat = 20
+        static let phoneHeight: CGFloat = 29
         static let firstSeparatorPosition: CGFloat = 1 / 3
         static let separatorHorizontalOffset: CGFloat = -2 / 3
         static let secondSeparatorPosition: CGFloat = 2 / 3
@@ -23,9 +23,13 @@ enum MyAutocompleteToolbar {
         static let separatorWidth: CGFloat = 1
     }
 
-    static var style: AutocompleteToolbarStyle {
+    static func style(isPadKeyboard: Bool) -> AutocompleteToolbarStyle {
         var style = AutocompleteToolbarStyle.standard
-        style.height = height
+
+        // На iPad над расширением уже находится системная строка быстрых действий.
+        // Уменьшаем только дополнительную полосу наших подсказок, не меняя
+        // привычную высоту панели на iPhone, где системного ряда нет.
+        style.height = isPadKeyboard ? Metrics.padHeight : Metrics.phoneHeight
 
         // Собственные разделители всегда занимают границы трёх системных ячеек.
         // Стандартные разделители KeyboardKit скрываем, чтобы после появления

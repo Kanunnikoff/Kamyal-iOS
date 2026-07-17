@@ -35,6 +35,7 @@ struct MyKeyboard: View {
             buttonContent: { parameters in
                 MyKeyboardButtonContent(
                     action: parameters.item.action,
+                    keyboardContext: keyboardContext,
                     standardContent: parameters.view
                 )
             },
@@ -52,7 +53,8 @@ struct MyKeyboard: View {
             },
             toolbar: { parameters in
                 if isPadKeyboard {
-                    Color.clear.frame(height: PadLayoutMetrics.toolbarHeight)
+                    parameters.view
+                        .offset(y: PadLayoutMetrics.autocompleteContentVerticalOffset)
                 } else {
                     parameters.view
                 }
@@ -61,10 +63,12 @@ struct MyKeyboard: View {
         .keyboardCalloutActions { parameters in
             customCalloutActions(for: parameters.action) ?? parameters.standardActions()
         }
-        .autocompleteToolbarStyle(MyAutocompleteToolbar.style)
+        .autocompleteToolbarStyle(
+            MyAutocompleteToolbar.style(isPadKeyboard: isPadKeyboard)
+        )
         .environment(\.layoutDirection, .leftToRight)
         .overlay(alignment: .top) {
-            if keyboardContext.keyboardType.isAlphabetic, !isPadKeyboard {
+            if keyboardContext.keyboardType.isAlphabetic {
                 MyAutocompleteToolbar.separators
             }
         }
@@ -325,16 +329,14 @@ private enum AlphabeticLayoutMetrics {
 
 private enum PadLayoutMetrics {
 
+    // Системная строка быстрых действий остаётся над сторонней клавиатурой,
+    // поэтому не увеличиваем собственную панель подсказок, а только поднимаем
+    // её содержимое до уровня текста на системной русской клавиатуре.
+    static let autocompleteContentVerticalOffset: CGFloat = -4
     static let lowerRowIndex = 2
     static let middleRowIndex = 1
     static let minimumInputRowItemCount = 3
     static let serviceRowIndex = 3
-
-    // iPad сам добавляет полосу команд редактирования над расширением. Нулевая
-    // высота делает клавиатуру на 8 физических пикселей ниже системной, а
-    // обычная полоса подсказок создаёт целый лишний ряд. Прозрачные 4 пункта
-    // сохраняют системную общую высоту без дублирования этой полосы.
-    static let toolbarHeight: CGFloat = 4
     static let topRowIndex = 0
 
     // Доли получены по системной клавиатуре iPad Pro 11″ в альбомной
@@ -379,6 +381,7 @@ private struct MyKeyboardButtonContent<StandardContent: View>: View {
     private var isKeyboardIngush = false
 
     let action: KeyboardAction
+    let keyboardContext: KeyboardContext
     let standardContent: StandardContent
 
     @ViewBuilder
@@ -392,6 +395,11 @@ private struct MyKeyboardButtonContent<StandardContent: View>: View {
                 text: title,
                 action: action
             )
+            // Стандартное содержимое KeyboardKit добавляет зависящие от действия
+            // и устройства внутренние отступы. При замене всего содержимого на наш
+            // заголовок эта обёртка исчезает, из-за чего подпись «Ввод» на iPad
+            // прижимается к нижнему правому краю. Возвращаем те же отступы явно.
+            .padding(action.standardButtonContentInsets(for: keyboardContext))
         } else {
             standardContent
         }
