@@ -52,24 +52,13 @@ struct MyKeyboard: View {
                 )
             },
             toolbar: { parameters in
-                if isPadKeyboard {
-                    parameters.view
-                        .offset(y: PadLayoutMetrics.autocompleteContentVerticalOffset)
-                } else {
-                    parameters.view
-                }
+                parameters.view
             }
         )
         .keyboardCalloutActions { parameters in
             customCalloutActions(for: parameters.action) ?? parameters.standardActions()
         }
-        .autocompleteToolbarStyle(MyAutocompleteToolbar.style)
         .environment(\.layoutDirection, .leftToRight)
-        .overlay(alignment: .top) {
-            if keyboardContext.keyboardType.isAlphabetic {
-                MyAutocompleteToolbar.separators
-            }
-        }
     }
 }
 
@@ -327,10 +316,6 @@ private enum AlphabeticLayoutMetrics {
 
 private enum PadLayoutMetrics {
 
-    // Системная строка быстрых действий остаётся над сторонней клавиатурой,
-    // поэтому не увеличиваем собственную панель подсказок, а только поднимаем
-    // её содержимое до уровня текста на системной русской клавиатуре.
-    static let autocompleteContentVerticalOffset: CGFloat = -4
     static let lowerRowIndex = 2
     static let middleRowIndex = 1
     static let minimumInputRowItemCount = 3

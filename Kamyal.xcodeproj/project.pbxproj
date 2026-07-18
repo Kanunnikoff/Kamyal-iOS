@@ -35,7 +35,6 @@
 		0A713B4B28E98478006C71D8 /* LatinIngushInputSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A713B4A28E98478006C71D8 /* LatinIngushInputSetProvider.swift */; };
 		0A713B4D28E984A4006C71D8 /* LatinIngushCalloutActionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A713B4C28E984A4006C71D8 /* LatinIngushCalloutActionProvider.swift */; };
 		0A7A0E2728797DFE0032472B /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2628797DFE0032472B /* KeyboardView.swift */; };
-		0A7A0E2A28797E6A0032472B /* MyAutocompleteToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2928797E6A0032472B /* MyAutocompleteToolbar.swift */; };
 		0A7A0E2C28797F9A0032472B /* MyKeyboardAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2B28797F9A0032472B /* MyKeyboardAppearance.swift */; };
 		0A7A0E302879C4160032472B /* MyKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E2F2879C4160032472B /* MyKeyboard.swift */; };
 		0A7A0E34287A11150032472B /* IngushInputSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A0E33287A11150032472B /* IngushInputSetProvider.swift */; };
@@ -118,7 +117,6 @@
 		0A713B4A28E98478006C71D8 /* LatinIngushInputSetProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatinIngushInputSetProvider.swift; sourceTree = "<group>"; };
 		0A713B4C28E984A4006C71D8 /* LatinIngushCalloutActionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatinIngushCalloutActionProvider.swift; sourceTree = "<group>"; };
 		0A7A0E2628797DFE0032472B /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
-		0A7A0E2928797E6A0032472B /* MyAutocompleteToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAutocompleteToolbar.swift; sourceTree = "<group>"; };
 		0A7A0E2B28797F9A0032472B /* MyKeyboardAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyKeyboardAppearance.swift; sourceTree = "<group>"; };
 		0A7A0E2F2879C4160032472B /* MyKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyKeyboard.swift; sourceTree = "<group>"; };
 		0A7A0E33287A11150032472B /* IngushInputSetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngushInputSetProvider.swift; sourceTree = "<group>"; };
@@ -327,7 +325,6 @@
 			isa = PBXGroup;
 			children = (
 				0A1241F328796F3200D71CE3 /* MyKeyboardActionHandler.swift */,
-				0A7A0E2928797E6A0032472B /* MyAutocompleteToolbar.swift */,
 				0A7A0E2B28797F9A0032472B /* MyKeyboardAppearance.swift */,
 				0A7A0E2F2879C4160032472B /* MyKeyboard.swift */,
 				0A547D1328ECCD3F0008C977 /* MyAutocompleteProvider.swift */,
@@ -557,7 +554,6 @@
 			files = (
 				0A713B4B28E98478006C71D8 /* LatinIngushInputSetProvider.swift in Sources */,
 				0A7A0E2728797DFE0032472B /* KeyboardView.swift in Sources */,
-				0A7A0E2A28797E6A0032472B /* MyAutocompleteToolbar.swift in Sources */,
 				0A3C773628E0770E0031EB74 /* Config.swift in Sources */,
 				0A7A0E302879C4160032472B /* MyKeyboard.swift in Sources */,
 				0A7A0E36287A20100032472B /* IngushCalloutActionProvider.swift in Sources */,
@@ -711,7 +707,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kamyal/Kamyal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "Kamyal/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				ENABLE_PREVIEWS = YES;
@@ -749,7 +745,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kamyal/Kamyal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "Kamyal/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				ENABLE_PREVIEWS = YES;
@@ -785,7 +781,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = keyboard/keyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = keyboard/Info.plist;
@@ -816,7 +812,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = keyboard/keyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = keyboard/Info.plist;
@@ -846,7 +842,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stickers/Info.plist;
@@ -869,7 +865,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stickers/Info.plist;
