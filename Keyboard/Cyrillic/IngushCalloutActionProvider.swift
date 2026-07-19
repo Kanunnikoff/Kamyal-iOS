@@ -24,11 +24,7 @@ struct IngushCalloutActionProvider {
             ? calloutStrings.map { $0.capitalized(with: .russian) }
             : calloutStrings
 
-        // `capitalized` переводит стоящую после первой буквы палочку в формальную
-        // строчную U+04CF. Перед вставкой возвращаем единственную принятую форму U+04C0.
-        return strings.map {
-            .character($0.canonicalizingIngushPalochka())
-        }
+        return strings.map { .character($0) }
     }
     
     private func calloutActionStrings(for char: String) -> [String] {
@@ -36,17 +32,17 @@ struct IngushCalloutActionProvider {
             case "0": return ["0", "°"]
                 
             case "а": return ["а", "аь", "а́", "ă"]
-            case "г": return ["г", "гӀ"]
+            case "г": return ["г", "гӏ"]
             case "е": return ["е", "ё", "е́"]
             case "и": return ["и", "и́"]
-            case "к": return ["к", "кх", "къ", "кӀ"]
+            case "к": return ["к", "кх", "къ", "кӏ"]
             case "о": return ["о", "о́"]
-            case "п": return ["п", "пӀ"]
-            case "т": return ["т", "тӀ"]
+            case "п": return ["п", "пӏ"]
+            case "т": return ["т", "тӏ"]
             case "у": return ["у", "у́"]
-            case "х": return ["х", "хь", "хӀ"]
-            case "ц": return ["ц", "цӀ"]
-            case "ч": return ["ч", "чӀ"]
+            case "х": return ["х", "хь", "хӏ"]
+            case "ц": return ["ц", "цӏ"]
+            case "ч": return ["ч", "чӏ"]
             case "ш": return ["ш", "щ"]
             case "ь": return ["ь", "ъ"]
             case "ы": return ["ы", "ы́"]

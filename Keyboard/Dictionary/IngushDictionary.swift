@@ -17,31 +17,25 @@ enum IngushSuggestionFormatter {
         for input: String,
         isUppercaseLocked: Bool
     ) -> String {
-        let formattedWord: String
-
         // Зафиксированный Shift относится ко всему выбранному слову, а не только
         // к уже введённому фрагменту. Проверяем его раньше нормативных исключений,
         // чтобы в этом режиме любая подсказка была полностью в верхнем регистре.
         if isUppercaseLocked {
-            formattedWord = word.uppercased(with: locale)
-        } else {
-            let normalizedWord = word.lowercased(with: locale)
-
-            // Частотный словарь собран из корпуса и содержит отдельные формы имени
-            // Всевышнего со строчной буквы. Для подсказок сохраняем нормативный регистр
-            // независимо от того, с какой буквы пользователь начал вводить слово.
-            if canonicalUppercasePrefixes.contains(where: normalizedWord.hasPrefix) {
-                formattedWord = word.capitalized(with: locale)
-            } else {
-                formattedWord = input.first?.isUppercase == true
-                    ? word.capitalized(with: locale)
-                    : word
-            }
+            return word.uppercased(with: locale)
         }
 
-        // Корпус словаря и системные операции регистра используют U+04CF.
-        // Наружу всегда отдаём принятую в ингушском алфавите форму U+04C0.
-        return formattedWord.canonicalizingIngushPalochka()
+        let normalizedWord = word.lowercased(with: locale)
+
+        // Частотный словарь собран из корпуса и содержит отдельные формы имени
+        // Всевышнего со строчной буквы. Для подсказок сохраняем нормативный регистр
+        // независимо от того, с какой буквы пользователь начал вводить слово.
+        if canonicalUppercasePrefixes.contains(where: normalizedWord.hasPrefix) {
+            return word.capitalized(with: locale)
+        }
+
+        return input.first?.isUppercase == true
+            ? word.capitalized(with: locale)
+            : word
     }
 }
 

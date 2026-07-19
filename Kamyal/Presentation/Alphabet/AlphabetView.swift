@@ -86,17 +86,9 @@ private struct AlphabetLetterView: View {
             Text(letter.uppercase)
                 .font(.title2.weight(.semibold))
 
-            if let lowercase = letter.lowercase {
-                Text(lowercase)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            } else {
-                // У буквы Ӏ одна и та же форма в обоих регистрах. Пустая строка
-                // сохраняет одинаковую высоту карточек, не создавая вторую форму.
-                Text(" ")
-                    .font(.subheadline)
-                    .accessibilityHidden(true)
-            }
+            Text(letter.lowercase)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
         }
         .minimumScaleFactor(0.75)
         .lineLimit(1)
@@ -166,7 +158,7 @@ private enum AlphabetScript: String, CaseIterable, Identifiable {
 private struct AlphabetLetter: Identifiable {
 
     let uppercase: String
-    let lowercase: String?
+    let lowercase: String
 
     var id: String { uppercase }
 }
@@ -223,7 +215,7 @@ private enum AlphabetData {
         AlphabetLetter(uppercase: "Ю", lowercase: "ю"),
         AlphabetLetter(uppercase: "Я", lowercase: "я"),
         AlphabetLetter(uppercase: "Яь", lowercase: "яь"),
-        AlphabetLetter(uppercase: "Ӏ", lowercase: nil)
+        AlphabetLetter(uppercase: "Ӏ", lowercase: "ӏ")
     ]
 
     // В статье приведено несколько исторических вариантов. Здесь используется
