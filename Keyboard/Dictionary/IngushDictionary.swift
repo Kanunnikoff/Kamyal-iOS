@@ -41,8 +41,31 @@ enum IngushSuggestionFormatter {
 
 actor IngushDictionary {
 
-    private static let fileExtension = "csv"
-    private static let fileName = "ing_freq_dict_sorted"
+    private enum Source: Hashable {
+
+        case dictionary
+        case names
+
+        var fileName: String {
+            switch self {
+                case .dictionary:
+                    "ing_freq_dict_sorted"
+                case .names:
+                    "ing_names"
+            }
+        }
+
+        var fileExtension: String {
+            switch self {
+                case .dictionary:
+                    "csv"
+                case .names:
+                    "txt"
+            }
+        }
+    }
+
+    private static let byteOrderMark: Character = "\u{FEFF}"
     private static let fieldSeparator: Character = ";"
     private static let indexedPrefixLength = 2
     private static let cancellationCheckInterval = 256
@@ -54,15 +77,22 @@ actor IngushDictionary {
         let positionsByPrefix: [String: [Int]]
     }
 
-    private let dictionaryURL: URL?
-    private var cachedStorage: Storage?
+    private let customURLs: [Source: URL]
+    private var cachedStorages: [Source: Storage] = [:]
 
-    init(dictionaryURL: URL? = nil) {
-        self.dictionaryURL = dictionaryURL
+    init(
+        dictionaryURL: URL? = nil,
+        namesURL: URL? = nil
+    ) {
+        var customURLs: [Source: URL] = [:]
+        customURLs[.dictionary] = dictionaryURL
+        customURLs[.names] = namesURL
+        self.customURLs = customURLs
     }
 
     func prepare() {
-        _ = loadStorageIfNeeded()
+        _ = loadStorageIfNeeded(for: .dictionary)
+        _ = loadStorageIfNeeded(for: .names)
     }
 
     func suggestions(
@@ -73,49 +103,54 @@ actor IngushDictionary {
 
         try Task.checkCancellation()
 
-        let storage = loadStorageIfNeeded()
         let normalizedInput = input.lowercased(with: Self.locale)
-
-        if let indexedPrefix = indexedPrefix(for: normalizedInput) {
-            guard let positions = storage.positionsByPrefix[indexedPrefix] else { return [] }
-
-            return try suggestions(
-                in: positions,
-                storage: storage,
-                matching: normalizedInput,
-                limit: limit
-            )
-        }
-
-        return try suggestions(
-            in: storage.words.indices,
-            storage: storage,
+        let dictionarySuggestions = try suggestions(
+            in: loadStorageIfNeeded(for: .dictionary),
             matching: normalizedInput,
-            limit: limit
+            limit: limit,
+            excluding: []
         )
+        let remainingSuggestionCount = limit - dictionarySuggestions.count
+
+        guard remainingSuggestionCount > 0 else { return dictionarySuggestions }
+
+        // Частотный словарь сохраняет приоритет, а имена занимают только оставшиеся
+        // места. Сравнение без учёта регистра не позволяет показать одно и то же
+        // слово дважды, если оно присутствует в обоих источниках.
+        let normalizedDictionarySuggestions = Set(
+            dictionarySuggestions.map { $0.lowercased(with: Self.locale) }
+        )
+        let nameSuggestions = try suggestions(
+            in: loadStorageIfNeeded(for: .names),
+            matching: normalizedInput,
+            limit: remainingSuggestionCount,
+            excluding: normalizedDictionarySuggestions
+        )
+
+        return dictionarySuggestions + nameSuggestions
     }
 }
 
 private extension IngushDictionary {
 
-    private func loadStorageIfNeeded() -> Storage {
-        if let cachedStorage {
+    private func loadStorageIfNeeded(for source: Source) -> Storage {
+        if let cachedStorage = cachedStorages[source] {
             return cachedStorage
         }
 
-        let storage = loadStorage()
-        cachedStorage = storage
+        let storage = loadStorage(for: source)
+        cachedStorages[source] = storage
         return storage
     }
 
-    private func loadStorage() -> Storage {
+    private func loadStorage(for source: Source) -> Storage {
         let bundledURL = Bundle.main.url(
-            forResource: Self.fileName,
-            withExtension: Self.fileExtension
+            forResource: source.fileName,
+            withExtension: source.fileExtension
         )
 
-        guard let url = dictionaryURL ?? bundledURL else {
-            assertionFailure("Не найден файл ингушского словаря.")
+        guard let url = customURLs[source] ?? bundledURL else {
+            assertionFailure("Не найден файл словаря: \(source.fileName).\(source.fileExtension).")
             return Storage(words: [], positionsByPrefix: [:])
         }
 
@@ -123,8 +158,18 @@ private extension IngushDictionary {
             let content = try String(contentsOf: url, encoding: .utf8)
             let words = content
                 .components(separatedBy: .newlines)
-                .compactMap { line in
-                    line.split(separator: Self.fieldSeparator).first.map(String.init)
+                .compactMap { line -> String? in
+                    guard var word = line.split(separator: Self.fieldSeparator).first else {
+                        return nil
+                    }
+
+                    // Файл имён сохранён с меткой порядка байтов. Убираем её из
+                    // первого имени, иначе невидимый символ помешает поиску по нему.
+                    if word.first == Self.byteOrderMark {
+                        word = word.dropFirst()
+                    }
+
+                    return word.isEmpty ? nil : String(word)
                 }
 
             var positionsByPrefix: [String: [Int]] = [:]
@@ -141,7 +186,9 @@ private extension IngushDictionary {
                 positionsByPrefix: positionsByPrefix
             )
         } catch {
-            assertionFailure("Не удалось прочитать ингушский словарь: \(error)")
+            assertionFailure(
+                "Не удалось прочитать файл словаря \(source.fileName).\(source.fileExtension): \(error)"
+            )
             return Storage(words: [], positionsByPrefix: [:])
         }
     }
@@ -152,14 +199,43 @@ private extension IngushDictionary {
         return String(text.prefix(Self.indexedPrefixLength))
     }
 
-    private func suggestions<Positions: Sequence>(
-        in positions: Positions,
-        storage: Storage,
+    private func suggestions(
+        in storage: Storage,
         matching normalizedInput: String,
-        limit: Int
+        limit: Int,
+        excluding normalizedExcludedWords: Set<String>
+    ) throws -> [String] {
+        if let indexedPrefix = indexedPrefix(for: normalizedInput) {
+            guard let positions = storage.positionsByPrefix[indexedPrefix] else { return [] }
+
+            return try suggestions(
+                at: positions,
+                in: storage,
+                matching: normalizedInput,
+                limit: limit,
+                excluding: normalizedExcludedWords
+            )
+        }
+
+        return try suggestions(
+            at: storage.words.indices,
+            in: storage,
+            matching: normalizedInput,
+            limit: limit,
+            excluding: normalizedExcludedWords
+        )
+    }
+
+    private func suggestions<Positions: Sequence>(
+        at positions: Positions,
+        in storage: Storage,
+        matching normalizedInput: String,
+        limit: Int,
+        excluding normalizedExcludedWords: Set<String>
     ) throws -> [String] where Positions.Element == Int {
         var result: [String] = []
         result.reserveCapacity(limit)
+        var normalizedResultWords = normalizedExcludedWords
 
         for (offset, position) in positions.enumerated() {
             // Поиск по редкому началу слова всё ещё может просмотреть большой раздел
@@ -170,7 +246,9 @@ private extension IngushDictionary {
             }
 
             let word = storage.words[position]
-            guard word.lowercased(with: Self.locale).hasPrefix(normalizedInput) else { continue }
+            let normalizedWord = word.lowercased(with: Self.locale)
+            guard normalizedWord.hasPrefix(normalizedInput) else { continue }
+            guard normalizedResultWords.insert(normalizedWord).inserted else { continue }
 
             result.append(word)
 
