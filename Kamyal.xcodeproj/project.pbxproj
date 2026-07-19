@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		038B7907300CD07A00AC6127 /* ing_names.txt in Resources */ = {isa = PBXBuildFile; fileRef = 038B7906300CD07A00AC6127 /* ing_names.txt */; };
 		0A1241D028796A3A00D71CE3 /* KamyalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1241CF28796A3A00D71CE3 /* KamyalApp.swift */; };
 		0A1241D228796A3A00D71CE3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1241D128796A3A00D71CE3 /* ContentView.swift */; };
 		0A1241D428796A3C00D71CE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A1241D328796A3C00D71CE3 /* Assets.xcassets */; };
@@ -87,6 +88,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		038B7906300CD07A00AC6127 /* ing_names.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = ing_names.txt; sourceTree = "<group>"; };
 		0A1241CC28796A3A00D71CE3 /* Kamyal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kamyal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A1241CF28796A3A00D71CE3 /* KamyalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KamyalApp.swift; sourceTree = "<group>"; };
 		0A1241D128796A3A00D71CE3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 		0A547D1728ECD0560008C977 /* Dictionary */ = {
 			isa = PBXGroup;
 			children = (
+				038B7906300CD07A00AC6127 /* ing_names.txt */,
 				0A29ECAC28EE18F400DBF90F /* ing_freq_dict_sorted.csv */,
 				0A547D1528ECD0110008C977 /* IngushDictionary.swift */,
 			);
@@ -507,6 +510,7 @@
 			files = (
 				0B10000B2F17000100C0D3E1 /* PrivacyInfo.xcprivacy in Resources */,
 				0A29ECAD28EE18F400DBF90F /* ing_freq_dict_sorted.csv in Resources */,
+				038B7907300CD07A00AC6127 /* ing_names.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
