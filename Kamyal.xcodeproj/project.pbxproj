@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		038B7907300CD07A00AC6127 /* ing_names.txt in Resources */ = {isa = PBXBuildFile; fileRef = 038B7906300CD07A00AC6127 /* ing_names.txt */; };
+		03F5C5B3300E0677006C83BA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03F5C5B1300E0677006C83BA /* GoogleService-Info.plist */; };
 		0A1241D028796A3A00D71CE3 /* KamyalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1241CF28796A3A00D71CE3 /* KamyalApp.swift */; };
 		0A1241D228796A3A00D71CE3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1241D128796A3A00D71CE3 /* ContentView.swift */; };
 		0A1241D428796A3C00D71CE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A1241D328796A3C00D71CE3 /* Assets.xcassets */; };
@@ -53,6 +54,9 @@
 		0B10000B2F17000100C0D3E1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0B20000B2F17000100C0D3E1 /* PrivacyInfo.xcprivacy */; };
 		0B10000C2F17000200C0D3E1 /* RequestReviewViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B20000C2F17000200C0D3E1 /* RequestReviewViewModifier.swift */; };
 		0B10000D2F17000300C0D3E1 /* AlphabetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B20000D2F17000300C0D3E1 /* AlphabetView.swift */; };
+		0C100001300E100100C0D3E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C200001300E100100C0D3E1 /* AppDelegate.swift */; };
+		0C100002300E100100C0D3E1 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0C500001300E100100C0D3E1 /* FirebaseAnalytics */; };
+		0C100003300E100100C0D3E1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0C500002300E100100C0D3E1 /* FirebaseCrashlytics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +93,7 @@
 
 /* Begin PBXFileReference section */
 		038B7906300CD07A00AC6127 /* ing_names.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = ing_names.txt; sourceTree = "<group>"; };
+		03F5C5B1300E0677006C83BA /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A1241CC28796A3A00D71CE3 /* Kamyal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kamyal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A1241CF28796A3A00D71CE3 /* KamyalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KamyalApp.swift; sourceTree = "<group>"; };
 		0A1241D128796A3A00D71CE3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -136,6 +141,7 @@
 		0B20000B2F17000100C0D3E1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0B20000C2F17000200C0D3E1 /* RequestReviewViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestReviewViewModifier.swift; sourceTree = "<group>"; };
 		0B20000D2F17000300C0D3E1 /* AlphabetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphabetView.swift; sourceTree = "<group>"; };
+		0C200001300E100100C0D3E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +149,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C100003300E100100C0D3E1 /* FirebaseCrashlytics in Frameworks */,
+				0C100002300E100100C0D3E1 /* FirebaseAnalytics in Frameworks */,
 				0B1000092E25700100C0D3E1 /* StoreKit.framework in Frameworks */,
 				0A1241EF28796BDD00D71CE3 /* KeyboardKit in Frameworks */,
 			);
@@ -183,6 +191,8 @@
 		0A1241CE28796A3A00D71CE3 /* Kamyal */ = {
 			isa = PBXGroup;
 			children = (
+				03F5C5B1300E0677006C83BA /* GoogleService-Info.plist */,
+				0C200001300E100100C0D3E1 /* AppDelegate.swift */,
 				0A3C773428E076A90031EB74 /* Kamyal.entitlements */,
 				0A26C47228D1106F004EEFCF /* Info.plist */,
 				0B20000A2F17000100C0D3E1 /* PrivacyInfo.xcprivacy */,
@@ -399,6 +409,7 @@
 				0A1241C928796A3A00D71CE3 /* Frameworks */,
 				0A1241CA28796A3A00D71CE3 /* Resources */,
 				0A1241EC28796B5F00D71CE3 /* Embed Foundation Extensions */,
+				0C300001300E100100C0D3E1 /* Firebase Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -409,6 +420,8 @@
 			name = Kamyal;
 			packageProductDependencies = (
 				0A1241EE28796BDD00D71CE3 /* KeyboardKit */,
+				0C500001300E100100C0D3E1 /* FirebaseAnalytics */,
+				0C500002300E100100C0D3E1 /* FirebaseCrashlytics */,
 			);
 			productName = izhitsa;
 			productReference = 0A1241CC28796A3A00D71CE3 /* Kamyal.app */;
@@ -480,6 +493,7 @@
 			mainGroup = 0A1241C328796A3A00D71CE3;
 			packageReferences = (
 				0A1241ED28796BDD00D71CE3 /* XCRemoteSwiftPackageReference "KeyboardKit" */,
+				0C400001300E100100C0D3E1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 0A1241CD28796A3A00D71CE3 /* Products */;
 			projectDirPath = "";
@@ -499,6 +513,7 @@
 			files = (
 				0B10000A2F17000100C0D3E1 /* PrivacyInfo.xcprivacy in Resources */,
 				0B1000082E25700100C0D3E1 /* Store.storekit in Resources */,
+				03F5C5B3300E0677006C83BA /* GoogleService-Info.plist in Resources */,
 				0A1241D728796A3C00D71CE3 /* Preview Assets.xcassets in Resources */,
 				0A1241D428796A3C00D71CE3 /* Assets.xcassets in Resources */,
 			);
@@ -524,11 +539,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0C300001300E100100C0D3E1 /* Firebase Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = "Firebase Crashlytics";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0A1241C828796A3A00D71CE3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C100001300E100100C0D3E1 /* AppDelegate.swift in Sources */,
 				0B10000D2F17000300C0D3E1 /* AlphabetView.swift in Sources */,
 				0B10000C2F17000200C0D3E1 /* RequestReviewViewModifier.swift in Sources */,
 				0B1000012E25700100C0D3E1 /* TabNavigationView.swift in Sources */,
@@ -622,7 +665,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -711,7 +754,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kamyal/Kamyal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_ASSET_PATHS = "Kamyal/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				ENABLE_PREVIEWS = YES;
@@ -729,6 +772,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -749,7 +796,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kamyal/Kamyal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_ASSET_PATHS = "Kamyal/Preview\\ Content";
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				ENABLE_PREVIEWS = YES;
@@ -767,6 +814,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = software.kanunnikoff.Kamyal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -785,7 +836,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = keyboard/keyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = keyboard/Info.plist;
@@ -816,7 +867,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = keyboard/keyboard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = keyboard/Info.plist;
@@ -846,7 +897,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stickers/Info.plist;
@@ -869,7 +920,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 9FJ6F4TT5T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stickers/Info.plist;
@@ -938,6 +989,14 @@
 				minimumVersion = 10.7.2;
 			};
 		};
+		0C400001300E100100C0D3E1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.16.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -945,6 +1004,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0A1241ED28796BDD00D71CE3 /* XCRemoteSwiftPackageReference "KeyboardKit" */;
 			productName = KeyboardKit;
+		};
+		0C500001300E100100C0D3E1 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C400001300E100100C0D3E1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		0C500002300E100100C0D3E1 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C400001300E100100C0D3E1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

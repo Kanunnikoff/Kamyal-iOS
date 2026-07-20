@@ -5,6 +5,7 @@
 //  Created by Codex on 12.07.2026.
 //
 
+import FirebaseAnalytics
 import Foundation
 import OSLog
 import StoreKit
@@ -47,6 +48,7 @@ actor PurchaseManager {
 
     private var transactionUpdatesTask: Task<Void, Never>?
     private var purchaseIntentsTask: Task<Void, Never>?
+    private var loggedTransactionIdentifiers: Set<UInt64> = []
 
     private init() {
     }
@@ -109,6 +111,8 @@ actor PurchaseManager {
             case .success(let verificationResult):
                 let transaction = try verifiedTransaction(from: verificationResult)
 
+                logTransactionIfNeeded(transaction)
+
                 // Чаевые не открывают содержимое, поэтому после проверки
                 // транзакцию можно завершить сразу и не оставлять в очереди StoreKit.
                 await transaction.finish()
@@ -132,6 +136,8 @@ actor PurchaseManager {
         do {
             let transaction = try verifiedTransaction(from: verificationResult)
 
+            logTransactionIfNeeded(transaction)
+
             // Обновление может прийти после одобрения покупки или с другого
             // устройства. Завершаем только проверенную транзакцию.
             await transaction.finish()
@@ -150,5 +156,18 @@ actor PurchaseManager {
             case .unverified:
                 throw PurchaseManagerError.unverifiedTransaction
         }
+    }
+
+    private func logTransactionIfNeeded(_ transaction: Transaction) {
+        guard transaction.revocationDate == nil,
+              transaction.revocationReason == nil,
+              loggedTransactionIdentifiers.insert(transaction.id).inserted else {
+            return
+        }
+
+        // Одна покупка может одновременно вернуться из product.purchase()
+        // и появиться в Transaction.updates. Передаём только проверенную
+        // транзакцию и не создаём повторное событие в рамках текущего запуска.
+        Analytics.logTransaction(transaction)
     }
 }
