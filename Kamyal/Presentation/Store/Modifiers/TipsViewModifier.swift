@@ -7,10 +7,14 @@
 
 import SwiftUI
 
+/// Показывает состояние успешной покупки чаевых или сообщение об ошибке.
 struct TipsViewModifier: ViewModifier {
 
     @ObservedObject var purchaseController: TipPurchaseController
 
+    /// Накладывает индикатор благодарности и предупреждение об ошибке.
+    ///
+    /// - Parameter content: Исходное содержимое представления.
     func body(content: Content) -> some View {
         content
             .overlay(alignment: .bottom) {
@@ -38,6 +42,10 @@ struct TipsViewModifier: ViewModifier {
 
 extension View {
 
+    /// Подключает отображение результата покупки чаевых.
+    ///
+    /// - Parameter purchaseController: Контроллер, публикующий состояние покупки.
+    /// - Returns: Представление с индикатором успеха и предупреждением об ошибке.
     func tips(purchaseController: TipPurchaseController) -> some View {
         modifier(TipsViewModifier(purchaseController: purchaseController))
     }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Разделы, доступные в основной навигации приложения.
 enum SidebarItem: Hashable {
     case main
     case alphabet
@@ -14,6 +15,7 @@ enum SidebarItem: Hashable {
     case about
 }
 
+/// Боковая панель навигации для iPad и других широких окон.
 struct Sidebar: View {
     
     @Binding var selection: SidebarItem?
@@ -47,7 +49,10 @@ struct Sidebar: View {
     }
 }
 
+/// Предварительный просмотр боковой панели.
 struct Sidebar_Previews: PreviewProvider {
+
+    /// Хранит изменяемый выбор раздела для предварительного просмотра.
     struct Preview: View {
         @State private var selection: SidebarItem? = SidebarItem.main
         var body: some View {

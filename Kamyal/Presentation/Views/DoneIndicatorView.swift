@@ -7,8 +7,10 @@
 
 import SwiftUI
 
+/// Последовательно показывает значок, сообщение и итоговый значок операции.
 struct DoneIndicatorView: View {
 
+    /// Длительности этапов анимации индикатора.
     private enum Constants {
 
         static let initialPauseNanoseconds: UInt64 = 2_000_000_000
@@ -26,6 +28,12 @@ struct DoneIndicatorView: View {
 
     @ScaledMetric private var indicatorHeight = 80.0
 
+    /// Создаёт анимированный индикатор завершённой операции.
+    ///
+    /// - Parameters:
+    ///   - message: Сообщение, показываемое между начальным и итоговым значками.
+    ///   - startImageName: Имя начального символа SF Symbols.
+    ///   - endImageName: Имя итогового символа SF Symbols.
     init(
         message: LocalizedStringKey,
         startImageName: String = "arrow.down.circle",
@@ -80,6 +88,7 @@ struct DoneIndicatorView: View {
         }
     }
 
+    /// Выполняет этапы появления сообщения и смены значков.
     private func animateIndicator() async {
         withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
             isImageVisible = true
@@ -118,6 +127,7 @@ struct DoneIndicatorView: View {
     }
 }
 
+/// Предварительный просмотр индикатора завершения.
 struct DoneIndicatorView_Previews: PreviewProvider {
 
     static var previews: some View {

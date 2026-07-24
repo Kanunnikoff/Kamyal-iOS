@@ -8,6 +8,7 @@
 import SwiftUI
 import UIKit
 
+/// Показывает сведения о приложении, обратную связь и способы поддержки проекта.
 struct AboutView: View {
 
     @AppStorage(AppSettingsKey.isIngush)
@@ -120,6 +121,7 @@ struct AboutView: View {
     }
 }
 
+/// Предварительный просмотр экрана сведений о приложении.
 struct AboutView_Previews: PreviewProvider {
     static var previews: some View {
         AboutView()

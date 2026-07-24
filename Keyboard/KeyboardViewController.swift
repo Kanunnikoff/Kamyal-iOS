@@ -7,14 +7,21 @@
 
 import KeyboardKit
 
+/// Управляет жизненным циклом, службами и представлением расширения клавиатуры.
 class KeyboardViewController: KeyboardInputViewController {
 
+    /// Обновляет настройку автоматического регистра перед каждым появлением клавиатуры.
+    ///
+    /// - Parameter animated: Признак анимированного появления представления.
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         applyAutocapitalizationSetting()
     }
 
+    /// Отмечает в общей группе, что пользователь действительно открыл клавиатуру.
+    ///
+    /// - Parameter animated: Признак анимированного появления представления.
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -27,6 +34,7 @@ class KeyboardViewController: KeyboardInputViewController {
         )
     }
 
+    /// Настраивает KeyboardKit и устанавливает службы подсказок и обработки действий.
     override func viewWillSetupKeyboardKit() {
         setupKeyboardKit(for: .kamyal) { [weak self] result in
             guard let self else { return }
@@ -57,6 +65,7 @@ class KeyboardViewController: KeyboardInputViewController {
         }
     }
 
+    /// Выбирает начальный регистр клавиатуры с учётом пользовательской настройки.
     override func viewWillSetupInitialKeyboardCase() {
         guard isAutocapitalizationEnabled else {
             setKeyboardCase(.lowercased)
@@ -66,6 +75,7 @@ class KeyboardViewController: KeyboardInputViewController {
         super.viewWillSetupInitialKeyboardCase()
     }
 
+    /// Устанавливает корневое представление пользовательской клавиатуры.
     override func viewWillSetupKeyboardView() {
         setupKeyboardView { controller in
             KeyboardView(
@@ -90,6 +100,7 @@ private extension KeyboardViewController {
         ) as? Bool ?? true
     }
 
+    /// Переносит настройку автоматического регистра в службы KeyboardKit.
     func applyAutocapitalizationSetting() {
         let isEnabled = isAutocapitalizationEnabled
 

@@ -6,15 +6,18 @@
 import StoreKit
 import SwiftUI
 
+/// Запрашивает оценку приложения после заданного числа запусков каждой сборки.
 struct RequestReviewViewModifier: ViewModifier {
 
 #if !os(tvOS) && !os(watchOS)
+    /// Ключи сохранённого состояния запроса оценки.
     private enum StorageKey {
 
         static let launchesCount = "Util.launchesCount"
         static let lastVersionPromtedForReview = "Util.lastVersionPromtedForReview"
     }
 
+    /// Временные параметры запроса оценки.
     private enum Metrics {
 
         static let requestDelaySeconds: TimeInterval = 1
@@ -32,6 +35,9 @@ struct RequestReviewViewModifier: ViewModifier {
     private var requestReview
 #endif
 
+    /// Подключает проверку условий запроса оценки при появлении содержимого.
+    ///
+    /// - Parameter content: Исходное содержимое представления.
     func body(content: Content) -> some View {
         content
 #if !os(tvOS) && !os(watchOS)
@@ -45,6 +51,7 @@ struct RequestReviewViewModifier: ViewModifier {
 #if !os(tvOS) && !os(watchOS)
 private extension RequestReviewViewModifier {
 
+    /// Увеличивает счётчик запусков и при выполнении условий показывает системный запрос.
     func requestReviewIfNeeded() {
         launchesCount += 1
 
@@ -66,6 +73,9 @@ private extension RequestReviewViewModifier {
 
 extension View {
 
+    /// Подключает автоматический запрос оценки к представлению.
+    ///
+    /// - Returns: Представление с учётом числа запусков и уже запрошенной сборки.
     func requestReview() -> some View {
         modifier(RequestReviewViewModifier())
     }

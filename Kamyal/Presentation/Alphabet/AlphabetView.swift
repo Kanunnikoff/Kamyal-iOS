@@ -7,8 +7,10 @@
 
 import SwiftUI
 
+/// Показывает кириллический и исторический латинский ингушские алфавиты.
 struct AlphabetView: View {
 
+    /// Геометрические параметры сетки алфавита.
     fileprivate enum Layout {
 
         static let horizontalPadding: CGFloat = 16
@@ -77,6 +79,7 @@ struct AlphabetView: View {
     }
 }
 
+/// Карточка одной буквы или буквосочетания алфавита.
 private struct AlphabetLetterView: View {
 
     let letter: AlphabetLetter
@@ -102,6 +105,7 @@ private struct AlphabetLetterView: View {
     }
 }
 
+/// Доступные варианты ингушской письменности.
 private enum AlphabetScript: String, CaseIterable, Identifiable {
 
     case cyrillic
@@ -155,6 +159,7 @@ private enum AlphabetScript: String, CaseIterable, Identifiable {
     }
 }
 
+/// Пара заглавного и строчного начертаний в алфавите.
 private struct AlphabetLetter: Identifiable {
 
     let uppercase: String
@@ -163,6 +168,7 @@ private struct AlphabetLetter: Identifiable {
     var id: String { uppercase }
 }
 
+/// Источник и упорядоченные наборы букв для обоих вариантов письменности.
 private enum AlphabetData {
 
     static let sourceURL = URL(
@@ -266,6 +272,7 @@ private enum AlphabetData {
     ]
 }
 
+/// Предварительный просмотр экрана алфавита.
 struct AlphabetView_Previews: PreviewProvider {
 
     static var previews: some View {

@@ -10,6 +10,7 @@ import SwiftUI
 import UIKit
 #endif
 
+/// Выбирает подходящую для устройства схему навигации приложения.
 struct ContentView: View {
     
     @State private var selection: SidebarItem? = SidebarItem.main
@@ -49,8 +50,10 @@ struct ContentView: View {
     }
 }
 
+/// Предварительный просмотр корневого представления.
 struct ContentView_Previews: PreviewProvider {
-    
+
+    /// Обёртка корневого представления для предварительного просмотра.
     struct Preview: View {
         
         var body: some View {

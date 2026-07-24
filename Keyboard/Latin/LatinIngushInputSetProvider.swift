@@ -12,6 +12,10 @@ import KeyboardKit
 public struct LatinIngushInputSetProvider {
     
     /// Создаёт наборы с указанными знаками валют для цифрового и символьного режимов.
+    ///
+    /// - Parameters:
+    ///   - numericCurrency: Знак валюты в цифровом режиме.
+    ///   - symbolicCurrency: Знак валюты в символьном режиме.
     public init(
         numericCurrency: String = "₽",
         symbolicCurrency: String = "€") {

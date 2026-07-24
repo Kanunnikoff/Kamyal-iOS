@@ -9,9 +9,11 @@ import Combine
 import Foundation
 import SwiftUI
 
+/// Управляет покупкой чаевых и состояниями связанных элементов интерфейса.
 @MainActor
 final class TipPurchaseController: ObservableObject {
 
+    /// Временные параметры показа результата покупки.
     private enum Constants {
 
         static let indicatorDisplayNanoseconds: UInt64 = 8_000_000_000
@@ -23,6 +25,7 @@ final class TipPurchaseController: ObservableObject {
 
     private var indicatorTask: Task<Void, Never>?
 
+    /// Запускает покупку чаевых, если другая покупка ещё не выполняется.
     func purchase() {
         guard !isPurchasing else {
             return
@@ -55,6 +58,7 @@ final class TipPurchaseController: ObservableObject {
         }
     }
 
+    /// Показывает индикатор благодарности и скрывает его после заданной задержки.
     private func showSuccessIndicator() {
         indicatorTask?.cancel()
 

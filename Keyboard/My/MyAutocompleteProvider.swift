@@ -8,6 +8,7 @@
 import Foundation
 import KeyboardKit
 
+/// Формирует подсказки из встроенного ингушского словаря для KeyboardKit.
 final class MyAutocompleteProvider: AutocompleteService {
 
     private static let maxSuggestionCount = 3
@@ -18,6 +19,9 @@ final class MyAutocompleteProvider: AutocompleteService {
 
     var locale: Locale = .russian
 
+    /// Создаёт службу подсказок и начинает предварительную подготовку словаря.
+    ///
+    /// - Parameter keyboardContext: Состояние клавиатуры, необходимое для выбора регистра.
     init(keyboardContext: KeyboardContext) {
         self.keyboardContext = keyboardContext
 
@@ -28,6 +32,11 @@ final class MyAutocompleteProvider: AutocompleteService {
         }
     }
 
+    /// Возвращает до трёх словарных подсказок для текущего фрагмента слова.
+    ///
+    /// - Parameter text: Текст перед курсором, переданный KeyboardKit.
+    /// - Returns: Результат с исходным текстом запроса и подходящими словами.
+    /// - Throws: `CancellationError`, если запрос потерял актуальность.
     func autocomplete(_ text: String) async throws -> AutocompleteResult {
         guard !isKeyboardLatin else {
             return AutocompleteResult(
@@ -74,11 +83,36 @@ final class MyAutocompleteProvider: AutocompleteService {
     var ignoredWords: [String] { [] }
     var learnedWords: [String] { [] }
 
+    /// Сообщает, что служба не хранит игнорируемые слова.
+    ///
+    /// - Parameter word: Проверяемое слово.
+    /// - Returns: Всегда `false`.
     func hasIgnoredWord(_ word: String) -> Bool { false }
+
+    /// Сообщает, что служба не хранит выученные слова.
+    ///
+    /// - Parameter word: Проверяемое слово.
+    /// - Returns: Всегда `false`.
     func hasLearnedWord(_ word: String) -> Bool { false }
+
+    /// Не изменяет словарь, поскольку игнорирование слов не поддерживается.
+    ///
+    /// - Parameter word: Слово, которое запрашивает KeyboardKit.
     func ignoreWord(_ word: String) {}
+
+    /// Не изменяет словарь, поскольку обучение не поддерживается.
+    ///
+    /// - Parameter word: Слово, которое запрашивает KeyboardKit.
     func learnWord(_ word: String) {}
+
+    /// Не изменяет словарь, поскольку список игнорируемых слов отсутствует.
+    ///
+    /// - Parameter word: Слово, которое запрашивает KeyboardKit.
     func removeIgnoredWord(_ word: String) {}
+
+    /// Не изменяет словарь, поскольку список выученных слов отсутствует.
+    ///
+    /// - Parameter word: Слово, которое запрашивает KeyboardKit.
     func unlearnWord(_ word: String) {}
 }
 

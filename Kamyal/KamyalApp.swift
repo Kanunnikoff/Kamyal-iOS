@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Главная точка входа в приложение «Къамаьл».
 @main
 struct KamyalApp: App {
 

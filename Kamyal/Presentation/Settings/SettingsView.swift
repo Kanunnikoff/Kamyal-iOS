@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Позволяет настроить язык приложения и поведение клавиатуры.
 struct SettingsView: View {
     
     @AppStorage(AppSettingsKey.isIngush)
@@ -73,6 +74,7 @@ struct SettingsView: View {
     }
 }
 
+/// Предварительный просмотр экрана настроек.
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()

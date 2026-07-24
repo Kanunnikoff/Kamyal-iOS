@@ -7,11 +7,19 @@
 
 import Foundation
 
+/// Приводит регистр словарной подсказки в соответствие с вводом пользователя.
 enum IngushSuggestionFormatter {
 
     private static let canonicalUppercasePrefixes = ["аллахӏ"]
     private static let locale = Locale(identifier: "ru")
 
+    /// Выбирает регистр подсказки с учётом Shift и нормативных исключений.
+    ///
+    /// - Parameters:
+    ///   - word: Слово из словаря.
+    ///   - input: Введённый пользователем фрагмент слова.
+    ///   - isUppercaseLocked: Признак зафиксированного верхнего регистра.
+    /// - Returns: Слово в регистре, подходящем для текущего ввода.
     static func format(
         _ word: String,
         for input: String,
@@ -39,8 +47,10 @@ enum IngushSuggestionFormatter {
     }
 }
 
+/// Загружает ингушские словари и последовательно выполняет поиск подсказок.
 actor IngushDictionary {
 
+    /// Файлы, из которых формируются подсказки.
     private enum Source: Hashable {
 
         case dictionary
@@ -71,6 +81,7 @@ actor IngushDictionary {
     private static let cancellationCheckInterval = 256
     private static let locale = Locale(identifier: "ru")
 
+    /// Слова одного источника и указатель их позиций по началу слова.
     private struct Storage {
 
         let words: [String]
@@ -80,6 +91,11 @@ actor IngushDictionary {
     private let customURLs: [Source: URL]
     private var cachedStorages: [Source: Storage] = [:]
 
+    /// Создаёт словарь с файлами из пакета или с переданными файлами.
+    ///
+    /// - Parameters:
+    ///   - dictionaryURL: Необязательный адрес частотного словаря для проверки или замены.
+    ///   - namesURL: Необязательный адрес файла имён для проверки или замены.
     init(
         dictionaryURL: URL? = nil,
         namesURL: URL? = nil
@@ -90,11 +106,19 @@ actor IngushDictionary {
         self.customURLs = customURLs
     }
 
+    /// Заранее загружает оба источника и строит указатели для поиска.
     func prepare() {
         _ = loadStorageIfNeeded(for: .dictionary)
         _ = loadStorageIfNeeded(for: .names)
     }
 
+    /// Ищет начинающиеся с введённого фрагмента слова в порядке их приоритета.
+    ///
+    /// - Parameters:
+    ///   - input: Начало искомого слова.
+    ///   - limit: Наибольшее число возвращаемых вариантов.
+    /// - Returns: Уникальные подсказки из частотного словаря, дополненные именами.
+    /// - Throws: `CancellationError`, если задача поиска была отменена.
     func suggestions(
         for input: String,
         limit: Int
@@ -133,6 +157,10 @@ actor IngushDictionary {
 
 private extension IngushDictionary {
 
+    /// Возвращает ранее загруженное хранилище либо загружает его из файла.
+    ///
+    /// - Parameter source: Источник слов.
+    /// - Returns: Подготовленное хранилище источника.
     private func loadStorageIfNeeded(for source: Source) -> Storage {
         if let cachedStorage = cachedStorages[source] {
             return cachedStorage
@@ -143,6 +171,10 @@ private extension IngushDictionary {
         return storage
     }
 
+    /// Читает слова источника и строит указатель по первым символам.
+    ///
+    /// - Parameter source: Источник слов.
+    /// - Returns: Хранилище слов; при ошибке возвращается пустое хранилище.
     private func loadStorage(for source: Source) -> Storage {
         let bundledURL = Bundle.main.url(
             forResource: source.fileName,
@@ -193,12 +225,25 @@ private extension IngushDictionary {
         }
     }
 
+    /// Возвращает часть строки, используемую в качестве ключа указателя.
+    ///
+    /// - Parameter text: Нормализованная строка.
+    /// - Returns: Начальные символы либо `nil`, если строка слишком короткая.
     private func indexedPrefix(for text: String) -> String? {
         guard text.count >= Self.indexedPrefixLength else { return nil }
 
         return String(text.prefix(Self.indexedPrefixLength))
     }
 
+    /// Выбирает полный перебор или поиск по указателю в зависимости от длины ввода.
+    ///
+    /// - Parameters:
+    ///   - storage: Хранилище, в котором выполняется поиск.
+    ///   - normalizedInput: Введённый фрагмент в нижнем регистре.
+    ///   - limit: Наибольшее число результатов.
+    ///   - normalizedExcludedWords: Уже добавленные слова в нижнем регистре.
+    /// - Returns: Уникальные слова с подходящим началом.
+    /// - Throws: `CancellationError`, если задача поиска была отменена.
     private func suggestions(
         in storage: Storage,
         matching normalizedInput: String,
@@ -226,6 +271,16 @@ private extension IngushDictionary {
         )
     }
 
+    /// Перебирает указанные позиции и собирает уникальные подходящие слова.
+    ///
+    /// - Parameters:
+    ///   - positions: Позиции слов, которые следует проверить.
+    ///   - storage: Хранилище исходных слов.
+    ///   - normalizedInput: Введённый фрагмент в нижнем регистре.
+    ///   - limit: Наибольшее число результатов.
+    ///   - normalizedExcludedWords: Уже добавленные слова в нижнем регистре.
+    /// - Returns: Уникальные слова в порядке исходного файла.
+    /// - Throws: `CancellationError`, если задача поиска была отменена.
     private func suggestions<Positions: Sequence>(
         at positions: Positions,
         in storage: Storage,

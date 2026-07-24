@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Разделы нижней панели навигации на iPhone.
 private enum TabSelection: Hashable {
 
     case main
@@ -15,6 +16,7 @@ private enum TabSelection: Hashable {
     case about
 }
 
+/// Нижняя панель, связывающая основные разделы приложения на iPhone.
 struct TabNavigationView: View {
 
     @AppStorage(AppSettingsKey.isIngush)
@@ -59,6 +61,7 @@ struct TabNavigationView: View {
     }
 }
 
+/// Предварительный просмотр нижней панели навигации.
 struct TabNavigationView_Previews: PreviewProvider {
 
     static var previews: some View {

@@ -8,6 +8,7 @@
 import KeyboardKit
 import SwiftUI
 
+/// Собирает раскладку, оформление клавиш и панель эмодзи для расширения.
 struct MyKeyboard: View {
 
     @AppStorage(
@@ -20,6 +21,11 @@ struct MyKeyboard: View {
 
     @ObservedObject private var keyboardContext: KeyboardContext
 
+    /// Создаёт клавиатуру с переданными службами и общим состоянием KeyboardKit.
+    ///
+    /// - Parameters:
+    ///   - services: Службы обработки действий и подсказок.
+    ///   - state: Наблюдаемое состояние расширения клавиатуры.
     init(
         services: KeyboardServices,
         state: KeyboardState
@@ -96,6 +102,10 @@ private extension MyKeyboard {
         return deviceLayout(from: baseLayout)
     }
 
+    /// Преобразует базовую раскладку для фактического вида клавиатуры устройства.
+    ///
+    /// - Parameter baseLayout: Раскладка, построенная KeyboardKit из наборов символов.
+    /// - Returns: Раскладка с геометрией iPhone или iPad.
     func deviceLayout(from baseLayout: KeyboardLayout) -> KeyboardLayout {
         // На iPad библиотека добавляет отдельные служебные ряды и размеры клавиш,
         // а плавающая клавиатура сообщает тип iPhone через deviceTypeForKeyboard.
@@ -110,6 +120,10 @@ private extension MyKeyboard {
         )
     }
 
+    /// Приближает геометрию раскладки iPhone к системной ингушской клавиатуре.
+    ///
+    /// - Parameter layout: Раскладка iPhone от KeyboardKit.
+    /// - Returns: Раскладка с согласованными размерами и отступами рядов.
     func systemIngushLayout(from layout: KeyboardLayout) -> KeyboardLayout {
         var result = layout
 
@@ -171,6 +185,10 @@ private extension MyKeyboard {
         return result
     }
 
+    /// Приближает размеры буквенных и служебных клавиш iPad к системным.
+    ///
+    /// - Parameter layout: Раскладка iPad от KeyboardKit.
+    /// - Returns: Раскладка с перераспределённой шириной клавиш.
     func systemPadLayout(from layout: KeyboardLayout) -> KeyboardLayout {
         var result = layout
 
@@ -204,6 +222,10 @@ private extension MyKeyboard {
         return result
     }
 
+    /// Настраивает ширину клавиш верхнего ряда iPad.
+    ///
+    /// - Parameter row: Исходный верхний ряд.
+    /// - Returns: Ряд с расширенной завершающей служебной клавишей.
     func padTopRow(from row: KeyboardLayoutItemRow) -> KeyboardLayoutItemRow {
         guard row.count >= PadLayoutMetrics.minimumInputRowItemCount else {
             return row
@@ -220,6 +242,10 @@ private extension MyKeyboard {
         }
     }
 
+    /// Настраивает ширину клавиш среднего ряда iPad.
+    ///
+    /// - Parameter row: Исходный средний ряд.
+    /// - Returns: Ряд с фиксированной начальной и доступной завершающей шириной.
     func padMiddleRow(from row: KeyboardLayoutItemRow) -> KeyboardLayoutItemRow {
         guard row.count >= PadLayoutMetrics.minimumInputRowItemCount else {
             return row
@@ -240,6 +266,10 @@ private extension MyKeyboard {
         }
     }
 
+    /// Настраивает ширину клавиш нижнего буквенного ряда iPad.
+    ///
+    /// - Parameter row: Исходный нижний ряд.
+    /// - Returns: Ряд с растягиваемыми служебными клавишами по краям.
     func padLowerRow(from row: KeyboardLayoutItemRow) -> KeyboardLayoutItemRow {
         guard row.count >= PadLayoutMetrics.minimumInputRowItemCount else {
             return row
@@ -255,6 +285,10 @@ private extension MyKeyboard {
         }
     }
 
+    /// Применяет системные пропорции к служебному ряду iPad.
+    ///
+    /// - Parameter row: Исходный служебный ряд.
+    /// - Returns: Ряд с заданными долями ширины либо исходный ряд неожиданного состава.
     func padServiceRow(from row: KeyboardLayoutItemRow) -> KeyboardLayoutItemRow {
         guard row.count == PadLayoutMetrics.serviceRowWidths.count else {
             return row
@@ -268,6 +302,10 @@ private extension MyKeyboard {
         }
     }
 
+    /// Корректирует вертикальные отступы одной клавиши ввода на iPhone.
+    ///
+    /// - Parameter layoutItem: Исходная клавиша раскладки.
+    /// - Returns: Клавиша с границами, согласованными с системной раскладкой.
     func verticallyAlignedInputItem(
         from layoutItem: KeyboardLayoutItem
     ) -> KeyboardLayoutItem {
@@ -283,6 +321,10 @@ private extension MyKeyboard {
         return item
     }
 
+    /// Возвращает пользовательские варианты долгого нажатия для текущего алфавита.
+    ///
+    /// - Parameter action: Действие нажатой клавиши.
+    /// - Returns: Варианты символов либо `nil`, если они не определены.
     func customCalloutActions(for action: KeyboardAction) -> [KeyboardAction]? {
         if isKeyboardLatin {
             return LatinIngushCalloutActionProvider().calloutActions(for: action)
@@ -292,6 +334,7 @@ private extension MyKeyboard {
     }
 }
 
+/// Геометрические параметры буквенной раскладки iPhone.
 private enum AlphabeticLayoutMetrics {
 
     static let columnCount = 11
@@ -314,6 +357,7 @@ private enum AlphabeticLayoutMetrics {
     }
 }
 
+/// Геометрические параметры полноразмерной раскладки iPad.
 private enum PadLayoutMetrics {
 
     static let lowerRowIndex = 2
@@ -349,6 +393,7 @@ private extension KeyboardAction {
     }
 }
 
+/// Подменяет подписи отдельных служебных клавиш, сохраняя стандартное содержимое остальных.
 private struct MyKeyboardButtonContent<StandardContent: View>: View {
 
     @AppStorage(
@@ -389,8 +434,10 @@ private struct MyKeyboardButtonContent<StandardContent: View>: View {
     }
 }
 
+/// Пользовательская панель эмодзи для компактной и полноразмерной клавиатуры.
 private struct MyEmojiKeyboard: View {
 
+    /// Геометрические параметры панели эмодзи на iPhone и плавающем iPad.
     private enum CompactMetrics {
 
         static let bottomBarHeight: CGFloat = 44
@@ -403,6 +450,7 @@ private struct MyEmojiKeyboard: View {
         static let rowSpacing: CGFloat = 2
     }
 
+    /// Геометрические параметры полноразмерной панели эмодзи на iPad.
     private enum PadMetrics {
 
         static let bottomBarHeight: CGFloat = 44
@@ -427,6 +475,11 @@ private struct MyEmojiKeyboard: View {
 
     @State private var selectedCategory: EmojiCategory = .smileysAndPeople
 
+    /// Создаёт панель эмодзи и выбирает начальную категорию.
+    ///
+    /// - Parameters:
+    ///   - services: Службы KeyboardKit для вставки символов и служебных действий.
+    ///   - isPadKeyboard: Признак полноразмерной клавиатуры iPad.
     init(
         services: KeyboardServices,
         isPadKeyboard: Bool
@@ -538,6 +591,10 @@ private extension MyEmojiKeyboard {
         .padding(.horizontal, CompactMetrics.horizontalPadding)
     }
 
+    /// Рассчитывает число строк эмодзи, помещающихся по высоте на iPad.
+    ///
+    /// - Parameter availableHeight: Высота области над нижней панелью.
+    /// - Returns: Строки сетки в допустимом для iPad диапазоне.
     func padEmojiRows(for availableHeight: CGFloat) -> [GridItem] {
         // Полноразмерные iPad дают расширению разную высоту в книжной и альбомной
         // ориентациях. Число строк выводим из фактической высоты после вычета
@@ -607,6 +664,12 @@ private extension MyEmojiKeyboard {
         }
     }
 
+    /// Создаёт раздел одной категории в горизонтальной ленте iPad.
+    ///
+    /// - Parameters:
+    ///   - category: Категория, заголовок и эмодзи которой требуется показать.
+    ///   - rows: Рассчитанные строки горизонтальной сетки.
+    /// - Returns: Представление заголовка и сетки категории.
     func padCategorySection(
         _ category: EmojiCategory,
         rows: [GridItem]
@@ -703,6 +766,14 @@ private extension MyEmojiKeyboard {
         .padding(.horizontal, CompactMetrics.horizontalPadding)
     }
 
+    /// Создаёт кнопку эмодзи с заданными размерами.
+    ///
+    /// - Parameters:
+    ///   - emoji: Отображаемый и вставляемый эмодзи.
+    ///   - fontSize: Размер шрифта символа.
+    ///   - itemWidth: Ширина области нажатия.
+    ///   - itemHeight: Высота области нажатия.
+    /// - Returns: Кнопка, вставляющая выбранный эмодзи.
     func emojiButton(
         _ emoji: Emoji,
         fontSize: CGFloat,
@@ -723,6 +794,9 @@ private extension MyEmojiKeyboard {
         .accessibilityLabel(emoji.localizedName)
     }
 
+    /// Сохраняет эмодзи в недавних и передаёт действие обработчику клавиатуры.
+    ///
+    /// - Parameter emoji: Эмодзи, выбранный пользователем.
     func insert(_ emoji: Emoji) {
         EmojiCategory.Persisted.recent.addEmoji(emoji)
         services.actionHandler.handle(.emoji(emoji))

@@ -10,6 +10,7 @@ import Foundation
 import OSLog
 import StoreKit
 
+/// Результат попытки купить расходуемый товар.
 enum ConsumablePurchaseResult: Equatable {
 
     case purchased
@@ -17,6 +18,7 @@ enum ConsumablePurchaseResult: Equatable {
     case cancelled
 }
 
+/// Ошибки подготовки и проверки покупки.
 enum PurchaseManagerError: LocalizedError {
 
     case productNotFound
@@ -37,6 +39,7 @@ enum PurchaseManagerError: LocalizedError {
     }
 }
 
+/// Последовательно обрабатывает покупки StoreKit и передаёт проверенные транзакции в аналитику.
 actor PurchaseManager {
 
     static let shared = PurchaseManager()
@@ -50,9 +53,13 @@ actor PurchaseManager {
     private var purchaseIntentsTask: Task<Void, Never>?
     private var loggedTransactionIdentifiers: Set<UInt64> = []
 
+    /// Создаёт единственный экземпляр обработчика покупок.
     private init() {
     }
 
+    /// Запускает наблюдение за обновлениями транзакций и намерениями покупок.
+    ///
+    /// Повторный вызов не создаёт дополнительные задачи наблюдения.
     func startObservingTransactions() {
         guard transactionUpdatesTask == nil else {
             return
@@ -81,12 +88,18 @@ actor PurchaseManager {
         }
     }
 
+    /// Обрабатывает проверяемые транзакции, оставшиеся незавершёнными.
     func processUnfinishedTransactions() async {
         for await verificationResult in Transaction.unfinished {
             await process(verificationResult: verificationResult)
         }
     }
 
+    /// Покупает расходуемый товар с указанным идентификатором.
+    ///
+    /// - Parameter productIdentifier: Идентификатор товара в App Store Connect.
+    /// - Returns: Состояние завершения попытки покупки.
+    /// - Throws: Ошибку загрузки товара, покупки или проверки транзакции.
     func purchaseConsumable(productIdentifier: String) async throws -> ConsumablePurchaseResult {
         guard let product = try await Product.products(for: [productIdentifier]).first else {
             throw PurchaseManagerError.productNotFound
@@ -95,6 +108,9 @@ actor PurchaseManager {
         return try await process(purchaseResult: product.purchase())
     }
 
+    /// Обрабатывает покупку, начатую системой вне текущего экрана приложения.
+    ///
+    /// - Parameter purchaseIntent: Намерение покупки, полученное от StoreKit.
     @available(iOS 16.4, *)
     private func process(purchaseIntent: PurchaseIntent) async {
         do {
@@ -104,6 +120,11 @@ actor PurchaseManager {
         }
     }
 
+    /// Проверяет результат покупки, завершает успешную транзакцию и возвращает её состояние.
+    ///
+    /// - Parameter purchaseResult: Результат, полученный от StoreKit.
+    /// - Returns: Состояние расходуемой покупки.
+    /// - Throws: Ошибку проверки или неизвестный вариант результата.
     private func process(
         purchaseResult: Product.PurchaseResult
     ) async throws -> ConsumablePurchaseResult {
@@ -130,6 +151,9 @@ actor PurchaseManager {
         }
     }
 
+    /// Проверяет и завершает транзакцию из последовательности обновлений.
+    ///
+    /// - Parameter verificationResult: Результат проверки, предоставленный StoreKit.
     private func process(
         verificationResult: VerificationResult<Transaction>
     ) async {
@@ -146,6 +170,11 @@ actor PurchaseManager {
         }
     }
 
+    /// Извлекает подтверждённую транзакцию из результата проверки.
+    ///
+    /// - Parameter verificationResult: Проверяемая транзакция StoreKit.
+    /// - Returns: Транзакция с действительной подписью.
+    /// - Throws: `PurchaseManagerError.unverifiedTransaction`, если проверка не пройдена.
     private func verifiedTransaction(
         from verificationResult: VerificationResult<Transaction>
     ) throws -> Transaction {
@@ -158,6 +187,9 @@ actor PurchaseManager {
         }
     }
 
+    /// Один раз за запуск передаёт действующую транзакцию в Firebase Analytics.
+    ///
+    /// - Parameter transaction: Проверенная транзакция для регистрации.
     private func logTransactionIfNeeded(_ transaction: Transaction) {
         guard transaction.revocationDate == nil,
               transaction.revocationReason == nil,

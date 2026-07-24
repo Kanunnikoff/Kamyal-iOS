@@ -7,8 +7,16 @@
 
 import KeyboardKit
 
+/// Выбирает локализованные подписи служебных клавиш.
 enum MyKeyboardAppearance {
 
+    /// Возвращает подпись пробела или клавиши ввода для выбранного алфавита.
+    ///
+    /// - Parameters:
+    ///   - action: Действие настраиваемой клавиши.
+    ///   - isKeyboardLatin: Признак латинской раскладки.
+    ///   - isKeyboardIngush: Признак ингушских подписей интерфейса.
+    /// - Returns: Пользовательская подпись либо `nil` для стандартного содержимого.
     static func buttonTitle(
         for action: KeyboardAction,
         isKeyboardLatin: Bool,

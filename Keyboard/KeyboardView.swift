@@ -8,6 +8,7 @@
 import SwiftUI
 import KeyboardKit
 
+/// Корневое SwiftUI-представление расширения клавиатуры.
 struct KeyboardView: View {
 
     let services: KeyboardServices

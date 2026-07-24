@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Показывает экран, выбранный в боковой панели.
 struct DetailColumn: View {
     
     @Binding var selection: SidebarItem?
@@ -25,8 +26,10 @@ struct DetailColumn: View {
     }
 }
 
+/// Предварительный просмотр столбца с выбранным экраном.
 struct DetailColumn_Previews: PreviewProvider {
-    
+
+    /// Хранит изменяемый выбор экрана для предварительного просмотра.
     struct Preview: View {
         
         @State private var selection: SidebarItem? = .main

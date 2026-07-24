@@ -2,6 +2,7 @@ import AppKit
 import ImageIO
 import UniformTypeIdentifiers
 
+/// Размеры и имена ресурсов для снимков iPad с диагональю 13 дюймов.
 private enum Constants {
     static let canvasSize = NSSize(width: 2_752, height: 2_064)
     static let screenshotWidth: CGFloat = 1_940
@@ -14,6 +15,7 @@ private enum Constants {
     static let outputDirectoryName = "13-inch"
 }
 
+/// Описание текста, исходного снимка и свечения одного рекламного изображения.
 private struct Slide {
     let sourceFileName: String
     let outputFileName: String
@@ -23,6 +25,7 @@ private struct Slide {
     let glowCenter: NSPoint
 }
 
+/// Ошибки чтения ресурсов и записи готовых снимков.
 private enum GenerationError: LocalizedError {
     case invalidArguments
     case imageLoadingFailed(URL)
@@ -40,6 +43,11 @@ private enum GenerationError: LocalizedError {
     }
 }
 
+/// Загружает изображение по указанному адресу.
+///
+/// - Parameter url: Адрес исходного файла.
+/// - Returns: Загруженное изображение AppKit.
+/// - Throws: `GenerationError.imageLoadingFailed`, если файл нельзя открыть.
 private func loadImage(at url: URL) throws -> NSImage {
     guard let image = NSImage(contentsOf: url) else {
         throw GenerationError.imageLoadingFailed(url)
@@ -48,6 +56,12 @@ private func loadImage(at url: URL) throws -> NSImage {
     return image
 }
 
+/// Рассчитывает прямоугольник для заполнения области изображением без искажения пропорций.
+///
+/// - Parameters:
+///   - imageSize: Исходный размер изображения.
+///   - destination: Заполняемая область.
+/// - Returns: Масштабированный прямоугольник с возможной обрезкой краёв.
 private func aspectFillRect(for imageSize: NSSize, in destination: NSRect) -> NSRect {
     let horizontalScale = destination.width / imageSize.width
     let verticalScale = destination.height / imageSize.height
@@ -65,6 +79,11 @@ private func aspectFillRect(for imageSize: NSSize, in destination: NSRect) -> NS
     )
 }
 
+/// Рисует изображение с заполнением всей области и обрезкой выступающих краёв.
+///
+/// - Parameters:
+///   - image: Исходное изображение.
+///   - destination: Заполняемая область.
 private func drawAspectFill(_ image: NSImage, in destination: NSRect) {
     let drawRect = aspectFillRect(for: image.size, in: destination)
 
@@ -78,6 +97,12 @@ private func drawAspectFill(_ image: NSImage, in destination: NSRect) {
     )
 }
 
+/// Создаёт стиль абзаца с заданным выравниванием и интервалом.
+///
+/// - Parameters:
+///   - alignment: Выравнивание текста.
+///   - lineSpacing: Дополнительное расстояние между строками.
+/// - Returns: Настроенный изменяемый стиль абзаца.
 private func paragraphStyle(
     alignment: NSTextAlignment,
     lineSpacing: CGFloat
@@ -90,6 +115,16 @@ private func paragraphStyle(
     return style
 }
 
+/// Рисует оформленный многострочный текст.
+///
+/// - Parameters:
+///   - text: Отображаемый текст.
+///   - rect: Область размещения.
+///   - font: Шрифт текста.
+///   - color: Цвет текста.
+///   - alignment: Выравнивание абзаца.
+///   - lineSpacing: Дополнительное расстояние между строками.
+///   - kerning: Межбуквенный интервал.
 private func drawText(
     _ text: String,
     in rect: NSRect,
@@ -116,6 +151,16 @@ private func drawText(
     )
 }
 
+/// Подбирает наибольший размер шрифта, при котором заданные строки помещаются в область.
+///
+/// - Parameters:
+///   - text: Текст с явно заданными переносами.
+///   - rect: Доступная область.
+///   - maximumSize: Начальный размер шрифта.
+///   - minimumSize: Наименьший допустимый размер шрифта.
+///   - weight: Насыщенность шрифта.
+///   - lineSpacing: Дополнительное расстояние между строками.
+/// - Returns: Подходящий шрифт или шрифт наименьшего допустимого размера.
 private func fittedFont(
     for text: String,
     in rect: NSRect,
@@ -150,6 +195,11 @@ private func fittedFont(
     return .systemFont(ofSize: minimumSize, weight: weight)
 }
 
+/// Рисует радиальное цветное свечение на фоне.
+///
+/// - Parameters:
+///   - center: Центр свечения.
+///   - color: Основной цвет градиента.
 private func drawGlow(center: NSPoint, color: NSColor) {
     let glowSize = NSSize(width: 1_600, height: 1_600)
     let glowRect = NSRect(
@@ -167,6 +217,9 @@ private func drawGlow(center: NSPoint, color: NSColor) {
     glowGradient?.draw(in: glowPath, relativeCenterPosition: .zero)
 }
 
+/// Рисует значок и название приложения в верхней части снимка.
+///
+/// - Parameter icon: Значок приложения.
 private func drawBrand(icon: NSImage) {
     let iconRect = NSRect(
         x: 86,
@@ -222,6 +275,9 @@ private func drawBrand(icon: NSImage) {
     )
 }
 
+/// Рисует панель с заголовком и подзаголовком слайда.
+///
+/// - Parameter slide: Описание текстового содержимого слайда.
 private func drawCopyPanel(for slide: Slide) {
     let panelRect = NSRect(x: 68, y: 270, width: 606, height: 1_510)
 
@@ -278,6 +334,9 @@ private func drawCopyPanel(for slide: Slide) {
     )
 }
 
+/// Рисует исходный снимок приложения внутри декоративной рамки устройства.
+///
+/// - Parameter screenshot: Снимок интерфейса приложения.
 private func drawScreenshot(_ screenshot: NSImage) {
     let screenshotHeight = Constants.screenshotWidth * screenshot.size.height / screenshot.size.width
     let screenshotRect = NSRect(
@@ -331,6 +390,15 @@ private func drawScreenshot(_ screenshot: NSImage) {
     innerBorder.stroke()
 }
 
+/// Собирает рекламный слайд и записывает его как непрозрачный PNG.
+///
+/// - Parameters:
+///   - slide: Описание текущего слайда.
+///   - background: Фоновое изображение.
+///   - icon: Значок приложения.
+///   - screenshot: Снимок интерфейса.
+///   - outputURL: Адрес итогового PNG.
+/// - Throws: `GenerationError.pngEncodingFailed`, если изображение нельзя растрировать или записать.
 private func renderSlide(
     slide: Slide,
     background: NSImage,
@@ -407,6 +475,9 @@ private func renderSlide(
     }
 }
 
+/// Загружает общие ресурсы и создаёт всю серию снимков iPad.
+///
+/// - Throws: Ошибку аргументов, чтения исходных изображений или записи PNG.
 private func run() throws {
     guard CommandLine.arguments.count >= 2 else {
         throw GenerationError.invalidArguments

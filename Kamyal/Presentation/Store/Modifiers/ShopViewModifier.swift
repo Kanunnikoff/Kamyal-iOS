@@ -7,8 +7,12 @@
 
 import SwiftUI
 
+/// Запускает обработку новых и незавершённых покупок вместе с представлением.
 struct ShopViewModifier: ViewModifier {
 
+    /// Подключает наблюдение StoreKit на время существования содержимого.
+    ///
+    /// - Parameter content: Исходное содержимое представления.
     func body(content: Content) -> some View {
         content
             .task {
@@ -20,6 +24,9 @@ struct ShopViewModifier: ViewModifier {
 
 extension View {
 
+    /// Подключает обработку покупок StoreKit к представлению.
+    ///
+    /// - Returns: Представление, запускающее наблюдение за транзакциями.
     func shop() -> some View {
         modifier(ShopViewModifier())
     }

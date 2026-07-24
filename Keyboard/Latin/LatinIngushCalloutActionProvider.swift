@@ -11,6 +11,10 @@ import KeyboardKit
 /// Варианты ингушских латинских букв и знаков по долгому нажатию.
 struct LatinIngushCalloutActionProvider {
 
+    /// Возвращает варианты для всплывающего меню указанной клавиши.
+    ///
+    /// - Parameter action: Действие клавиши, для которого нужны варианты.
+    /// - Returns: Действия с доступными символами или `nil`, если вариантов нет.
     func calloutActions(for action: KeyboardAction) -> [KeyboardAction]? {
         guard case .character(let character) = action else { return nil }
 
@@ -26,7 +30,11 @@ struct LatinIngushCalloutActionProvider {
 
         return strings.map { .character($0) }
     }
-    
+
+    /// Сопоставляет основной символ с вариантами латинской раскладки.
+    ///
+    /// - Parameter char: Символ в нижнем регистре.
+    /// - Returns: Упорядоченные варианты, включая исходный символ.
     private func calloutActionStrings(for char: String) -> [String] {
         switch char {
             case "0": return ["0", "°"]

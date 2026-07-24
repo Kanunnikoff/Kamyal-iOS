@@ -7,8 +7,10 @@
 
 import SwiftUI
 
+/// Главный экран с инструкцией по подключению клавиатуры и полем проверки ввода.
 struct MainView: View {
 
+    /// Геометрические параметры главного экрана.
     private enum Metrics {
 
         static let cornerRadius: CGFloat = 15
@@ -18,6 +20,7 @@ struct MainView: View {
         static let decorativeDividerWidth: CGFloat = 140
     }
 
+    /// Именованные цвета главного экрана.
     private enum Colors {
 
         static let decorativeDivider = Color("MainDividerColor")
@@ -85,8 +88,12 @@ struct MainView: View {
     }
 }
 
+/// Добавляет подзаголовок панели навигации в поддерживаемых версиях iOS.
 private struct TipNavigationSubtitleModifier: ViewModifier {
 
+    /// Возвращает содержимое с благодарностью за чаевые, если доступен подзаголовок навигации.
+    ///
+    /// - Parameter content: Исходное содержимое представления.
     @ViewBuilder
     func body(content: Content) -> some View {
         if #available(iOS 26.0, *) {
@@ -187,6 +194,7 @@ private extension MainView {
     }
 }
 
+/// Отдельный шаг инструкции по подключению клавиатуры.
 private struct ActivationStepView: View {
 
     let number: Int
@@ -207,6 +215,7 @@ private struct ActivationStepView: View {
     }
 }
 
+/// Предварительный просмотр главного экрана.
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
